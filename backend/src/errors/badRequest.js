@@ -1,5 +1,5 @@
 const statusCodes = require('../utils/constants');
-const CustomAPIError = require('./custom-api');
+const CustomAPIError = require('./customApi');
 
 
 class BadRequestError extends CustomAPIError {

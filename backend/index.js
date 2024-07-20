@@ -6,10 +6,12 @@ require('express-async-errors');
 const mainRoute = require('./src/routes/main');
 const notFound = require('./src/middlewares/notFound');
 const errorHandler = require('./src/middlewares/errorHandler');
+const cors = require('cors');
 
 
 
 //middlewares
+app.use(cors({origin: "http://localhost:5173", credentials: true}));
 app.use(express.json());
 
 
