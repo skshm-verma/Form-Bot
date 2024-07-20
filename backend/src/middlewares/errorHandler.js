@@ -13,7 +13,8 @@ const errorHandler = (err, req, res, next) => {
         message: err || 'Something went wrong try again later'
     }
 
-    return res.status(customError.statusCode).json({ msg: customError.message })
+
+   return res.status(customError.statusCode).json({ msg: customError.message })
 }
 
 module.exports = errorHandler;

@@ -2,7 +2,7 @@ const User = require('../models/User');
 const statusCodes = require('../utils/constants');
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../utils/tokenGenerator');
-const { BadRequestError, UnauthenticatedError } = require('../errors/error')
+const { BadRequestError, UnauthenticatedError, ForbiddenError } = require('../errors/error')
 
 
 
@@ -27,12 +27,14 @@ const userSignIn = async (req, res) => {
     }
     const user = await User.findOne({ email })
     if (!user) {
-        res.status(statusCodes.FORBIDDEN).send("Invalid Email");
+        throw new ForbiddenError('Invalid Email');
+        // res.status(statusCodes.FORBIDDEN).send("Invalid Email");
     }
 
     const verifyingPassword = await bcrypt.compare(password, user.password)
     if (!verifyingPassword) {
-        res.status(statusCodes.FORBIDDEN).send("Invalid Password");
+        throw new ForbiddenError('Invalid Password');
+        // res.status(statusCodes.FORBIDDEN).send("Invalid Password");
     }
     const token = generateToken(user._id.toString(), user.name);
 

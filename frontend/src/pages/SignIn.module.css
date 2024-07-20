@@ -1,34 +1,34 @@
-.wrapper-contianer {
+.wrapperContainer {
     height: 100vh;
     position: relative;
 }
 
-.arrow-img{
+.arrowImg {
     position: absolute;
     left: 5rem;
     top: 3rem;
     cursor: pointer;
 }
 
-.triangle-img {
+.triangleImg {
     position: absolute;
     left: 10rem;
     bottom: 9rem;
 }
 
-.Ellipse1-img {
+.ellipse1Img {
     position: absolute;
     left: 55rem;
     bottom: 0rem;
 }
 
-.Ellipse2-img {
+.ellipse2Img {
     position: absolute;
     bottom: 24rem;
     right: 0;
 }
 
-.form-container {
+.formContainer {
     height: 100vh;
     width: fit-content;
     margin: 0px auto;
@@ -36,38 +36,94 @@
     align-items: center;
     justify-content: center;
     font-family: 'Poppins';
-    font-size: 12px;
+    font-size: 14px;
 }
 
-.fields-container {
+.fieldsContainer {
     display: flex;
     flex-direction: column;
 }
 
-.fields-container label {
-    margin: 0px 5px
-}
-
-.fields-container input,
+.fieldsContainer input,
 button {
     padding: 12px;
-    margin: 12px 0px;
+    margin-top: 0.5rem;
     border-radius: 12px;
     border: 2px solid #636364;
+    width: 100%;
 }
 
-.fields-container p {
-    padding: 10px 35px;
+.fieldsContainer input:focus {
+    outline: none !important;
+    border: 2px solid #335094;
 }
 
-.fields-container span {
+.fieldsContainer label {
+    margin: 0px 5px;
+}
+
+.fieldsContainer p {
+    padding: 8px 25px;
+}
+
+.fieldsContainer span {
     color: #335094;
     cursor: pointer;
 }
 
-.fields-container button {
+.fieldsContainer button {
     border: 2px solid #1A5FFF;
     background-color: #1A5FFF;
     cursor: pointer;
     font-size: medium;
+}
+
+.emailContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 1rem;
+}
+
+.passwordContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 0.8rem;
+}
+
+.emailContainer p {
+    padding: 2px 5px;
+    font-size: 12px;
+}
+
+.passwordContainer p {
+    padding: 2px 5px;
+    font-size: 12px;
+}
+
+.errorLabel {
+    color: rgb(251, 74, 74);
+}
+
+/* nesting it within the parent class */
+.fieldsContainer .errorInput {
+    border: 2px solid rgb(118, 33, 33);
+}
+
+.fieldsContainer .errorInput:focus {
+    outline: none !important;
+    border: 2px solid #636364;
+}
+
+/*  another way to override the css
+.errorInput {
+    border: 2px solid rgb(94, 24, 24) !important;
+}
+ */
+
+.errorMessage {
+    padding: 0;
+    margin: 0;
+    color: rgb(116, 39, 39);
 }

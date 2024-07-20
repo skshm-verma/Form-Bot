@@ -1,0 +1,9 @@
+.wrapper-container{
+    font-family: "Open Sans";
+}
+
+.wrapper-container button {
+    background-color: #1A5FFF;
+    cursor: pointer;
+    padding: 12px;
+}

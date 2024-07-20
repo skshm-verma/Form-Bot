@@ -1,45 +1,149 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import { signInUser } from '../helpers/api-communicator';
+import { Toaster, toast } from 'react-hot-toast';
 import styles from './SignIn.module.css';
 import Triangle from '../assets/triangleImage2.png';
 import Ellipse1 from '../assets/ellipseImage1.png';
 import Ellipse2 from '../assets/ellipseImage2.png';
-import Arrow from '../assets/backArrow.png'
+import Arrow from '../assets/backArrow.png';
+import Close from '../assets/close.png';
+import Check from '../assets/check.png';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await signInUser(email, password);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
+
+  // this is an independent toaster theme, cannot be written in css file
+  const toastTheme = {
+    fontSize: "14px",
+    fontFamily: 'Poppins',
+    width: 'fit-content',
+    border: "1px solid #335094",
+    padding: "12px 18px",
+    borderRadius: "10px",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
   }
 
+  const validate = () => {
+    const errors = {};
+
+    // Email validation
+    if (!email) errors.email = "Email is required";
+    // Password validation
+    if (!password) errors.password = "Password is required";
+
+    return errors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      toast.custom((t) => (
+        <div style={toastTheme}>
+          <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon"/>
+          <p style={{color: 'red'}}>Signing In Failed</p>
+        </div >
+      ),
+        { id: "login", duration: 800 }
+      );
+      return;
+    }
+
+    try {
+      const response = await signInUser(email, password);
+      if (response.msg == 'Invalid Email') {
+        errors.email = "Invalid Email";
+        setErrors(errors)
+        toast.custom((t) => (
+          <div style={toastTheme}>
+            <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon"/>
+            <p style={{color: 'red'}}>Signing In Failed</p>
+          </div >
+        ),
+          { id: "login", duration: 800 }
+        );
+      }
+      if (response.msg == 'Invalid Password') {
+        errors.password = "Invalid Password";
+        setErrors(errors)
+        toast.custom((t) => (
+          <div style={toastTheme}>
+            <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon"/>
+            <p style={{color: 'red'}}>Signing In Failed</p>
+          </div >
+        ),
+          { id: "login", duration: 800 }
+        );
+      }
+      if (response.status == 200){
+        toast.custom((t) => (
+          <div style={toastTheme}>
+            <img width="28" height="28" src="https://img.icons8.com/color/48/ok--v1.png" alt="successIcon"/>
+            <p style={{color: 'green'}}>Signed In Successfully</p>
+          </div >
+        ),
+          { id: "login", duration: 800 }
+        );
+        setTimeout(() => navigate('/workspace'), 500);//not required, just to show case toast properly for smaller data
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Signing In Failed", { id: "login" });
+    }
+  };
+
   return (
-    <div className={styles['wrapper-container']}>
-      <img className={styles['arrow-img']} src={Arrow} alt="arrow" />
-      <img className={styles['triangle-img']} src={Triangle} alt="triangle" />
-      <img className={styles['Ellipse1-img']} src={Ellipse1} alt="Ellipse1" />
-      <img className={styles['Ellipse2-img']} src={Ellipse2} alt="Ellipse2" />
-      <div className={styles['form-container']}>
-        <form className={styles['fields-container']} onSubmit={handleSubmit}>
-          <label>Email</label>
-          <input type="email" placeholder='Enter your email' value={email} onInput={(e) => setEmail(e.target.value)} />
-          <label>Password</label>
-          <input type="password" placeholder='Enter your password' value={password} onInput={(e) => setPassword(e.target.value)} />
-          <button type='submit'>Log In</button>
-          <p>Don't have an account? <span onClick={() => navigate('/signUp')}>Register now</span></p>
+    <div className={styles.wrapperContainer}>
+      <Toaster
+        position="top-center"
+        containerStyle={{ margin: "0px auto", width: "250px", height: "100px" }}
+      />
+      <img className={styles.arrowImg} src={Arrow} alt="arrow" />
+      <img className={styles.triangleImg} src={Triangle} alt="triangle" />
+      <img className={styles.ellipse1Img} src={Ellipse1} alt="Ellipse1" />
+      <img className={styles.ellipse2Img} src={Ellipse2} alt="Ellipse2" />
+
+      <div className={styles.formContainer}>
+        <form className={styles.fieldsContainer} onSubmit={handleSubmit}>
+          <div className={styles.emailContainer}>
+            <label className={errors.email ? styles.errorLabel : ''}>Email</label>
+            <input
+              className={errors.email ? styles.errorInput : ''}
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {errors.email && <p className={styles.errorMessage}>{errors.email}</p>}
+          </div>
+          <div className={styles.passwordContainer}>
+            <label className={errors.password ? styles.errorLabel : ''}>Password</label>
+            <input
+              className={errors.password ? styles.errorInput : ''}
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {errors.password && <p className={styles.errorMessage}>{errors.password}</p>}
+          </div>
+          <button type="submit">Log In</button>
+          <p>
+            Don't have an account? <span onClick={() => navigate('/signUp')}>Register now</span>
+          </p>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
