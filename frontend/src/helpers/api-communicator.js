@@ -6,7 +6,7 @@ const signUpUser = async (name, email, password) => {
         const response = await axios.post('/user/signUp', { name, email, password });
         return response;
     } catch (error) {
-        return error.response.data;
+        return error.response?.data;
     }
 }
 
@@ -15,7 +15,7 @@ const signInUser = async (email, password) => {
         const response = await axios.post('/user/signIn', { email, password });
         return response;
     } catch (error) {
-        return error.response.data;
+        return error.response?.data;
     }
 }
 

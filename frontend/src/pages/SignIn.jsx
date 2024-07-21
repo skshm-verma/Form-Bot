@@ -58,7 +58,7 @@ const SignIn = () => {
 
     try {
       const response = await signInUser(email, password);
-      if (response.msg == 'Invalid Email') {
+      if (response?.msg == 'Invalid Email') {
         errors.email = "Invalid Email";
         setErrors(errors)
         toast.custom((t) => (
@@ -70,7 +70,7 @@ const SignIn = () => {
           { id: "login", duration: 800 }
         );
       }
-      if (response.msg == 'Invalid Password') {
+      if (response?.msg == 'Invalid Password') {
         errors.password = "Invalid Password";
         setErrors(errors)
         toast.custom((t) => (
@@ -82,7 +82,7 @@ const SignIn = () => {
           { id: "login", duration: 800 }
         );
       }
-      if (response.status == 200){
+      if (response?.status == 200){
         toast.custom((t) => (
           <div style={toastTheme}>
             <img width="28" height="28" src="https://img.icons8.com/color/48/ok--v1.png" alt="successIcon"/>

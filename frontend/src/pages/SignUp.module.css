@@ -1,6 +1,7 @@
 .wrapperContainer {
     height: 100vh;
     position: relative;
+    background-color: #171923;
 }
 
 .arrowImg {

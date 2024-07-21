@@ -11,14 +11,14 @@ export const ContextProvider = ({ children }) => {
     const checkAuthStatus = async () => {
         const data = await verifyUser();
 
-        if (data.status === 401) {
-            setIsLoggedIn(false);
-            return 401;
-        } else {
+        if (data) {
             setIsLoggedIn(true);
             setUserName(data.userName);
             setUserId(data.userId);
             return 200;
+        } else {
+            setIsLoggedIn(false);
+            return 401;
         }
     }
 

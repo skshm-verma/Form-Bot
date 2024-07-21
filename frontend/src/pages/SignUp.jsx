@@ -66,7 +66,7 @@ const SignUp = () => {
     }
     try {
       const response = await signUpUser(userName, email, password);
-      if (response.status === 201) {
+      if (response?.status === 201) {
         toast.custom((t) => (
           <div style={toastTheme}>
             <img width="28" height="28" src="https://img.icons8.com/color/48/ok--v1.png" alt="successIcon" />

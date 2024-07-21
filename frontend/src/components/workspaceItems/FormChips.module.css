@@ -1,0 +1,25 @@
+.formChip{
+    width: 10rem;
+    height: 15rem;
+    background-color: #636364;
+    margin: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.formChip span {
+    font-family: 'Open Sans';
+    background-color: #636364;
+}
+
+.formChip img {
+    background-color: transparent;
+    position: absolute;
+    transform: translate(78px, -118px);
+    cursor: pointer;
+}

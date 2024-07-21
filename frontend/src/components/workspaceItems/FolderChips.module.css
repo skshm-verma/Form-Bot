@@ -1,0 +1,22 @@
+.folder {
+    background-color: #171923;
+    display: flex;
+    width: 12rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin: 12px 8px;
+}
+.folder span{
+    width: fit-content;
+    padding-right: 8px;
+}
+
+.folder button, img {
+    background-color: #171923;
+    border: none;
+    padding: 2px 0px 0px 0px;
+    margin: 0;
+    width: fit-content;
+}

@@ -1,3 +1,7 @@
+.wrapperContainer {
+    background-color: #171923;
+}
+
 .navLinks {
     display: flex;
     align-items: center;
