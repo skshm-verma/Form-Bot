@@ -3,11 +3,9 @@ import axios from 'axios'
 
 const signUpUser = async (name, email, password) => {
     try {
-        const response = await axios.post('/user/signUp', (name, email, password));
+        const response = await axios.post('/user/signUp', { name, email, password });
         return response;
-        console.log(response);
     } catch (error) {
-        console.log("Error SignUp: ", error);
         return error.response.data;
     }
 }
@@ -22,5 +20,20 @@ const signInUser = async (email, password) => {
     }
 }
 
+const verifyUser = async () => {
+    try {
+        const token = localStorage.getItem('token');
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        const response = await axios.get('/workspace', config);
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
+}
 
-export { signInUser };
+
+export { signUpUser, signInUser, verifyUser };

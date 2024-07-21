@@ -7,8 +7,6 @@ import Triangle from '../assets/triangleImage2.png';
 import Ellipse1 from '../assets/ellipseImage1.png';
 import Ellipse2 from '../assets/ellipseImage2.png';
 import Arrow from '../assets/backArrow.png';
-import Close from '../assets/close.png';
-import Check from '../assets/check.png';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -93,6 +91,7 @@ const SignIn = () => {
         ),
           { id: "login", duration: 800 }
         );
+        localStorage.setItem("token", response.data.token);
         setTimeout(() => navigate('/workspace'), 500);//not required, just to show case toast properly for smaller data
       }
     } catch (error) {
@@ -107,7 +106,7 @@ const SignIn = () => {
         position="top-center"
         containerStyle={{ margin: "0px auto", width: "250px", height: "100px" }}
       />
-      <img className={styles.arrowImg} src={Arrow} alt="arrow" />
+      <img className={styles.arrowImg} src={Arrow} alt="arrow" onClick={() => navigate('/')} />
       <img className={styles.triangleImg} src={Triangle} alt="triangle" />
       <img className={styles.ellipse1Img} src={Ellipse1} alt="Ellipse1" />
       <img className={styles.ellipse2Img} src={Ellipse2} alt="Ellipse2" />

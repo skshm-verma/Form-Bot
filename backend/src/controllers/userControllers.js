@@ -4,11 +4,11 @@ const bcrypt = require('bcrypt');
 const { generateToken } = require('../utils/tokenGenerator');
 const { BadRequestError, UnauthenticatedError, ForbiddenError } = require('../errors/error')
 
-
-
 const userSignUp = async (req, res) => {
-    // managed the error handling in the errorHandler middleware
+
     const { name, email, password } = req.body;
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser) throw new BadRequestError('User already exist with this email');
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
         name: name.trim(),
@@ -28,17 +28,15 @@ const userSignIn = async (req, res) => {
     const user = await User.findOne({ email })
     if (!user) {
         throw new ForbiddenError('Invalid Email');
-        // res.status(statusCodes.FORBIDDEN).send("Invalid Email");
     }
 
     const verifyingPassword = await bcrypt.compare(password, user.password)
     if (!verifyingPassword) {
         throw new ForbiddenError('Invalid Password');
-        // res.status(statusCodes.FORBIDDEN).send("Invalid Password");
     }
     const token = generateToken(user._id.toString(), user.name);
 
-    res.status(statusCodes.OK).json({ message: {status: "SUCCESS", email: user.email} , token});
+    res.status(statusCodes.OK).json({ message: { status: "SUCCESS", email: user.email }, token });
 }
 
 module.exports = { userSignUp, userSignIn }
