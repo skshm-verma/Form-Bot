@@ -15,7 +15,6 @@ const signInUser = async (email, password) => {
         const response = await axios.post('/user/signIn', { email, password });
         return response;
     } catch (error) {
-        // console.log("Error SignIn",error);
         return error.response.data;
     }
 }
@@ -31,7 +30,7 @@ const verifyUser = async () => {
         const response = await axios.get('/workspace', config);
         return response.data;
     } catch (error) {
-        return error.response.data;
+        return error.response;
     }
 }
 

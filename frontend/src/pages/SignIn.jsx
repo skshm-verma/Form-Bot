@@ -96,7 +96,14 @@ const SignIn = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Signing In Failed", { id: "login" });
+      toast.custom((t) => (
+        <div style={toastTheme}>
+          <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon"/>
+          <p style={{color: 'red'}}>Signing In Failed</p>
+        </div >
+      ),
+        { id: "login", duration: 800 }
+      );
     }
   };
 
