@@ -1,4 +1,4 @@
-const NotFoundError = require('../errors/notFound');
+const {BadRequestError, NotFoundError} = require('../errors/notFound');
 const User = require('../models/User');
 const Folder = require('../models/Folder');
 const Form = require('../models/Form');
@@ -61,8 +61,28 @@ const createFolder = async (req, res) => {
     user.folders.push(folder._id);
     await user.save();
 
-    res.status(statusCodes.CREATED).json({ Message: `${folder.name} Folder Created`, folderId: folder._id });
+    res.status(statusCodes.CREATED).json({ message: `${folder.name} Folder Created`, folderId: folder._id });
 
 }
 
-module.exports = { createForm, createFolder }
+const getAllFolders = async (req, res) => {
+    const { userId } = req.query;
+
+    if (!userId) {
+        return res.status(400).json({ message: "User ID is required" });
+    }
+    const user = await User.findById(userId).populate('folders');
+    // populate() method is used to replace the user ObjectId field with the whole document consisting of all the user data.
+    if (!user) {
+        throw new NotFoundError('User not found');
+    }
+
+    const folderNames = user.folders.map(folder => folder.name);
+    res.status(statusCodes.OK).json({ message: "Success", folderNames });
+}
+
+const getAllForms = () => {
+
+}
+
+module.exports = { createForm, createFolder, getAllFolders, getAllForms }

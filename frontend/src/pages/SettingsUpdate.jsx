@@ -3,7 +3,7 @@ import styles from './SettingsUpdate.module.css'
 
 const SettingsUpdate = () => {
   return (
-    <div>
+    <div className={styles.settingsWrapper}>
       Setting Update
     </div>
   )

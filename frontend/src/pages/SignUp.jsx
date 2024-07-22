@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { signUpUser } from '../helpers/api-communicator';
 import { useNavigate } from 'react-router-dom'
 import { Toaster, toast } from 'react-hot-toast';
@@ -60,7 +60,7 @@ const SignUp = () => {
           <p style={{ color: 'red' }}>SignUp Failed</p>
         </div >
       ),
-        { id: "login", duration: 800 }
+        { id: "register", duration: 300 }
       );
       return;
     }
@@ -73,9 +73,9 @@ const SignUp = () => {
             <p style={{ color: 'green' }}>Signed In Successfully</p>
           </div >
         ),
-          { id: "login", duration: 800 }
+          { id: "register", duration: 300 }
         );
-        setTimeout(() => navigate('/'), 500);
+        setTimeout(() => navigate('/'), 300);
       }
     } catch (error) {
       console.log(error);
@@ -85,7 +85,7 @@ const SignUp = () => {
           <p style={{ color: 'red' }}>SignUp Failed</p>
         </div >
       ),
-        { id: "login", duration: 800 }
+        { id: "register", duration: 300 }
       );
     }
   }
@@ -94,7 +94,7 @@ const SignUp = () => {
     <div className={styles.wrapperContianer1}>
       <Toaster
         position="top-center"
-        containerStyle={{ margin: "0px auto", width: "250px", height: "80px", position: "absolute", zIndex: 1, backgroundColor: " #171923"}}
+        containerStyle={{ margin: "0px auto", width: "250px", height: "80px", position: "absolute", zIndex: 1, backgroundColor: " #171923" }}
       />
       <img className={styles.arrowImg} src={Arrow} alt="arrow" onClick={() => navigate('/')} />
       <img className={styles.triangleImg} src={Triangle} alt="triangle" />

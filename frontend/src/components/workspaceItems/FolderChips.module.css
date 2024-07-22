@@ -11,6 +11,7 @@
 .folder span{
     width: fit-content;
     padding-right: 8px;
+    font-size: 16px;
 }
 
 .folder button, img {

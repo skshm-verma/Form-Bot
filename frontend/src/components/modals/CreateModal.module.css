@@ -18,7 +18,8 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     width: 400px;
     text-align: center;
-    color: white; /* Ensure text is visible */
+    color: white; 
+    font-family: "Open Sans";
 }
 
 .buttonContainer {
@@ -35,6 +36,7 @@
     color: #1A5FFF;
     cursor: pointer;
     font-size: 16px;
+    font-family: "Open Sans";
 }
 
 .button2 {
@@ -43,6 +45,7 @@
     color: white;
     cursor: pointer;
     font-size: 16px;
+    font-family: "Open Sans";
 }
 
 input {
@@ -57,4 +60,16 @@ input {
 
 input:focus {
     outline: none;
+}
+
+
+.errorInput {
+    border: 1px solid red !important;
+}
+
+.errorMessage {
+    color: rgb(255, 1, 1);
+    font-size: 0.8rem;
+    font-family: "Open Sans";
+    margin-top: 0.5rem;
 }

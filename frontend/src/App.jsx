@@ -8,6 +8,7 @@ import LandingPage from './pages/LandingPage';
 import Workspace from './pages/Workspace';
 import SettingsUpdate from './pages/SettingsUpdate';
 import './App.css'
+import NewFormPage from './pages/NewFormPage';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path='/' element={<LandingPage currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
             <Route path="/workspace" element={<Workspace />} />
             <Route path="/workspace/settings" element={<SettingsUpdate />} />
+            <Route path="/workspace/newForm" element={< NewFormPage/>} />
           </Routes>
         </BrowserRouter>
       </ContextProvider>

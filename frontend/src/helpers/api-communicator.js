@@ -37,8 +37,16 @@ const verifyUser = async () => {
 
 const createNewFolder = async (userId, folderName) => {
     try {
-        const response = await axios.post('/workspace/newFolder', {userId , folderName})
-        console.log("Response Data: ", response)
+        const response = await axios.post('/workspace/newFolder', { userId, folderName })
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+const getAllFolders = async (userId) => {
+    try {
+        const response = await axios.get('/workspace/allFolders', { params: { userId } })
         return response;
     } catch (error) {
         return error.response;
@@ -46,4 +54,4 @@ const createNewFolder = async (userId, folderName) => {
 }
 
 
-export { signUpUser, signInUser, verifyUser, createNewFolder };
+export { signUpUser, signInUser, verifyUser, createNewFolder, getAllFolders };

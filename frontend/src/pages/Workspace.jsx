@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import styles from './Workspace.module.css'
 import WorkspaceNavbar from '../components/navbars/WorkspaceNavbar'
 import { useAuth } from '../context/AllContext'
 import { useNavigate } from 'react-router-dom'
 import FolderChips from '../components/workspaceItems/FolderChips'
 import FormChips from '../components/workspaceItems/FormChips'
-import { createNewFolder } from '../helpers/api-communicator'
+import { createNewFolder, getAllFolders } from '../helpers/api-communicator'
 import CreateModal from '../components/modals/CreateModal'
 
 const Workspace = () => {
@@ -13,9 +13,10 @@ const Workspace = () => {
     const navigate = useNavigate();
     const [openModal, setOpenModal] = useState(false);
     const [folderName, setFolderName] = useState('');
+    const [allFoldersNames, setAllFoldersNames] = useState([]);
+    const [id, setId] = useState('');
 
     const handleCreateFolder = async () => {
-        // if (response) 
         setFolderName('');
         setOpenModal(true);
     }
@@ -25,18 +26,48 @@ const Workspace = () => {
             const status = await auth?.checkAuthStatus();
             if (status === 401) {
                 navigate('/');
+            } else {
+                setId(auth?.userId)
             }
         };
         checkAuthStatus();
-        
-        const newFolder =  async () => {
+
+        const createFolder = async () => {
             if (!openModal && folderName) {
-                const response = await createNewFolder(auth?.userId, folderName);
-                console.log("Reponse at Workspace: ", response);
+                try {
+                    const response = await createNewFolder(auth?.userId, folderName);
+                    console.log(response);
+                    if(response.msg == 'Duplicate value entered'){
+                       alert('Folder with same name already present');
+                    }
+                    await fetchFolders();
+                    setFolderName('');
+                } catch (error) {
+
+                    console.log(error);
+                }
             }
+        };
+        createFolder();
+
+        const fetchFolders = async () => {
+            try {
+                const response = await getAllFolders(id);
+                if (response.status === 200) {
+                    setAllFoldersNames(response.data.folderNames);
+                } else {
+                    console.log("Fetch Folders Function: ",response);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        if (id) {
+            fetchFolders();
         }
-        newFolder();
-    }, [auth, openModal])
+
+    }, [auth, openModal, id])
+
 
     return (
         <div className={styles.workspace}>
@@ -51,16 +82,13 @@ const Workspace = () => {
                         <span>Create a folder</span>
                     </button>
                     <div className={styles.folders}>
-                        {/* A call to get all folder should be made here */}
-                        <FolderChips folderName={"Computer Networks"} />
-                        <FolderChips folderName={"Computer Networks"} />
-                        <FolderChips folderName={"Computer Networks"} />
-                        <FolderChips folderName={"Computer Networks"} />
-                        <FolderChips folderName={"Computer Networks"} />
+                        {allFoldersNames.map((name, index) => (
+                            <FolderChips key={index} folderName={name} id={index} />
+                        ))}
                     </div>
                 </div>
                 <div className={styles.formContainer}>
-                    <div className={styles.newForm}>
+                    <div className={styles.newForm} onClick={() => navigate('/workspace/newForm')}>
                         <img width="24" height="24" src="https://img.icons8.com/android/24/FFFFFF/plus.png" alt="plus" />
                         <span>
                             Create a typebot

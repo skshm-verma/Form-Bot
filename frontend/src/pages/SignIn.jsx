@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInUser } from '../helpers/api-communicator';
 import { Toaster, toast } from 'react-hot-toast';
@@ -52,7 +52,7 @@ const SignIn = () => {
           <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
         </div >
       ),
-        { id: "login", duration: 800 }
+        { id: "login", duration: 300 }
       );
       return;
     }
@@ -68,7 +68,7 @@ const SignIn = () => {
             <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
           </div >
         ),
-          { id: "login", duration: 800 }
+          { id: "login", duration: 300 }
         );
       }
       if (response?.msg == 'Invalid Password') {
@@ -80,7 +80,7 @@ const SignIn = () => {
             <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
           </div >
         ),
-          { id: "login", duration: 800 }
+          { id: "login", duration: 300 }
         );
       }
       if (response?.status == 200) {
@@ -90,10 +90,10 @@ const SignIn = () => {
             <p style={{ color: 'green', backgroundColor: "#171923" }}>Signed In Successfully</p>
           </div >
         ),
-          { id: "login", duration: 800 }
+          { id: "login", duration: 300 }
         );
         localStorage.setItem("token", response.data.token);
-        setTimeout(() => navigate('/workspace'), 500);//not required, just to show case toast properly for smaller data
+        setTimeout(() => navigate('/workspace'), 300);//not required, just to show case toast properly for smaller data
       }
     } catch (error) {
       console.log(error);
@@ -103,7 +103,7 @@ const SignIn = () => {
           <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
         </div >
       ),
-        { id: "login", duration: 800 }
+        { id: "login", duration: 300 }
       );
     }
   };
