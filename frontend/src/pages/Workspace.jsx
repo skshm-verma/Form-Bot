@@ -5,7 +5,7 @@ import { useAuth } from '../context/AllContext'
 import { useNavigate } from 'react-router-dom'
 import FolderChips from '../components/workspaceItems/FolderChips'
 import FormChips from '../components/workspaceItems/FormChips'
-import { createNewFolder, getAllFolders } from '../helpers/api-communicator'
+import { createNewFolder, getAllFolders, getAllForms } from '../helpers/api-communicator'
 import CreateModal from '../components/modals/CreateModal'
 
 const Workspace = () => {
@@ -14,11 +14,32 @@ const Workspace = () => {
     const [openModal, setOpenModal] = useState(false);
     const [folderName, setFolderName] = useState('');
     const [allFoldersNames, setAllFoldersNames] = useState([]);
-    const [id, setId] = useState('');
+    const [allFormsNames, setAllFormsNames] = useState([]);
+    const [openedFolders, setOpenedFolders] = useState(new Set());
+
+    const [folderId, setFolderId] = useState('');
 
     const handleCreateFolder = async () => {
         setFolderName('');
         setOpenModal(true);
+    }
+
+    const handleGetAllForms = async (folderId) => {
+        if (openedFolders.has(folderId)) {
+            const response = await getAllForms(folderId);
+            const formNames = response.data.formNames;
+            setAllFormsNames(prevForms => prevForms.filter(form => !formNames.includes(form)));
+            setOpenedFolders(prevFolders => {
+                const newFolders = new Set(prevFolders);
+                newFolders.delete(folderId);
+                return newFolders;
+            });
+        } else {
+            const response = await getAllForms(folderId);
+            const formNames = response.data.formNames;
+            setAllFormsNames(prevForms => [...prevForms, ...formNames]);
+            setOpenedFolders(prevFolders => new Set(prevFolders.add(folderId)));
+        }
     }
 
     useEffect(() => {
@@ -26,8 +47,6 @@ const Workspace = () => {
             const status = await auth?.checkAuthStatus();
             if (status === 401) {
                 navigate('/');
-            } else {
-                setId(auth?.userId)
             }
         };
         checkAuthStatus();
@@ -36,9 +55,8 @@ const Workspace = () => {
             if (!openModal && folderName) {
                 try {
                     const response = await createNewFolder(auth?.userId, folderName);
-                    console.log(response);
-                    if(response.msg == 'Duplicate value entered'){
-                       alert('Folder with same name already present');
+                    if (response.msg == 'Duplicate value entered') {
+                        alert('Folder with same name already present');
                     }
                     await fetchFolders();
                     setFolderName('');
@@ -52,21 +70,23 @@ const Workspace = () => {
 
         const fetchFolders = async () => {
             try {
-                const response = await getAllFolders(id);
-                if (response.status === 200) {
-                    setAllFoldersNames(response.data.folderNames);
-                } else {
-                    console.log("Fetch Folders Function: ",response);
+                const response = await getAllFolders(auth?.userId);
+                const folders = response.data.folders;
+                setAllFoldersNames(folders);
+                const mainFolder = folders.find(folder => folder.name === "main");
+                if (mainFolder) {
+                    const response = await getAllForms(mainFolder.id);
+                    setAllFormsNames(response.data.formNames);
                 }
             } catch (error) {
                 console.log(error);
             }
         };
-        if (id) {
+        if (auth?.userId) {
             fetchFolders();
         }
 
-    }, [auth, openModal, id])
+    }, [auth, openModal])
 
 
     return (
@@ -82,9 +102,16 @@ const Workspace = () => {
                         <span>Create a folder</span>
                     </button>
                     <div className={styles.folders}>
-                        {allFoldersNames.map((name, index) => (
-                            <FolderChips key={index} folderName={name} id={index} />
-                        ))}
+                        {allFoldersNames
+                            ?.filter(folder => folder.name !== "main")
+                            ?.map((folder, index) => (
+                                <FolderChips
+                                    key={index}
+                                    folderName={folder.name}
+                                    id={folder.id}
+                                    onClick={() => handleGetAllForms(folder.id)}
+                                />
+                            ))}
                     </div>
                 </div>
                 <div className={styles.formContainer}>
@@ -95,11 +122,9 @@ const Workspace = () => {
                         </span>
                     </div>
                     <div className={styles.oldForms}>
-                        {/* Call to get all the forms of a particular folder */}
-                        <FormChips formName={"New Folder"} />
-                        <FormChips formName={"New Folder"} />
-                        <FormChips formName={"New Folder"} />
-                        <FormChips formName={"New Folder"} />
+                        {allFormsNames?.map((name, index) => (
+                            <FormChips key={index} formName={name} />
+                        ))}
                     </div>
                 </div>
             </div>

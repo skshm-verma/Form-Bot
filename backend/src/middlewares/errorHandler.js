@@ -2,7 +2,7 @@ const statusCodes = require('../utils/constants');
 const { CustomAPIError } = require('../errors/error');
 
 const errorHandler = (err, req, res, next) => {
-  console.error('Error: ', err); // Log the error for debugging purposes
+  // console.error('Error: ', err); // Log the error for debugging purposes
 
   if (err instanceof CustomAPIError) {
     return res.status(err.statusCode).json({ msg: err.message })

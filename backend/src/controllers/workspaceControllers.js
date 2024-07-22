@@ -1,4 +1,4 @@
-const {BadRequestError, NotFoundError} = require('../errors/notFound');
+const { BadRequestError, NotFoundError } = require('../errors/error');
 const User = require('../models/User');
 const Folder = require('../models/Folder');
 const Form = require('../models/Form');
@@ -14,11 +14,11 @@ const createForm = async (req, res) => {
     }
 
     let folder;
-    if (folderName) {
+    if (folderName.trim()) {
         folder = await Folder.findOne({ userId, name: folderName });
 
         if (!folder) {
-            folder = new Folder({ userId, name: folderName });
+            folder = new Folder({ userId, name: folderName.trim() });
             await folder.save();
             user.folders.push(folder._id);
             await user.save();
@@ -33,7 +33,7 @@ const createForm = async (req, res) => {
         }
     }
 
-    const form = new Form({ title, folderId: folder._id });
+    const form = new Form({ title: title.trim(), folderId: folder._id });
     await form.save();
 
     folder.forms.push(form._id);
@@ -55,7 +55,7 @@ const createFolder = async (req, res) => {
         throw new NotFoundError('User not found');
     }
 
-    const folder = new Folder({ userId, name: folderName });
+    const folder = new Folder({ userId, name: folderName.trim() });
     await folder.save();
 
     user.folders.push(folder._id);
@@ -69,7 +69,7 @@ const getAllFolders = async (req, res) => {
     const { userId } = req.query;
 
     if (!userId) {
-        return res.status(400).json({ message: "User ID is required" });
+        throw new BadRequestError("User ID is required");
     }
     const user = await User.findById(userId).populate('folders');
     // populate() method is used to replace the user ObjectId field with the whole document consisting of all the user data.
@@ -77,12 +77,27 @@ const getAllFolders = async (req, res) => {
         throw new NotFoundError('User not found');
     }
 
-    const folderNames = user.folders.map(folder => folder.name);
-    res.status(statusCodes.OK).json({ message: "Success", folderNames });
+    const folders = user.folders.map(folder => ({
+        name: folder.name,
+        id: folder._id
+    }));
+    res.status(statusCodes.OK).json({ message: "Success", folders });
 }
 
-const getAllForms = () => {
+const getAllForms = async (req, res) => {
+    const { folderId } = req.query;
 
+    if (!folderId) {
+        throw new BadRequestError("Folder ID is required");
+    }
+
+    const folder = await Folder.findById(folderId).populate('forms');
+    if (!folder) {
+        throw new NotFoundError("Folder not found");
+    }
+
+    const formNames = folder.forms.map(form => form.title);
+    res.status(statusCodes.OK).json({ message: "Success", formNames });
 }
 
 module.exports = { createForm, createFolder, getAllFolders, getAllForms }

@@ -54,4 +54,14 @@ const getAllFolders = async (userId) => {
 }
 
 
-export { signUpUser, signInUser, verifyUser, createNewFolder, getAllFolders };
+const getAllForms = async (folderId) => {
+    try {
+        const response = await axios.get('/workspace/allForms', { params: { folderId } });
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+}
+
+
+export { signUpUser, signInUser, verifyUser, createNewFolder, getAllFolders, getAllForms };

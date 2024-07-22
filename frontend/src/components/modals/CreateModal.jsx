@@ -22,7 +22,7 @@ const CreateModal = ({ option1, option2, requiredField, setInputName, inputName,
                     value={inputName}
                     onChange={(e) => setInputName(e.target.value)}
                     placeholder={`Enter ${requiredField} Name`}
-                    className={error && styles.errorInput}
+                    className={error? styles.errorInput : ''}
                 />
                 {error && <p className={styles.errorMessage}>This field is required.</p>}
                 <div className={styles.buttonContainer}>

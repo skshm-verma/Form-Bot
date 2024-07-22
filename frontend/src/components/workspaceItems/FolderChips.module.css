@@ -1,12 +1,13 @@
 .folder {
     background-color: #171923;
     display: flex;
-    width: 12rem;
+    width: fit-content;
     justify-content: center;
     align-items: center;
     border-radius: 8px;
     padding: 0.5rem 1rem;
     margin: 12px 8px;
+    cursor: pointer;
 }
 .folder span{
     width: fit-content;
@@ -20,4 +21,5 @@
     padding: 2px 0px 0px 0px;
     margin: 0;
     width: fit-content;
+    cursor: pointer;
 }
