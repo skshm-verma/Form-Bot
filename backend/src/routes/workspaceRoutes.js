@@ -1,9 +1,10 @@
 const express = require('express')
 const workspaceRouter = express.Router();
-const { verifyUser } = require('../controllers/workspaceControllers');
+const { createFolder, createForm } = require('../controllers/workspaceControllers');
 const verifyToken = require('../middlewares/verifyToken');
 
-workspaceRouter.get('/', verifyToken, verifyUser);   // domain/v1/user/signUp
-
+ // domain/v1/user/signUp
+workspaceRouter.post('/newFolder', createFolder);
+workspaceRouter.post('/newForm', createForm);
 
 module.exports = workspaceRouter;

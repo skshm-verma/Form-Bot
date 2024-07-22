@@ -1,8 +1,13 @@
 .navLinks {
+    background-color: #171923;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-top: 12px;
+}
+
+.navLinks div {
+    background-color: #171923;
 }
 
 .navLinks img {
@@ -21,6 +26,8 @@
     margin: 5px;
     border: 2px solid #1A5FFF;
     color: white;
+    background-color: #171923;
+    border-radius: 8px;
 }
 
 .btn1:hover {
@@ -31,6 +38,8 @@
 .btn2 {
     border: 2px solid #1A5FFF;
     background-color: #1A5FFF;
+    color: white;
+    border-radius: 8px;
     cursor: pointer;
     padding: 12px;
     width: 10rem;

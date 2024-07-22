@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { signUpUser } from '../helpers/api-communicator';
 import { useNavigate } from 'react-router-dom'
 import { Toaster, toast } from 'react-hot-toast';
-import styles from './SignUp.module.css';
 import Triangle from '../assets/triangleImage2.png';
 import Ellipse1 from '../assets/ellipseImage1.png';
 import Ellipse2 from '../assets/ellipseImage2.png';
 import Arrow from '../assets/backArrow.png'
+import styles from './SignUp.module.css';
 
 const SignUp = () => {
 
@@ -21,7 +21,7 @@ const SignUp = () => {
   const toastTheme = {
     fontSize: "14px",
     fontFamily: 'Poppins',
-    width: 'fit-content',
+    width: '100%',
     border: "1px solid #335094",
     padding: "12px 18px",
     borderRadius: "10px",
@@ -91,10 +91,10 @@ const SignUp = () => {
   }
 
   return (
-    <div className={styles.wrapperContianer}>
+    <div className={styles.wrapperContianer1}>
       <Toaster
         position="top-center"
-        containerStyle={{ margin: "0px auto", width: "300px", height: "80px", position: "absolute", zIndex: 1 }}
+        containerStyle={{ margin: "0px auto", width: "250px", height: "80px", position: "absolute", zIndex: 1, backgroundColor: " #171923"}}
       />
       <img className={styles.arrowImg} src={Arrow} alt="arrow" onClick={() => navigate('/')} />
       <img className={styles.triangleImg} src={Triangle} alt="triangle" />

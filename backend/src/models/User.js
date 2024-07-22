@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Form'
     }],
+    folders: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Folder'
+    }]
 })
 
 module.exports = mongoose.model("User", userSchema);

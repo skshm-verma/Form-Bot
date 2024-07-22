@@ -18,13 +18,14 @@ const SignIn = () => {
   const toastTheme = {
     fontSize: "14px",
     fontFamily: 'Poppins',
-    width: 'fit-content',
+    width: '100%',
     border: "1px solid #335094",
     padding: "12px 18px",
     borderRadius: "10px",
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: "#171923",
     gap: 8,
   }
 
@@ -47,8 +48,8 @@ const SignIn = () => {
       setErrors(errors);
       toast.custom((t) => (
         <div style={toastTheme}>
-          <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon"/>
-          <p style={{color: 'red'}}>Signing In Failed</p>
+          <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon" />
+          <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
         </div >
       ),
         { id: "login", duration: 800 }
@@ -63,8 +64,8 @@ const SignIn = () => {
         setErrors(errors)
         toast.custom((t) => (
           <div style={toastTheme}>
-            <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon"/>
-            <p style={{color: 'red'}}>Signing In Failed</p>
+            <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon" />
+            <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
           </div >
         ),
           { id: "login", duration: 800 }
@@ -75,18 +76,18 @@ const SignIn = () => {
         setErrors(errors)
         toast.custom((t) => (
           <div style={toastTheme}>
-            <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon"/>
-            <p style={{color: 'red'}}>Signing In Failed</p>
+            <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon" />
+            <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
           </div >
         ),
           { id: "login", duration: 800 }
         );
       }
-      if (response?.status == 200){
+      if (response?.status == 200) {
         toast.custom((t) => (
           <div style={toastTheme}>
-            <img width="28" height="28" src="https://img.icons8.com/color/48/ok--v1.png" alt="successIcon"/>
-            <p style={{color: 'green'}}>Signed In Successfully</p>
+            <img width="28" height="28" src="https://img.icons8.com/color/48/ok--v1.png" alt="successIcon" />
+            <p style={{ color: 'green', backgroundColor: "#171923" }}>Signed In Successfully</p>
           </div >
         ),
           { id: "login", duration: 800 }
@@ -98,8 +99,8 @@ const SignIn = () => {
       console.log(error);
       toast.custom((t) => (
         <div style={toastTheme}>
-          <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon"/>
-          <p style={{color: 'red'}}>Signing In Failed</p>
+          <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon" />
+          <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
         </div >
       ),
         { id: "login", duration: 800 }
@@ -111,7 +112,7 @@ const SignIn = () => {
     <div className={styles.wrapperContainer}>
       <Toaster
         position="top-center"
-        containerStyle={{ margin: "0px auto", width: "250px", height: "100px" }}
+        containerStyle={{ margin: "0px auto", width: "250px", height: "100px", backgroundColor: "#171923" }}
       />
       <img className={styles.arrowImg} src={Arrow} alt="arrow" onClick={() => navigate('/')} />
       <img className={styles.triangleImg} src={Triangle} alt="triangle" />

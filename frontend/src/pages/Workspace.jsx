@@ -5,10 +5,20 @@ import { useAuth } from '../context/AllContext'
 import { useNavigate } from 'react-router-dom'
 import FolderChips from '../components/workspaceItems/FolderChips'
 import FormChips from '../components/workspaceItems/FormChips'
+import { createNewFolder } from '../helpers/api-communicator'
+import CreateModal from '../components/modals/CreateModal'
 
 const Workspace = () => {
     const auth = useAuth();
     const navigate = useNavigate();
+    const [openModal, setOpenModal] = useState(false);
+    const [folderName, setFolderName] = useState('');
+
+    const handleCreateFolder = async () => {
+        // if (response) 
+        setFolderName('');
+        setOpenModal(true);
+    }
 
     useEffect(() => {
         const checkAuthStatus = async () => {
@@ -18,7 +28,15 @@ const Workspace = () => {
             }
         };
         checkAuthStatus();
-    }, [auth])
+        
+        const newFolder =  async () => {
+            if (!openModal && folderName) {
+                const response = await createNewFolder(auth?.userId, folderName);
+                console.log("Reponse at Workspace: ", response);
+            }
+        }
+        newFolder();
+    }, [auth, openModal])
 
     return (
         <div className={styles.workspace}>
@@ -28,7 +46,7 @@ const Workspace = () => {
             <hr className={styles.partition} />
             <div className={styles.itemsWrapper}>
                 <div className={styles.folderContainer}>
-                    <button className={styles.btn}>
+                    <button className={styles.btn} onClick={handleCreateFolder}>
                         <img width="24" height="24" src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/add-folder.png" alt="add-folder" />
                         <span>Create a folder</span>
                     </button>
@@ -50,13 +68,14 @@ const Workspace = () => {
                     </div>
                     <div className={styles.oldForms}>
                         {/* Call to get all the forms of a particular folder */}
-                        <FormChips formName={"New Folder"}/>
-                        <FormChips formName={"New Folder"}/>
-                        <FormChips formName={"New Folder"}/>
-                        <FormChips formName={"New Folder"}/>
+                        <FormChips formName={"New Folder"} />
+                        <FormChips formName={"New Folder"} />
+                        <FormChips formName={"New Folder"} />
+                        <FormChips formName={"New Folder"} />
                     </div>
                 </div>
             </div>
+            {openModal && <CreateModal option1={"Done"} option2={"Cancel"} requiredField={"New Folder"} setInputName={setFolderName} inputName={folderName} setOpenModal={setOpenModal} />}
         </div>
     )
 }

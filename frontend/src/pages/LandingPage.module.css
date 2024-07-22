@@ -1,32 +1,12 @@
 .wrapperContainer {
     background-color: #171923;
-}
-
-.navLinks {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 12px;
-}
-
-.navLinks img {
-    margin: 0rem 8rem;
-}
-
-.navLinks div {
-    margin: 0rem 8rem;
-}
-
-.navLinks button {
-    background-color: #1A5FFF;
-    cursor: pointer;
-    padding: 12px;
-    width: 10rem;
-    margin: 5px;
+    color: white;
+    height: 100vh;
 }
 
 
 .previewSection {
+    background-color: #171923;
     display: flex;
     align-items: center;
     width: 100%;
@@ -34,6 +14,7 @@
 
 
 .headingSection {
+    background-color: #171923;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -53,6 +34,7 @@
 }
 
 .headingSection p{
+    background-color: #171923;
     font-family: 'Open Sans';
     font-size: 1rem;
     text-align: center;
@@ -63,8 +45,11 @@
     width: 16rem;
     font-family: 'Open Sans';
     border: 2px solid #1A5FFF;
+    border-radius: 8px;
     background-color: #1A5FFF;
+    color: white;
     cursor: pointer;
     font-size: 1rem;
+    padding: 10px 15px;
 }
 

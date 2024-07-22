@@ -27,7 +27,7 @@ const verifyUser = async () => {
                 Authorization: `Bearer ${token}`
             }
         };
-        const response = await axios.get('/workspace', config);
+        const response = await axios.get('/user/verify', config);
         return response.data;
     } catch (error) {
         return error.response;
@@ -35,4 +35,15 @@ const verifyUser = async () => {
 }
 
 
-export { signUpUser, signInUser, verifyUser };
+const createNewFolder = async (userId, folderName) => {
+    try {
+        const response = await axios.post('/workspace/newFolder', {userId , folderName})
+        console.log("Response Data: ", response)
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+}
+
+
+export { signUpUser, signInUser, verifyUser, createNewFolder };

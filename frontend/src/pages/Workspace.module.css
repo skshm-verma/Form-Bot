@@ -1,7 +1,8 @@
 .workspace {
     position: relative;
-    height: 100%;
-    background-color: black;
+    height: 100vh;
+    background-color: black !important;
+    color: white !important;
     overflow-y: auto ;
 }
 
@@ -17,18 +18,17 @@
     height: fit-content;
     display: flex;
     justify-content: center;
-    background-color: black;
+    background-color: black ;
     position: absolute;
-
 }
 
 .itemsWrapper {
     margin-top: 10rem;
-    height: 100%;
+    height: calc(100vh - 10rem);
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: black;
+    background-color: black !important;
 }
 
 .folderContainer {
@@ -37,12 +37,15 @@
     align-items: center;
     justify-content: space-between;
     padding: 0rem 3rem;
-    background-color: black;
+    background-color: black !important;
     
 }
 
 .btn {
     background-color: #171923;
+    border: 1px solid black;
+    border-radius: 8px;
+    color: white;
     width: 10rem;
     height: fit-content;
     display: flex;
@@ -50,6 +53,7 @@
     align-items: center;
     margin: auto;
     padding: 0.6rem 1rem;
+    cursor: pointer;
 }
 
 .btn img {
@@ -62,7 +66,7 @@
     flex-wrap: wrap;
     width: 75rem;
     height: auto;
-    background-color: black;
+    background-color: black !important;
 }
 
 .formContainer {
@@ -71,7 +75,7 @@
     display: flex;
     margin-top: 3rem;
     padding: 1rem 4rem;
-    background-color: black;
+    background-color: black !important;
 }
 
 
@@ -83,7 +87,7 @@
     width: 10rem;
     height: 15rem;
     margin-top: 10px;
-    background-color: #1A5FFF;
+    background-color: #1A5FFF !important;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -95,11 +99,11 @@
 
 .newForm span {
     padding-top: 2rem;
-    background-color: #1A5FFF;
+    background-color: #1A5FFF !important;
 }
 
 .oldForms {
-    background-color: black;
+    background-color: black !important;
     display: flex;
     margin-left: 1rem;
     flex-wrap: wrap ;

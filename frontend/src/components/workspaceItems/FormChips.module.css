@@ -1,7 +1,7 @@
 .formChip{
     width: 10rem;
     height: 15rem;
-    background-color: #636364;
+    background-color: #636364 !important;
     margin: 10px 12px;
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@
 
 .formChip span {
     font-family: 'Open Sans';
-    background-color: #636364;
+    background-color: #636364 !important;
 }
 
 .formChip img {

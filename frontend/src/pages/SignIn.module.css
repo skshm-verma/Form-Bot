@@ -1,7 +1,8 @@
 .wrapperContainer {
     height: 100vh;
     position: relative;
-    background-color: #171923;
+    background-color: #171923 !important;
+    color: white !important;
 }
 
 .arrowImg {
@@ -30,6 +31,7 @@
 }
 
 .formContainer {
+    background-color: #171923 !important;
     height: 100vh;
     width: fit-content;
     margin: 0px auto;
@@ -41,12 +43,14 @@
 }
 
 .fieldsContainer {
+    background-color: #171923 !important;
     display: flex;
     flex-direction: column;
 }
 
-.fieldsContainer input,
-button {
+.fieldsContainer input{
+    background-color: #171923 !important;
+    color: white !important;
     padding: 12px;
     margin-top: 0.5rem;
     border-radius: 12px;
@@ -54,16 +58,27 @@ button {
     width: 100%;
 }
 
+.fieldsContainer button {
+    padding: 12px;
+    margin-top: 0.5rem;
+    border-radius: 12px;
+    border: 2px solid #636364;
+    width: 100%;
+}
+
+
 .fieldsContainer input:focus {
     outline: none !important;
     border: 2px solid #335094;
 }
 
 .fieldsContainer label {
+    background-color: #171923 !important;
     margin: 0px 5px;
 }
 
 .fieldsContainer p {
+    background-color: #171923 !important;
     padding: 8px 25px;
 }
 
@@ -80,6 +95,7 @@ button {
 }
 
 .emailContainer {
+    background-color: #171923 !important;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -87,6 +103,7 @@ button {
 }
 
 .passwordContainer {
+    background-color: #171923 !important;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -94,11 +111,13 @@ button {
 }
 
 .emailContainer p {
+    background-color: #171923 !important;
     padding: 2px 5px;
     font-size: 12px;
 }
 
 .passwordContainer p {
+    background-color: #171923 !important;
     padding: 2px 5px;
     font-size: 12px;
 }

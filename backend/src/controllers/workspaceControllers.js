@@ -1,33 +1,68 @@
-const UnauthenticatedError = require('../errors/unauthenticated');
+const NotFoundError = require('../errors/notFound');
 const User = require('../models/User');
+const Folder = require('../models/Folder');
+const Form = require('../models/Form');
 const statusCodes = require("../utils/constants");
 
 
-const verifyUser = async (req, res) => {
+const createForm = async (req, res) => {
+    const { userId, title, folderName } = req.body;
 
-    const userId = req.userId;
-    const userName = req.userName;
     const user = await User.findById(userId);
-    //if the user is not found
     if (!user) {
-        throw new UnauthenticatedError('Token Malfunctioned');
+        throw new NotFoundError('User not found');
     }
 
-    if (user._id.toString() !== userId) {
-        throw new UnauthenticatedError("Permissons didn't matched");
+    let folder;
+    if (folderName) {
+        folder = await Folder.findOne({ userId, name: folderName });
+
+        if (!folder) {
+            folder = new Folder({ userId, name: folderName });
+            await folder.save();
+            user.folders.push(folder._id);
+            await user.save();
+        }
+    } else {
+        folder = await Folder.findOne({ userId, name: 'main' });
+        if (!folder) {
+            folder = new Folder({ userId, name: 'main' });
+            await folder.save();
+            user.folders.push(folder._id);
+            await user.save();
+        }
     }
 
-    res.status(statusCodes.OK).json({ userName, userId });
+    const form = new Form({ title, folderId: folder._id });
+    await form.save();
+
+    folder.forms.push(form._id);
+    await folder.save();
+
+    user.forms.push(form._id);
+    await user.save();
+
+    res.status(statusCodes.CREATED).json({ form });
 }
 
 
+const createFolder = async (req, res) => {
+    const { userId, folderName } = req.body;
 
-const getForms = async (folderId) => {
-    try {
+    const user = await User.findById(userId);
 
-    } catch (error) {
-
+    if (!user) {
+        throw new NotFoundError('User not found');
     }
+
+    const folder = new Folder({ userId, name: folderName });
+    await folder.save();
+
+    user.folders.push(folder._id);
+    await user.save();
+
+    res.status(statusCodes.CREATED).json({ Message: `${folder.name} Folder Created`, folderId: folder._id });
+
 }
 
-module.exports = { verifyUser, getForms }
+module.exports = { createForm, createFolder }

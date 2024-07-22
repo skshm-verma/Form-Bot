@@ -1,7 +1,9 @@
-.wrapperContainer {
+.wrapperContainer1 {
     height: 100vh;
+    width: 100vw;
     position: relative;
-    background-color: #171923;
+    background-color: #171923 !important;
+    color: white !important;
 }
 
 .arrowImg {
@@ -23,6 +25,11 @@
     bottom: 0rem;
 }
 
+div {
+    background-color: #171923 !important;
+    color: white !important;
+}
+
 .ellipse2Img {
     position: absolute;
     bottom: 24rem;
@@ -30,6 +37,8 @@
 }
 
 .formContainer {
+    background-color: #171923 !important;
+    color: white;
     height: 100vh;
     width: fit-content;
     margin: 0px auto;
@@ -46,14 +55,24 @@
     z-index: 10;
 }
 
-.fieldsContainer input,
-button {
+.fieldsContainer input {
+    background-color: #171923 !important;
+    color: white !important;
     padding: 12px;
     margin-top: 0.5rem;
     border-radius: 12px;
     border: 2px solid #636364;
     width: 100%;
 }
+
+.fieldsContainer button {
+    padding: 12px;
+    margin-top: 0.5rem;
+    border-radius: 12px;
+    border: 2px solid #636364;
+    width: 100%;
+}
+
 
 .fieldsContainer input:focus {
     outline: none !important;

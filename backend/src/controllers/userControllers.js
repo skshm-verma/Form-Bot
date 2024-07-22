@@ -2,7 +2,7 @@ const User = require('../models/User');
 const statusCodes = require('../utils/constants');
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../utils/tokenGenerator');
-const { BadRequestError, UnauthenticatedError, ForbiddenError } = require('../errors/error')
+const { BadRequestError, UnauthenticatedError, NotFoundError } = require('../errors/error')
 
 const userSignUp = async (req, res) => {
 
@@ -27,16 +27,33 @@ const userSignIn = async (req, res) => {
     }
     const user = await User.findOne({ email })
     if (!user) {
-        throw new ForbiddenError('Invalid Email');
+        throw new NotFoundError('Invalid Email');
     }
 
     const verifyingPassword = await bcrypt.compare(password, user.password)
     if (!verifyingPassword) {
-        throw new ForbiddenError('Invalid Password');
+        throw new UnauthenticatedError('Invalid Password');
     }
     const token = generateToken(user._id.toString(), user.name);
 
     res.status(statusCodes.OK).json({ message: { status: "SUCCESS", email: user.email }, token });
 }
 
-module.exports = { userSignUp, userSignIn }
+
+const verifyUser = async (req, res) => {
+
+    const userId = req.userId;
+    const userName = req.userName;
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new UnauthenticatedError('Token Malfunctioned');
+    }
+
+    if (user._id.toString() !== userId) {
+        throw new UnauthenticatedError("Permissons didn't matched");
+    }
+
+    res.status(statusCodes.OK).json({ userName, userId });
+}
+
+module.exports = { userSignUp, userSignIn, verifyUser }
