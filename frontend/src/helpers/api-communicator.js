@@ -63,5 +63,25 @@ const getAllForms = async (folderId) => {
     }
 }
 
+const createNewTypeBot = async (userId,formName, formFields, folderId) => {
+    try {
+        const cleanedFields = formFields.map(({ label, icon, placeholder, ...rest }) => rest);
+        console.log("Here")
+        const formData = {
+            userId,
+            title: formName,
+            folderId,
+            fields: cleanedFields
+        };
+        console.log("Here")
 
-export { signUpUser, signInUser, verifyUser, createNewFolder, getAllFolders, getAllForms };
+        const response = await axios.post('/workspace/newForm', formData);
+        console.log("response data : ", response);
+        return response.data;
+    } catch (error) {
+        return error.response;
+    }
+}
+
+
+export { signUpUser, signInUser, verifyUser, createNewFolder, getAllFolders, getAllForms, createNewTypeBot };

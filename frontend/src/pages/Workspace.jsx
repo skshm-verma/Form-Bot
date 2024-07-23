@@ -16,8 +16,7 @@ const Workspace = () => {
     const [allFoldersNames, setAllFoldersNames] = useState([]);
     const [allFormsNames, setAllFormsNames] = useState([]);
     const [openedFolders, setOpenedFolders] = useState(new Set());
-
-    const [folderId, setFolderId] = useState('');
+    
 
     const handleCreateFolder = async () => {
         setFolderName('');
@@ -29,19 +28,36 @@ const Workspace = () => {
             const response = await getAllForms(folderId);
             const formNames = response.data.formNames;
             setAllFormsNames(prevForms => prevForms.filter(form => !formNames.includes(form)));
-            setOpenedFolders(prevFolders => {
-                const newFolders = new Set(prevFolders);
-                newFolders.delete(folderId);
-                return newFolders;
-            });
         } else {
             const response = await getAllForms(folderId);
             const formNames = response.data.formNames;
             setAllFormsNames(prevForms => [...prevForms, ...formNames]);
-            setOpenedFolders(prevFolders => new Set(prevFolders.add(folderId)));
         }
     }
 
+    const handleFolderClick = (folderId) => {
+        setOpenedFolders(prevFolders => {
+            const newFolders = new Set(prevFolders);
+            if (newFolders.has(folderId)) {
+                newFolders.delete(folderId);
+            } else {
+                newFolders.add(folderId);
+            }
+            return newFolders;
+        });
+    };
+
+
+    const handleCreateTypebot = () => {
+        const openedFoldersArray = Array.from(openedFolders);
+        if (openedFoldersArray.length > 1) {
+            alert('Multiple folders are selected');
+        } else if (openedFoldersArray.length === 1) {
+            navigate('/workspace/newForm', { state: { folderId: openedFoldersArray[0] } });
+        } else {
+            navigate('/workspace/newForm');
+        }
+    };
     useEffect(() => {
         const checkAuthStatus = async () => {
             const status = await auth?.checkAuthStatus();
@@ -109,13 +125,17 @@ const Workspace = () => {
                                     key={index}
                                     folderName={folder.name}
                                     id={folder.id}
-                                    onClick={() => handleGetAllForms(folder.id)}
+                                    onClick={() => {
+                                        handleFolderClick(folder.id);
+                                        handleGetAllForms(folder.id);
+                                    }}
+                                    className={openedFolders.has(folder.id) ? styles.selectedFolder : ''}
                                 />
                             ))}
                     </div>
                 </div>
                 <div className={styles.formContainer}>
-                    <div className={styles.newForm} onClick={() => navigate('/workspace/newForm')}>
+                    <div className={styles.newForm} onClick={handleCreateTypebot}>
                         <img width="24" height="24" src="https://img.icons8.com/android/24/FFFFFF/plus.png" alt="plus" />
                         <span>
                             Create a typebot

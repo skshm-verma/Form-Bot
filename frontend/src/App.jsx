@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { useState } from "react";
-import { ContextProvider } from './context/AllContext';
+import ContextProvider from './context/AllContext';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import LandingPage from './pages/LandingPage';
@@ -23,7 +23,7 @@ function App() {
             <Route path='/' element={<LandingPage currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
             <Route path="/workspace" element={<Workspace />} />
             <Route path="/workspace/settings" element={<SettingsUpdate />} />
-            <Route path="/workspace/newForm" element={< NewFormPage/>} />
+            <Route path="/workspace/newForm" element={< NewFormPage />} />
           </Routes>
         </BrowserRouter>
       </ContextProvider>

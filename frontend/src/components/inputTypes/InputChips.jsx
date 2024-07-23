@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './InputChips.module.css';
 import Delete from '../../assets/delete.png';
 
-const InputChips = ({ field, image, placeholder, isPublic, onDelete, type }) => {
+const InputChips = ({ field, image, placeholder, isPublic, onDelete, type, content, onContentChange }) => {
     const isDisabled = isPublic && type !== "button";
 
     return (
@@ -11,6 +11,8 @@ const InputChips = ({ field, image, placeholder, isPublic, onDelete, type }) => 
             <div className={styles.inputs}>
                 <img src={image} alt="imageIcon" />
                 <input
+                    value={content}
+                    onChange={(e) => onContentChange(e.target.value)}
                     disabled={isDisabled}
                     className={isDisabled ? styles.publicInput : styles.defaultInput}
                     type={"text"}

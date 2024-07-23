@@ -4,9 +4,10 @@ const Folder = require('../models/Folder');
 const Form = require('../models/Form');
 const statusCodes = require("../utils/constants");
 
+// NOTE: I HAVE HANDLED All ERRORS GLOBALLY AT ERROR-HANDLER MIDDLEWARE
 
 const createForm = async (req, res) => {
-    const { userId, title, folderName } = req.body;
+    const { userId, title, folderId, fields } = req.body;
 
     const user = await User.findById(userId);
     if (!user) {
@@ -14,14 +15,11 @@ const createForm = async (req, res) => {
     }
 
     let folder;
-    if (folderName.trim()) {
-        folder = await Folder.findOne({ userId, name: folderName });
 
+    if (folderId) {
+        folder = await Folder.findById(folderId);
         if (!folder) {
-            folder = new Folder({ userId, name: folderName.trim() });
-            await folder.save();
-            user.folders.push(folder._id);
-            await user.save();
+            throw new NotFoundError('Folder not found');
         }
     } else {
         folder = await Folder.findOne({ userId, name: 'main' });
@@ -33,7 +31,11 @@ const createForm = async (req, res) => {
         }
     }
 
-    const form = new Form({ title: title.trim(), folderId: folder._id });
+    const form = new Form({
+        title: title.trim(),
+        folderId: folder._id,
+        fields
+    });
     await form.save();
 
     folder.forms.push(form._id);
@@ -42,7 +44,7 @@ const createForm = async (req, res) => {
     user.forms.push(form._id);
     await user.save();
 
-    res.status(statusCodes.CREATED).json({ form });
+    res.status(statusCodes.CREATED).json({ message: `Successfully Form Created`, form });
 }
 
 
@@ -62,7 +64,6 @@ const createFolder = async (req, res) => {
     await user.save();
 
     res.status(statusCodes.CREATED).json({ message: `${folder.name} Folder Created`, folderId: folder._id });
-
 }
 
 const getAllFolders = async (req, res) => {

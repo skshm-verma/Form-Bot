@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 8px;
+    border: 2px solid #171923;
     padding: 0.5rem 1rem;
     margin: 12px 8px;
     cursor: pointer;
@@ -17,7 +18,7 @@
 }
 
 .folder button, img {
-    background-color: #171923;
+    background-color: transparent !important;
     border: none;
     padding: 2px 0px 0px 0px;
     margin: 0;

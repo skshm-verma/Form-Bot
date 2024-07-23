@@ -3,7 +3,7 @@
     height: 100vh;
     background-color: black !important;
     color: white !important;
-    overflow-y: auto ;
+    overflow-y: auto;
 }
 
 .partition {
@@ -18,7 +18,7 @@
     height: fit-content;
     display: flex;
     justify-content: center;
-    background-color: black ;
+    background-color: black;
     position: absolute;
 }
 
@@ -38,7 +38,7 @@
     justify-content: space-between;
     padding: 0rem 3rem;
     background-color: black !important;
-    
+
 }
 
 .btn {
@@ -73,6 +73,10 @@
     width: 75rem;
     height: auto;
     background-color: black !important;
+}
+
+.selectedFolder {
+    border-color: #487df7 !important;
 }
 
 .formContainer {
@@ -112,6 +116,6 @@
     background-color: black !important;
     display: flex;
     margin-left: 1rem;
-    flex-wrap: wrap ;
+    flex-wrap: wrap;
     width: 75rem;
 }

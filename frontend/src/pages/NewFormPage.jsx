@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useAuth } from '../context/AllContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './NewFormPage.module.css'
 import NewFormNavbar from '../components/navbars/NewFormNavbar'
 import SelectionChips from '../components/inputTypes/SelectionChips'
+import { createNewTypeBot } from '../helpers/api-communicator';
 import Chat from '../assets/chatIcon1.png';
 import Gif from '../assets/gifIcon.png';
 import Image from '../assets/imageIcon1.png';
@@ -35,8 +38,16 @@ const publicFields = [
 ];
 
 const NewFormPage = () => {
+
+  const auth = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [folderId] = useState(location.state?.folderId);
   const [formFields, setFormFields] = useState([]);
   const [fieldCounts, setFieldCounts] = useState({});
+  const [formName, setFormName] = useState('');
+
+
 
   const addField = (field, isPublic) => {
     const type = field.type;
@@ -45,58 +56,71 @@ const NewFormPage = () => {
     const newField = {
       ...field,
       label: `${field.label} ${count + 1}`,
-      public: isPublic
+      public: isPublic,
+      content: ''
     };
 
     setFormFields([...formFields, newField]);
     setFieldCounts(newFieldCounts);
   };
 
-  const deleteField = (index) => {
-    const fieldToDelete = formFields[index];
-    const newFormFields = formFields.filter((_, i) => i !== index);
-    const type = fieldToDelete.type;
-
-    const newFieldCounts = { ...fieldCounts, [type]: fieldCounts[type] - 1 };
-
+  const updateFieldContent = (index, content) => {
+    const newFormFields = formFields.map((field, i) =>
+      i === index ? { ...field, content } : field
+    );
     setFormFields(newFormFields);
-    setFieldCounts(newFieldCounts);
+  };
+
+  const deleteField = (index) => {
+    const newFormFields = formFields.filter((_, i) => i !== index);
+    setFormFields(newFormFields);
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await createNewTypeBot(auth?.userId, formName, formFields, folderId);
+      console.log("Response NewForm:", response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const renderForm = () => {
-    return formFields.map((field, index) => {
-      if (field.public) {
-        return (
-          <InputChips
-            key={index}
-            field={field.label}
-            image={field.icon}
-            placeholder={field.placeholder}
-            isPublic={true}
-            onDelete={() => deleteField(index)}
-            type={field.type}
-          />
-        );
-      } else {
-        return (
-          <InputChips
-            key={index}
-            field={field.label}
-            image={field.icon}
-            placeholder={field.placeholder}
-            isPublic={false}
-            onDelete={() => deleteField(index)}
-            type={field.type}
-          />
-        );
-      }
-    });
+    return formFields.map((field, index) =>
+    (
+      <InputChips
+        key={`${field.type}-${index}`}
+        field={field.label}
+        image={field.icon}
+        placeholder={field.placeholder}
+        isPublic={field.public}
+        onDelete={() => deleteField(index)}
+        type={field.type}
+        content={field.content}
+        onContentChange={(content) => updateFieldContent(index, content)}
+      />
+    ));
   };
+
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const status = await auth?.checkAuthStatus();
+      if (status === 401) {
+        navigate('/');
+      }
+    };
+    checkAuthStatus();
+  }, [auth])
+
 
   return (
     <div className={styles.formWrapper}>
       <nav>
-        <NewFormNavbar />
+        <NewFormNavbar
+          formName={formName}
+          setFormName={setFormName}
+          onSave={handleSave} />
       </nav>
       <div className={styles.formWorkspace}>
         <div className={styles.selectionWrapper}>
@@ -141,49 +165,3 @@ const NewFormPage = () => {
 
 
 export default NewFormPage
-
-
-
-
-// const NewFormPage = () => {
-//   return (
-//     <div className={styles.formWrapper}>
-//       <nav>
-//         <NewFormNavbar />
-//       </nav>
-//       <div className={styles.formWorkspace}>
-//         <div className={styles.selectionWrapper}>
-//           <div className={styles.bubblesContainer}>
-//             <h2>Bubbles</h2>
-//             <div className={styles.bubbleItems}>
-//               <SelectionChips image={Chat} field={"Text"} />
-//               <SelectionChips image={Image} field={"Image"} />
-//               <SelectionChips image={Video} field={"Video"} />
-//               <SelectionChips image={Gif} field={"Gif"} />
-//             </div>
-//           </div>
-//           <div className={styles.inputsContainer}>
-//           <h2>Inputs</h2>
-//           <div className={styles.inputItems}>
-//             <SelectionChips image={Text} field={"Text"}/>
-//             <SelectionChips image={Number} field={"Number"}/>
-//             <SelectionChips image={Email} field={"Email"}/>
-//             <SelectionChips image={Phone} field={"Phone"}/>
-//             <SelectionChips image={Date} field={"Date"}/>
-//             <SelectionChips image={Rating} field={"Rating"}/>
-//             <SelectionChips image={Button} field={"Buttons"}/>
-//           </div>
-//           </div>
-//         </div>
-//         <div className={styles.workWrapper}>
-//                <div className={styles.startChip}>
-//                    <img width="20px" height="20px" src={Flag} alt="flagIcon" />
-//                    <span>Start</span>
-//                </div>
-//                <InputChips field={"Text 1"} image={Chat} placeholder={"click here to edit"} public={false}/>
-//                <InputChips field={"Number 1"} image={Number} placeholder={"Hint : User will input a number on this form"} isPublic={true}/>
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }

@@ -12,11 +12,11 @@ const formSchema = new mongoose.Schema({
     },
     fields: [
         {
-            type: { type: String, required: true },
-            content: { type: String },
-            public: { type: Boolean, default: false }
+          type: { type: String, required: true },
+          content: { type: String },
+          public: { type: Boolean, default: false }
         }
-    ]
+      ]
 })
 
 

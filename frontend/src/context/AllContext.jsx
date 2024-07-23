@@ -3,7 +3,7 @@ import { verifyUser } from '../helpers/api-communicator';
 
 const AuthContext = createContext(null);
 
-export const ContextProvider = ({ children }) => {
+ const ContextProvider = ({ children }) => {
     const [userName, setUserName] = useState('');
     const [userId, setUserId] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,3 +47,4 @@ export const ContextProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+export default ContextProvider;

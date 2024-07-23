@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const { generateToken } = require('../utils/tokenGenerator');
 const { BadRequestError, UnauthenticatedError, NotFoundError } = require('../errors/error')
 
+// NOTE: I HAVE HANDLED All ERRORS GLOBALLY AT ERROR-HANDLER MIDDLEWARE
+
 const userSignUp = async (req, res) => {
 
     const { name, email, password } = req.body;
