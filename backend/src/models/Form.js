@@ -9,7 +9,14 @@ const formSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Folder',
         required: [true, 'Provide Folder']
-    }
+    },
+    fields: [
+        {
+            type: { type: String, required: true },
+            content: { type: String },
+            public: { type: Boolean, default: false }
+        }
+    ]
 })
 
 

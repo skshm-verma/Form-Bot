@@ -3,6 +3,8 @@
     height: 100%;
     /* to be calculated accordind to the navbar*/
     width: 100%;
+    overflow: auto;
+    
 }
 
 
@@ -12,6 +14,7 @@
     width: 100%;
     padding: 1rem;
     display: flex;
+    overflow: auto;
 }
 
 .selectionWrapper {
@@ -23,6 +26,7 @@
     flex-direction: column;
     align-items: center;
     padding: 2rem 0rem;
+    
 }
 
 
@@ -63,12 +67,14 @@
 .workWrapper {
     background-color: #1F1F23 !important;
     width: 60rem;
-    height: 100%;
+    height: fit-content;
+    padding-bottom: 3rem;
     margin-left: 4.5rem;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
+   
 }
 
 .startChip {
