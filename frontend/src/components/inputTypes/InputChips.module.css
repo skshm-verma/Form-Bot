@@ -1,0 +1,56 @@
+.inputContainer{
+    background-color: black !important;
+    margin: 1rem 0rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 20rem;
+    height: 6.5rem;
+    border-radius: 8px ;
+}
+
+.inputContainer span {
+    background-color: black !important;
+    font-family: "Open Sans";
+    font-size: 18px;
+    border-radius: 8px ;
+    margin-left: 10px;
+}
+
+.inputs{
+    background-color: black !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+}
+.inputs img {
+    background-color: transparent !important;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 10px;
+    margin-right: 10px;
+    cursor: auto;
+}
+
+.defaultInput {
+    background-color: #1F1F23  !important;
+    width: 15rem;
+    height: 100%;
+    position: relative;
+    border: 1px solid #ccc; /* default border for input */
+}
+
+.publicInput {
+    background-color: #1F1F23  !important;
+    outline: none !important;
+    border: none !important;
+    width: 15rem;
+}
+
+.deleteBtn{
+    background-color: transparent !important;
+    position: absolute;
+    transform: translate(305px, -12px);
+    cursor: pointer;
+}

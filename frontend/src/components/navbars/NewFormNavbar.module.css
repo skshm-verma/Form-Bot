@@ -1,0 +1,102 @@
+.navbarWrapper {
+    background-color: black !important;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem 2rem;
+}
+
+.formName {
+    background-color: black !important;
+    width: 20rem;
+    padding: 4px;
+}
+
+.formName input {
+    background-color: #37373E !important;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+
+.menuWrapper {
+    background-color: black !important;
+    width: 30rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.menuContainer {
+    background-color: black !important;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.menuContainer div {
+    background-color: black !important;
+    font-size: 18px;
+    font-family: "Open Sans";
+    padding: 0.5rem 2rem;
+    margin: 0px 3px;
+}
+
+.currentMenu {
+    border: 2px solid #7EA6FF !important;
+    color: #7EA6FF !important;
+    border-radius: 8px;
+}
+
+.buttonContainer {
+    background-color: black !important;
+}
+
+
+.buttonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.btn1 {
+    background-color: #848890 !important;
+    border: 1px solid #848890;
+    color: white !important;
+    border-radius: 4px;
+    width: 8rem;
+    height: 2rem;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.btn2 {
+    background-color: #4ADE80 !important;
+    border: 1px solid #4ADE80;
+    color: white !important;
+    border-radius: 4px;
+    width: 8rem;
+    height: 2rem;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.btn3 {
+    background-color: black !important;
+    width: fit-content;
+    border: none;
+    outline: none;
+    margin: 0px 5px;
+}
+
+.btn3 img {
+    background-color: black !important;
+    width: fit-content;
+}

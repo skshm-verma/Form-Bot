@@ -1,0 +1,98 @@
+.formWrapper {
+    background-color: #1F1F23 !important;
+    height: 100%;
+    /* to be calculated accordind to the navbar*/
+    width: 100%;
+}
+
+
+.formWorkspace {
+    background-color: #1F1F23 !important;
+    height: calc(100vh - 5rem);
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+}
+
+.selectionWrapper {
+    background-color: black !important;
+    height: 100%;
+    width: 25rem;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0rem;
+}
+
+
+.bubblesContainer {
+    background-color: black !important;
+    width: 20rem;
+    height: 15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.bubblesContainer h2 {
+    font-size: 24px;
+    font-family: "Open Sans";
+}
+
+.bubbleItems,
+.inputItems {
+    background-color: black !important;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.inputsContainer {
+    background-color: black !important;
+    width: 20rem;
+    height: 15rem;
+}
+
+.inputsContainer h2 {
+    font-size: 24px;
+    font-family: "Open Sans";
+}
+
+
+.workWrapper {
+    background-color: #1F1F23 !important;
+    width: 60rem;
+    height: 100%;
+    margin-left: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.startChip {
+    background-color: black !important;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 18rem;
+    height: 3rem;
+    border-radius: 8px;
+
+}
+.startChip img {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: black !important;
+    margin-left: 14px;
+}
+
+.startChip span {
+    font-family: "Open Sans";
+    font-size: 18px;
+    background-color: black !important;
+    margin-left: 5px;
+}

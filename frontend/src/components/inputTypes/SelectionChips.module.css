@@ -1,0 +1,24 @@
+.chipsContainer{
+     width: 150px;
+     height: 50px;
+     background-color: #1F1F23 !important;
+     display: flex;
+     align-items: center;
+     justify-content: start;
+     margin: 5px;
+     padding: 0px 18px;
+     font-size: 16px;
+     font-family: "Open Sans";
+     border-radius: 8px;
+     cursor: pointer;
+}
+
+.chipsContainer img, span {
+    background-color: #1F1F23 !important;
+    padding: 0.5rem;
+}
+
+.chipsContainer img{
+    width: 2.5rem;
+    height: 2.5rem;
+}
