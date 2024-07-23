@@ -83,6 +83,7 @@
 }
 
 .fieldsContainer span {
+    background-color: transparent !important;
     color: #335094;
     cursor: pointer;
 }

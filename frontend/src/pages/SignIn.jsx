@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInUser } from '../helpers/api-communicator';
 import { Toaster, toast } from 'react-hot-toast';
-import styles from './SignIn.module.css';
 import Triangle from '../assets/triangleImage2.png';
 import Ellipse1 from '../assets/ellipseImage1.png';
 import Ellipse2 from '../assets/ellipseImage2.png';
 import Arrow from '../assets/backArrow.png';
+import styles from './SignIn.module.css';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');

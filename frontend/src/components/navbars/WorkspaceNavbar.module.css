@@ -44,7 +44,11 @@
     border-radius: 0px;
 }
 
-.dropbtn img, span {
+.dropbtn img  {
+    background-color: #171923 !important; 
+    color: white;
+}
+.dropbtn span  {
     background-color: #171923 !important; 
     color: white;
 }

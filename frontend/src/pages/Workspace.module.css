@@ -10,7 +10,7 @@
     width: 100%;
     border: 1px solid #636364;
     position: absolute;
-    top: 5.6rem;
+    top: 6.6rem;
 }
 
 .navContainer {
@@ -47,19 +47,23 @@
     border-radius: 8px;
     color: white;
     font-size: 16px;
-    width: 12rem;
+    width: 11rem;
     height: fit-content;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: auto;
-    padding: 0.6rem 1.6rem;
+    padding: 0.6rem 0.8rem;
     cursor: pointer;
 }
 
 .btn img {
-    background-color: #171923;
+    background-color: transparent !important;
     padding-bottom: 0.2rem;
+}
+
+.btn span {
+    background-color: transparent !important;
 }
 
 .folders {

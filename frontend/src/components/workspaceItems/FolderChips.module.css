@@ -10,6 +10,7 @@
     cursor: pointer;
 }
 .folder span{
+    background-color: transparent !important;
     width: fit-content;
     padding-right: 8px;
     font-size: 16px;

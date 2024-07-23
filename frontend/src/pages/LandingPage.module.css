@@ -2,6 +2,7 @@
     background-color: #171923;
     color: white;
     height: 100vh;
+    position: relative;
 }
 
 
@@ -33,7 +34,7 @@
     background-clip: text;
 }
 
-.headingSection p{
+.headingSection p {
     background-color: #171923;
     font-family: 'Open Sans';
     font-size: 1rem;
@@ -53,3 +54,88 @@
     padding: 10px 15px;
 }
 
+.flowDiagramImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+
+.oldWaysContainer {
+    padding: 10rem 0rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.oldWaysContainer h1 {
+    font-family: "Outfit";
+    font-size: 3rem;
+    text-align: center;
+}
+
+.oldWaysContainer p{
+    padding: 2rem 0rem;
+    font-family: "Outfit";
+    font-size: 1rem;
+    text-align: center;
+}
+
+
+.differentImgContainer {
+    display: flex;
+    position: relative;
+    margin-top: 1rem;
+    gap: 15px;
+}
+
+
+.oldTypeForms {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.newTypeForms {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.tryOutImage{
+    position: absolute;
+    background-color: transparent !important;
+    right: 0;
+    top: 0;
+    transform: translate(50px, -25px);
+}
+
+.blurEffect1 {
+    position: absolute;
+    background-color: #171923 !important;
+    height: 100%;
+    width: 6rem;
+    left: 0;
+    filter: blur(60px);
+}
+
+.blurEffect2 {
+    position: absolute;
+    background-color: #171923 !important;
+    height: 100%;
+    width: 6rem;
+    right: 0;
+    filter: blur(60px);
+}
+
+.extraDiv {
+    width: 100%;
+    height: 10rem;
+    background-color: orange !important;
+}
