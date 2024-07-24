@@ -31,7 +31,6 @@ const SignIn = () => {
 
   const validate = () => {
     const errors = {};
-
     // Email validation
     if (!email) errors.email = "Email is required";
     // Password validation

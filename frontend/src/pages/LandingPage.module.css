@@ -13,6 +13,11 @@
     width: 100%;
 }
 
+.previewSection img{
+    display: absolute;
+    z-index: 100;
+}
+
 
 .headingSection {
     background-color: #171923;

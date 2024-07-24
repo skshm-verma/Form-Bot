@@ -58,4 +58,36 @@ const verifyUser = async (req, res) => {
     res.status(statusCodes.OK).json({ userName, userId });
 }
 
-module.exports = { userSignUp, userSignIn, verifyUser }
+const updateUser = async (req, res) => {
+    const { userId, userName, email, oldPassword, newPassword } = req.body;
+
+    if (!userId || !userName || !email || !oldPassword || !newPassword) {
+        throw new BadRequestError('Required fields are missing');
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new NotFoundError('User not found')
+    }
+
+    const oldEmail = await User.findOne({ email })
+    if(oldEmail){
+        throw new BadRequestError('User with this email already registered');
+    }
+
+    // Verify the old password
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+        throw new BadRequestError('Old password is incorrect');
+    }
+
+    // Update the fields
+    user.name = userName;
+    user.email = email;
+    user.password = await bcrypt.hash(newPassword, 10);
+
+    await user.save();
+    res.status(statusCodes.OK).json({ message: 'User updated successfully' });
+}
+
+module.exports = { userSignUp, userSignIn, verifyUser, updateUser }

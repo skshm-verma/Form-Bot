@@ -11,14 +11,14 @@ const AuthContext = createContext(null);
     const checkAuthStatus = async () => {
         const data = await verifyUser();
 
-        if (data) {
+        if (data.status !== 401) {
             setIsLoggedIn(true);
             setUserName(data.userName);
             setUserId(data.userId);
             return 200;
         } else {
             setIsLoggedIn(false);
-            return 401;
+            return data.status;
         }
     }
 

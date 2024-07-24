@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Workspace.module.css'
 import WorkspaceNavbar from '../components/navbars/WorkspaceNavbar'
 import { useAuth } from '../context/AllContext'
@@ -59,13 +59,13 @@ const Workspace = () => {
         }
     };
     useEffect(() => {
-        const checkAuthStatus = async () => {
+        const checkLoginStatus = async () => {
             const status = await auth?.checkAuthStatus();
-            if (status === 401) {
+            if (status === 401 ) {
                 navigate('/');
             }
         };
-        checkAuthStatus();
+        checkLoginStatus();
 
         const createFolder = async () => {
             if (!openModal && folderName) {
