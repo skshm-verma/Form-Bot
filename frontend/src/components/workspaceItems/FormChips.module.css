@@ -15,6 +15,7 @@
 .formChip span {
     font-family: 'Open Sans';
     background-color: #636364 !important;
+    text-align: center;
 }
 
 .formChip img {

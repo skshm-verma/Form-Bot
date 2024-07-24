@@ -7,8 +7,9 @@ import SignUp from './pages/SignUp';
 import LandingPage from './pages/LandingPage';
 import Workspace from './pages/Workspace';
 import SettingsUpdate from './pages/SettingsUpdate';
-import './App.css'
 import NewFormPage from './pages/NewFormPage';
+import PublishForm from './pages/PublishForm';
+import './App.css'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/workspace" element={<Workspace />} />
             <Route path="/workspace/settings" element={<SettingsUpdate />} />
             <Route path="/workspace/newForm" element={< NewFormPage />} />
+            <Route path='/submitForm' element={<PublishForm />} />
           </Routes>
         </BrowserRouter>
       </ContextProvider>

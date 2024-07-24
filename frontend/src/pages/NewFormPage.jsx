@@ -50,16 +50,15 @@ const NewFormPage = () => {
 
 
   const addField = (field, isPublic) => {
-    const type = field.type;
-    const count = fieldCounts[type] || 0;
-    const newFieldCounts = { ...fieldCounts, [type]: count + 1 };
+    const icon = field.icon;
+    const count = fieldCounts[icon] || 1;
+    const newFieldCounts = { ...fieldCounts, [icon]: count + 1 };
     const newField = {
       ...field,
-      label: `${field.label} ${count + 1}`,
+      label: `${field.label} ${count}`,
       public: isPublic,
       content: ''
     };
-
     setFormFields([...formFields, newField]);
     setFieldCounts(newFieldCounts);
   };

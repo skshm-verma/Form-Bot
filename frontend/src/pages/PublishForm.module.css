@@ -1,0 +1,62 @@
+.submitFormWrapper {
+    background-color: orange !important;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formData {
+    display: flex;
+    width: 60%;
+    color: white !important;
+    flex-direction: column;
+    font-family: "Open Sans";
+    font-size: 18px;
+}
+
+.publicValues {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.systemValues {
+    width: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.publishFormContainer {
+    display: flex;
+    width: 60%;
+    color: white !important;
+    flex-direction: column;
+    align-items: end;
+    background-color: #171923 !important;
+}
+
+.inputDetail {
+    background-color: #171923 !important;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+}
+
+.inputDetail label {
+    font-family: "Open Sans";
+    font-size: 18px;
+}
+
+.inputDetail input {
+    width: 10rem;
+}
+
+.inputDetail button {
+    width: 3rem;
+    height: 1.5rem;
+}

@@ -73,8 +73,6 @@ const createNewTypeBot = async (userId,formName, formFields, folderId) => {
             folderId,
             fields: cleanedFields
         };
-        console.log("Here")
-
         const response = await axios.post('/workspace/newForm', formData);
         console.log("response data : ", response);
         return response.data;
