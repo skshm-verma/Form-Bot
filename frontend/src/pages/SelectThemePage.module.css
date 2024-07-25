@@ -1,0 +1,365 @@
+.themeWrapper {
+    width: 100vw;
+    height: 100vh;
+}
+
+.themeContainer {
+    background-color: #1F1F23 !important;
+    height: calc(100vh - 5rem);
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+.allThemes {
+    background-color: #18181B !important;
+    height: 100%;
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.allThemes h1 {
+    font-family: "Open Sans";
+    font-size: 20px;
+    letter-spacing: 2px;
+    padding: 1rem 0.5rem;
+    width: 100%;
+    text-align: center;
+    border-top: 2px solid #828181;
+    border-bottom: 2px solid #828181;
+}
+
+.themeImgs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent !important;
+    gap: 6px;
+}
+
+.lightTheme,
+.darkTheme,
+.tailTheme {
+    width: 13rem;
+    height: 10.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 3px solid transparent !important;
+}
+
+.lightTheme {
+    margin-top: 10px;
+}
+
+.lightTheme .themeBg {
+    height: 70%;
+    width: 100%;
+    border-radius: 8px 8px 0px 0px;
+    background-color: white !important;
+}
+
+.lightTheme .themeName {
+    height: 30%;
+    width: 100%;
+    border-radius: 0px 0px 8px 8px;
+    background-color: black !important;
+    font-family: "Open Sans";
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+}
+
+.lightTheme .predefinedItem {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px 8px 0px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-color: white !important;
+}
+
+.lightTheme .predefinedItem img {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+}
+
+.lightTheme .predefinedItem div {
+    background-color: rgb(246, 240, 229) !important;
+    width: 90px;
+    height: 14px;
+    border-radius: 3px;
+}
+
+.lightTheme .publicItem1 {
+    display: flex;
+    width: 100%;
+    background-color: white !important;
+    justify-content: end;
+}
+
+
+.lightTheme .publicItem1 span {
+    background-color: orange !important;
+    margin-right: 12px;
+    border-radius: 3px;
+    width: 90px;
+    height: 10px;
+}
+
+.lightTheme .publicItem2 {
+    display: flex;
+    width: 100%;
+    background-color: white !important;
+    justify-content: end;
+    padding-right: 8px;
+}
+
+.lightTheme .publicItem2 span {
+    background-color: #1A5FFF !important;
+    border-radius: 3px;
+    margin: 0px 5px;
+    width: 25px;
+    height: 14px;
+    padding: 0px;
+}
+
+
+.darkTheme {
+    margin-top: 4px;
+}
+
+.darkTheme .themeBg {
+    height: 70%;
+    width: 100%;
+    border-radius: 8px 8px 0px 0px;
+    background-color: rgb(26, 29, 39) !important;
+}
+
+.darkTheme .themeName {
+    height: 30%;
+    width: 100%;
+    border-radius: 0px 0px 8px 8px;
+    background-color: black !important;
+    font-family: "Open Sans";
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+}
+
+.darkTheme .predefinedItem {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px 8px 0px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-color: rgb(26, 29, 39) !important;
+}
+
+.darkTheme .predefinedItem img {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+}
+
+.darkTheme .predefinedItem div {
+    background-color: rgb(34, 39, 97) !important;
+    width: 90px;
+    height: 14px;
+    border-radius: 3px;
+}
+
+.darkTheme .publicItem1 {
+    display: flex;
+    width: 100%;
+    background-color: rgb(26, 29, 39) !important;
+    justify-content: end;
+}
+
+
+.darkTheme .publicItem1 span {
+    background-color: orange !important;
+    margin-right: 12px;
+    border-radius: 3px;
+    width: 90px;
+    height: 10px;
+}
+
+.darkTheme .publicItem2 {
+    display: flex;
+    width: 100%;
+    background-color: rgb(26, 29, 39) !important;
+    justify-content: end;
+    padding-right: 8px;
+}
+
+.darkTheme .publicItem2 span {
+    background-color: #1A5FFF !important;
+    border-radius: 3px;
+    margin: 0px 5px;
+    width: 25px;
+    height: 14px;
+    padding: 0px;
+}
+
+
+.tailTheme {
+    margin-top: 4px;
+}
+
+.tailTheme .themeBg {
+    height: 70%;
+    width: 100%;
+    border-radius: 8px 8px 0px 0px;
+    background-color: #508C9B !important;
+    padding-top: 16px;
+}
+
+.tailTheme .themeName {
+    height: 30%;
+    width: 100%;
+    border-radius: 0px 0px 8px 8px;
+    background-color: black !important;
+    font-family: "Open Sans";
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+}
+
+.tailTheme .predefinedItem {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px 8px 0px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-color: #508C9B !important;
+}
+
+
+.tailTheme .predefinedItem div {
+    background-color: #085c76 !important;
+    width: 90px;
+    height: 14px;
+    border-radius: 3px;
+}
+
+.tailTheme .publicItem1 {
+    display: flex;
+    width: 100%;
+    background-color: #508C9B !important;
+    justify-content: end;
+}
+
+
+.tailTheme .publicItem1 span {
+    background-color: rgb(239, 237, 233) !important;
+    margin-right: 12px;
+    border-radius: 3px;
+    width: 90px;
+    height: 10px;
+}
+
+.selectedTheme {
+    border-color: blue !important;
+    border-radius: none !important;
+}
+
+
+.themeOutputContainer {
+    background-color: black !important;
+    width: calc(100% - 25rem);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.field1,
+.field2 {
+    background-color: transparent !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.field1 {
+    margin: 4rem 0rem;
+    padding-left: 8rem;
+}
+
+.field1 span {
+    background-color: transparent !important;
+    font-family: "Open Sans";
+    font-size: 18px;
+    margin-left: 16px;
+    letter-spacing: 1px;
+    border-radius: 4px;
+}
+
+.field1 img {
+    background-color: transparent !important;
+    width: 40px;
+    height: 40px;
+}
+
+.field2 {
+    justify-content: end;
+    padding-right: 9rem;
+}
+
+.field2 div {
+    padding: 8px 14px;
+    background-color: #1A5FFF !important;
+    border-radius: 4px;
+    font-family: "Open Sans";
+    font-size: 18px;
+    position: relative;
+}
+
+.field2 span {
+    position: absolute;
+    border-radius: 50%;
+    background-color: #4f81ff !important;
+    padding: 6px;
+    transform: translate(5px, -20px);
+}
+
+.backgroundColor1 {
+    background-color: white !important;
+}
+
+.backgroundColor1 .field1 span {
+    color: black !important;
+    background-color: rgb(239, 237, 233) !important;
+}
+
+.backgroundColor2 {
+    background-color: rgb(26, 29, 39) !important;
+}
+
+.backgroundColor2 .field1 span {
+    color: black !important;
+    background-color: rgb(239, 237, 233) !important;
+}
+
+.backgroundColor3 {
+    background-color: #085c76 !important;
+}
+
+.backgroundColor3 .field1 span {
+    color: black !important;
+    background-color: rgb(239, 237, 233) !important;
+}
+
+
+/* tail color: #508C9B */

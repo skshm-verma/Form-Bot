@@ -1,18 +1,21 @@
 import React, { useState, createContext, useContext } from 'react';
 import { verifyUser } from '../helpers/api-communicator';
 
-const AuthContext = createContext(null);
+const AuthContext = React.createContext(null);
+const FormUpdateContext = React.createContext(null);
 
- const ContextProvider = ({ children }) => {
+const ContextProvider = ({ children }) => {
     const [userName, setUserName] = useState('');
     const [userId, setUserId] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [formName, setFormName] = useState('');
+    const [formFields, setFormFields] = useState('');
+    const [folderId, setFolderId] = useState('');
+
 
     const checkAuthStatus = async () => {
         const data = await verifyUser();
 
         if (data.status !== 401) {
-            setIsLoggedIn(true);
             setUserName(data.userName);
             setUserId(data.userId);
             return 200;
@@ -34,17 +37,32 @@ const AuthContext = createContext(null);
     //     }
     // };
 
+    const saveFormValues = (formName, formFields, folderId) => {
+        setFormName(formName);
+        setFormFields(formFields);
+        setFolderId(folderId);
+    }
+
     const authValues = {
         userName,
         userId,
-        isLoggedIn,
         checkAuthStatus
     };
 
+    const formValues = {
+        saveFormValues,
+        formName,
+        formFields,
+        folderId
+    }
+
     return <AuthContext.Provider value={authValues}>
-        {children}
+        <FormUpdateContext.Provider value={formValues}>
+            {children}
+        </FormUpdateContext.Provider>
     </AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);
+export const useForm = () => useContext(FormUpdateContext);
 export default ContextProvider;

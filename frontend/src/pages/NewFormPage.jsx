@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useAuth } from '../context/AllContext';
+import { useAuth, useForm } from '../context/AllContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './NewFormPage.module.css'
 import NewFormNavbar from '../components/navbars/NewFormNavbar'
@@ -38,8 +38,8 @@ const publicFields = [
 ];
 
 const NewFormPage = () => {
-
   const auth = useAuth();
+  const form = useForm();
   const location = useLocation();
   const navigate = useNavigate();
   const [folderId] = useState(location.state?.folderId);
@@ -75,14 +75,18 @@ const NewFormPage = () => {
     setFormFields(newFormFields);
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
+    form.saveFormValues(formName, formFields, folderId);
+  };
+
+  const handleShare = async () => {
     try {
-      const response = await createNewTypeBot(auth?.userId, formName, formFields, folderId);
+      const response = await createNewTypeBot(auth?.userId, form?.formName, form?.formFields, form?.folderId);
       console.log("Response NewForm:", response);
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   const renderForm = () => {
     return formFields.map((field, index) =>
@@ -119,7 +123,12 @@ const NewFormPage = () => {
         <NewFormNavbar
           formName={formName}
           setFormName={setFormName}
-          onSave={handleSave} />
+          onSave={handleSave}
+          onShare={handleShare}
+          isForm={true}
+          isTheme={false}
+          isResponse={false}
+        />
       </nav>
       <div className={styles.formWorkspace}>
         <div className={styles.selectionWrapper}>

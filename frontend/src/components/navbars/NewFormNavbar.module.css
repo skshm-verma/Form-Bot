@@ -45,6 +45,7 @@
     font-family: "Open Sans";
     padding: 0.5rem 2rem;
     margin: 0px 3px;
+    cursor: pointer;
 }
 
 .currentMenu {
