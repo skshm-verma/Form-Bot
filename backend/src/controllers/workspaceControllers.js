@@ -2,6 +2,7 @@ const { BadRequestError, NotFoundError } = require('../errors/error');
 const User = require('../models/User');
 const Folder = require('../models/Folder');
 const Form = require('../models/Form');
+const PublicInput = require('../models/PublicInput')
 const statusCodes = require("../utils/constants");
 
 // NOTE: I HAVE HANDLED All ERRORS GLOBALLY AT ERROR-HANDLER MIDDLEWARE
@@ -101,4 +102,67 @@ const getAllForms = async (req, res) => {
     res.status(statusCodes.OK).json({ message: "Success", formNames });
 }
 
-module.exports = { createForm, createFolder, getAllFolders, getAllForms }
+const getFormInputDetails = async (req, res) => {
+    const { formId } = req.query;
+    const form = await Form.findById(formId);
+    if (!form) {
+        throw new NotFoundError("Form not found");
+    }
+    const { userInputs, views } = form;
+    res.status(statusCodes.OK).json({ message: "Success", userInputs, views });
+}
+
+const getFormFieldDetails = async (req, res) => {
+    const { formId } = req.query;
+    const form = await Form.findById(formId);
+    if (!form) {
+        throw new NotFoundError("Form not found");
+    }
+    const { fields, views } = form;
+    res.status(statusCodes.OK).json({ message: "Success", fields, views });
+}
+
+const updateFormFields = async (req, res) => {
+    const { formId, fields } = req.query;
+    const form = await Form.findById(formId);
+    if (!form) {
+        throw new NotFoundError("Form not found");
+    }
+    form.fields = fields;
+    res.status(statusCodes.OK).json({ message: "Success", fields: form.fields });
+}
+
+const updateFormViews = async (req, res) => {
+    const { formId, views } = req.body;
+    const form = await Form.findById(formId);
+    if (!form) {
+        throw new NotFoundError("Form not found");
+    }
+    form.views = views;
+    await form.save();
+    res.status(statusCodes.OK).json({ message: "Success", views: form.views });
+}
+
+const createPublicInput = async (req, res) => {
+    const { formId, date, labelName, response } = req.body;
+
+    //formId, date and views are mandatory fields
+    const form = await Form.findById(formId);
+    if (!form) {
+        return res.status(404).json({ message: 'Form not found' });
+    }
+
+    const newPublicInput = new PublicInput({
+        formId,
+        date,
+        labelName,
+        response
+    });
+
+    const savedPublicInput = await newPublicInput.save();
+    form.userInputs.push(savedPublicInput);
+    await form.save();
+    res.status(201).json({ message: 'Public input saved successfully', publicInput: savedPublicInput });
+}
+
+module.exports = { createForm, createFolder, getAllFolders, getAllForms, getFormInputDetails, getFormFieldDetails, createPublicInput, updateFormFields, updateFormViews }

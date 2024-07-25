@@ -63,10 +63,9 @@ const getAllForms = async (folderId) => {
     }
 }
 
-const createNewTypeBot = async (userId,formName, formFields, folderId) => {
+const createNewTypeBot = async (userId, formName, formFields, folderId) => {
     try {
-        const cleanedFields = formFields.map(({ label, icon, placeholder, ...rest }) => rest);
-        console.log("Here")
+        const cleanedFields = formFields.map(({ icon, placeholder, ...rest }) => rest);
         const formData = {
             userId,
             title: formName,
@@ -74,12 +73,50 @@ const createNewTypeBot = async (userId,formName, formFields, folderId) => {
             fields: cleanedFields
         };
         const response = await axios.post('/workspace/newForm', formData);
-        console.log("response data : ", response);
+        console.log("response data in api : ", response);
         return response.data;
     } catch (error) {
         return error.response;
     }
 }
 
+const getAllFormFieldData = async (formId) => {
+    try {
+        const response = await axios.get('/workspace/formFieldDetails', { params: { formId } } )
+        return response.data;
+    } catch (error) {
+        return error.response;
+    }
+}
 
-export { signUpUser, signInUser, verifyUser, createNewFolder, getAllFolders, getAllForms, createNewTypeBot };
+const updateFormViews = async (formId, views) => {
+    try{
+       const response = await axios.patch('/workspace/updateFromViews', { formId, views })
+       return response;
+    }catch(error){
+        return error.response;
+    }
+}
+
+const createUserInput = async ( formId, date, labelName, response) => {
+    try{
+       const data = await axios.post('/workspace/publicInput', { formId, date, labelName, response })
+       return data;
+    }catch(error){
+        return error.response;
+    }
+} 
+
+
+export {
+    signUpUser,
+    signInUser,
+    verifyUser,
+    createNewFolder,
+    getAllFolders,
+    getAllForms,
+    createNewTypeBot,
+    getAllFormFieldData,
+    createUserInput,
+    updateFormViews
+};

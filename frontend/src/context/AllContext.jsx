@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext } from 'react';
-import { verifyUser } from '../helpers/api-communicator';
+import { verifyUser, updateFormViews } from '../helpers/api-communicator';
 
 const AuthContext = React.createContext(null);
 const FormUpdateContext = React.createContext(null);
@@ -10,6 +10,7 @@ const ContextProvider = ({ children }) => {
     const [formName, setFormName] = useState('');
     const [formFields, setFormFields] = useState('');
     const [folderId, setFolderId] = useState('');
+    const [formViews, setFormViews] = useState('');
 
 
     const checkAuthStatus = async () => {
@@ -53,7 +54,9 @@ const ContextProvider = ({ children }) => {
         saveFormValues,
         formName,
         formFields,
-        folderId
+        folderId,
+        formViews,
+        setFormViews
     }
 
     return <AuthContext.Provider value={authValues}>
