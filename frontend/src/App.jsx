@@ -9,8 +9,9 @@ import Workspace from './pages/Workspace';
 import SettingsUpdate from './pages/SettingsUpdate';
 import NewFormPage from './pages/NewFormPage';
 import PublishForm from './pages/PublishForm';
-import './App.css'
 import SelectThemePage from './pages/SelectThemePage';
+import ResponsePage from './pages/ResponsePage';
+import './App.css'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/workspace/settings" element={<SettingsUpdate />} />
             <Route path="/workspace/newForm" element={< NewFormPage />} />
             <Route path="/workspace/selectTheme" element={< SelectThemePage />} />
+            <Route path="/workspace/formResponse" element={< ResponsePage />} />
             <Route path='/submitForm' element={<PublishForm />} />
           </Routes>
         </BrowserRouter>

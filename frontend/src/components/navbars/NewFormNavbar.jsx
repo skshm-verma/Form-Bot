@@ -33,7 +33,9 @@ const NewFormNavbar = ({ formName, setFormName, onSave, onShare, isForm, isTheme
             Theme
           </div>
           <div
-            className={isResponse ? styles.currentMenu : ''}>
+            className={isResponse ? styles.currentMenu : ''}
+            onClick={() => navigate('/workspace/formResponse')}
+            >
             Response
           </div>
         </div>
