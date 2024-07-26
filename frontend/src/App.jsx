@@ -10,6 +10,7 @@ import NewFormPage from './pages/NewFormPage';
 import PublishForm from './pages/PublishForm';
 import SelectThemePage from './pages/SelectThemePage';
 import ResponsePage from './pages/ResponsePage';
+import NotFoundPage from './pages/NotFoundPage';
 import './App.css'
 
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/workspace/selectTheme" element={< SelectThemePage />} />
             <Route path="/workspace/formResponse" element={< ResponsePage />} />
             <Route path="/submitForm/:formId" element={<PublishForm />} />
+            <Route path="/*" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>
       </ContextProvider>

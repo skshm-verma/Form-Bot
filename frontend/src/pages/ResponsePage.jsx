@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom';
+import { useForm } from '../context/AllContext';
 import styles from './ResponsePage.module.css';
 import NewFormNavbar from '../components/navbars/NewFormNavbar';
 
@@ -33,6 +35,9 @@ const responseData = {
 }
 
 const ResponsePage = () => {
+    const form = useForm();
+    const location = useLocation();
+    // console.log(form?.formId);
 
     const handleSave = () => {
 
@@ -44,6 +49,14 @@ const ResponsePage = () => {
 
     const labels = responseData.Labels.map(label => label.name);
     const responses = responseData.Labels.map(label => label.response);
+
+
+    useEffect(() => {
+        const formId = location.state?.formId;
+        if (formId){
+            console.log(formId)
+        }
+    }, [])
     return (
         <div className={styles.responseWrapper}>
             <nav>
@@ -72,7 +85,7 @@ const ResponsePage = () => {
                 </div>
             </div>
             <div className={styles.wholeData}>
-            <table>
+                <table>
                     <thead>
                         <tr>
                             <th>Date</th>

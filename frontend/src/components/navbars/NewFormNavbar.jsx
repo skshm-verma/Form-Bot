@@ -2,10 +2,12 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import styles from './NewFormNavbar.module.css';
 import Close from '../../assets/close.png'
+import { useForm } from '../../context/AllContext';
 
 
 const NewFormNavbar = ({ formName, setFormName, onSave, onShare, isForm, isTheme, isResponse }) => {
 
+  const form = useForm();
   const navigate = useNavigate()
 
   return (
@@ -29,12 +31,12 @@ const NewFormNavbar = ({ formName, setFormName, onSave, onShare, isForm, isTheme
           </div>
           <div
             className={isTheme ? styles.currentMenu : ''}
-            onClick={() => navigate('/workspace/selectTheme')}>
+            onClick={() => navigate('/workspace/selectTheme', { state: { formId: form?.formId } })}>
             Theme
           </div>
           <div
             className={isResponse ? styles.currentMenu : ''}
-            onClick={() => navigate('/workspace/formResponse')}
+            onClick={() => navigate('/workspace/formResponse', { state: { formId: form?.formId } })}
             >
             Response
           </div>
@@ -48,5 +50,6 @@ const NewFormNavbar = ({ formName, setFormName, onSave, onShare, isForm, isTheme
     </div>
   )
 }
+
 
 export default NewFormNavbar

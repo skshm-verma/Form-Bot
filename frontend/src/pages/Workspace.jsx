@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Workspace.module.css'
 import WorkspaceNavbar from '../components/navbars/WorkspaceNavbar'
-import { useAuth } from '../context/AllContext'
+import { useAuth, useForm } from '../context/AllContext'
 import { useNavigate } from 'react-router-dom'
 import FolderChips from '../components/workspaceItems/FolderChips'
 import FormChips from '../components/workspaceItems/FormChips'
-import { createNewFolder, getAllFolders, getAllForms } from '../helpers/api-communicator'
+import { createNewFolder, getFormIdByName, getAllFolders, getAllForms } from '../helpers/api-communicator'
 import CreateModal from '../components/modals/CreateModal'
 
 const Workspace = () => {
     const auth = useAuth();
+    const form = useForm();
     const navigate = useNavigate();
     const [openModal, setOpenModal] = useState(false);
     const [folderName, setFolderName] = useState('');
     const [allFoldersNames, setAllFoldersNames] = useState([]);
     const [allFormsNames, setAllFormsNames] = useState([]);
     const [openedFolders, setOpenedFolders] = useState(new Set());
-    
+
 
     const handleCreateFolder = async () => {
         setFolderName('');
@@ -58,10 +59,20 @@ const Workspace = () => {
             navigate('/workspace/newForm');
         }
     };
+
+    const handleFormClick = async (formName) => {
+        const response = await getFormIdByName(formName);
+        if (response) {
+            navigate('/workspace/newForm', { state: { formId: response.data.formId } });
+        } else {
+            alert('Form not found');
+        }
+    };
+
     useEffect(() => {
         const checkLoginStatus = async () => {
             const status = await auth?.checkAuthStatus();
-            if (status === 401 ) {
+            if (status === 401) {
                 navigate('/');
             }
         };
@@ -99,6 +110,7 @@ const Workspace = () => {
             }
         };
         if (auth?.userId) {
+            form?.saveFormId('')
             fetchFolders();
         }
 
@@ -143,7 +155,11 @@ const Workspace = () => {
                     </div>
                     <div className={styles.oldForms}>
                         {allFormsNames?.map((name, index) => (
-                            <FormChips key={index} formName={name} />
+                            <FormChips
+                                key={index}
+                                formName={name}
+                                onClick={() => handleFormClick(name)}
+                            />
                         ))}
                     </div>
                 </div>

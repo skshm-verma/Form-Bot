@@ -9,7 +9,6 @@ const statusCodes = require("../utils/constants");
 
 const createForm = async (req, res) => {
     const { userId, title, folderId, fields } = req.body;
-
     const user = await User.findById(userId);
     if (!user) {
         throw new NotFoundError('User not found');
@@ -67,6 +66,15 @@ const createFolder = async (req, res) => {
     res.status(statusCodes.CREATED).json({ message: `${folder.name} Folder Created`, folderId: folder._id });
 }
 
+const getFormId = async (req, res) => {
+    const { formName } = req.query;
+    const form = await Form.findOne({ title: formName });
+    if (!form) {
+        throw new NotFoundError('Form not found');
+    }
+    res.status(statusCodes.OK).json({ message: "Success", formId: form._id });
+}
+
 const getAllFolders = async (req, res) => {
     const { userId } = req.query;
 
@@ -112,14 +120,14 @@ const getFormInputDetails = async (req, res) => {
     res.status(statusCodes.OK).json({ message: "Success", userInputs, views });
 }
 
-const getFormFieldDetails = async (req, res) => {
+const getFormDetails = async (req, res) => {
     const { formId } = req.query;
     const form = await Form.findById(formId);
     if (!form) {
         throw new NotFoundError("Form not found");
     }
-    const { fields, views } = form;
-    res.status(statusCodes.OK).json({ message: "Success", fields, views });
+    const { fields, views, title } = form;
+    res.status(statusCodes.OK).json({ message: "Success", fields, views, title });
 }
 
 const updateFormFields = async (req, res) => {
@@ -165,4 +173,4 @@ const createPublicInput = async (req, res) => {
     res.status(201).json({ message: 'Public input saved successfully', publicInput: savedPublicInput });
 }
 
-module.exports = { createForm, createFolder, getAllFolders, getAllForms, getFormInputDetails, getFormFieldDetails, createPublicInput, updateFormFields, updateFormViews }
+module.exports = { createForm, createFolder, getFormId, getAllFolders, getAllForms, getFormInputDetails, getFormDetails, createPublicInput, updateFormFields, updateFormViews }

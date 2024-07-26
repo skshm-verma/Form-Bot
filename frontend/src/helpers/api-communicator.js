@@ -65,24 +65,31 @@ const getAllForms = async (folderId) => {
 
 const createNewTypeBot = async (userId, formName, formFields, folderId) => {
     try {
-        const cleanedFields = formFields.map(({ icon, placeholder, ...rest }) => rest);
         const formData = {
             userId,
             title: formName,
             folderId,
-            fields: cleanedFields
+            fields: formFields
         };
         const response = await axios.post('/workspace/newForm', formData);
-        console.log("response data in api : ", response);
         return response.data;
     } catch (error) {
         return error.response;
     }
 }
 
-const getAllFormFieldData = async (formId) => {
+const getFormIdByName = async (formName) => {
     try {
-        const response = await axios.get('/workspace/formFieldDetails', { params: { formId } } )
+        const response = await axios.get('/workspace/getFormId', { params: { formName } } )
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+}
+
+const getAllFormData = async (formId) => {
+    try {
+        const response = await axios.get('/workspace/formDetails', { params: { formId } } )
         return response.data;
     } catch (error) {
         return error.response;
@@ -116,7 +123,8 @@ export {
     getAllFolders,
     getAllForms,
     createNewTypeBot,
-    getAllFormFieldData,
+    getFormIdByName,
+    getAllFormData,
     createUserInput,
     updateFormViews
 };

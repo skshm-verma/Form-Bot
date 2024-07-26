@@ -1,0 +1,55 @@
+/* Container for the Not Found page */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to left top, #4B83FF, #B794F4);
+  color: white;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Inner content styling */
+.content {
+  max-width: 600px;
+  padding: 20px 60px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the error code */
+.errorCode {
+  font-size: 10rem;
+  margin: 0;
+  font-weight: bold;
+  background-image: linear-gradient(to left top, #4B83FF, #B794F4);
+  color: transparent;
+  background-clip: text;
+}
+
+/* Styling for the message */
+.message {
+  font-size: 1.5rem;
+  margin: 20px 0;
+  background-image: linear-gradient(to left top, #4B83FF, #B794F4);
+  color: transparent;
+  background-clip: text;
+}
+
+/* Styling for the home link */
+.homeLink {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+

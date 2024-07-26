@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NewFormNavbar from '../components/navbars/NewFormNavbar';
+import { useLocation } from 'react-router-dom';
 import styles from './SelectThemePage.module.css';
 import Logo from '../assets/logo3.png'
 
 const SelectThemePage = () => {
 
+    const location = useLocation();
     const [selectedTheme, setSelectedTheme] = useState('light');
     const handleSave = () => {
 
@@ -22,6 +24,13 @@ const SelectThemePage = () => {
     const handleThemeClick = (theme) => {
         setSelectedTheme(theme);
     };
+
+    useEffect(() => {
+        const formId = location.state?.formId;
+        if (formId) {
+            console.log(formId)
+        }
+    }, [])
 
     return (
         <div className={styles.themeWrapper}>
@@ -109,11 +118,11 @@ const SelectThemePage = () => {
                         </div>
                     </div>
                 </div>
-                <div 
-                // className={styles.themeOutputContainer}
-                className={`${styles.themeOutputContainer} 
-                ${selectedTheme === 'light' ? styles.backgroundColor1 : 
-                    selectedTheme === 'dark' ? styles.backgroundColor2 : styles.backgroundColor3}`}
+                <div
+                    // className={styles.themeOutputContainer}
+                    className={`${styles.themeOutputContainer} 
+                ${selectedTheme === 'light' ? styles.backgroundColor1 :
+                            selectedTheme === 'dark' ? styles.backgroundColor2 : styles.backgroundColor3}`}
                 >
                     <div className={styles.field1}>
                         <img src={Logo} alt="logoIcon" />

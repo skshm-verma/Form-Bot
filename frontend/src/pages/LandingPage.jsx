@@ -9,7 +9,12 @@ import WorkingImage from '../assets/workingImage2.png';
 import OldFormImage from '../assets/formImage1.png';
 import TryImage from '../assets/tryImage.png';
 import Correct from '../assets/correctIcon.png';
-import Cross from '../assets/crossIcon.png'
+import Cross from '../assets/crossIcon.png';
+import WorkImage1 from '../assets/workingImage1.png';
+import WorkImage2 from '../assets/workingImage3.png';
+import WorkImage3 from '../assets/workingImage4.png';
+import Tools1 from '../assets/platforms1.png';
+import Tools2 from '../assets/platforms2.png';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -50,6 +55,43 @@ const LandingPage = () => {
                             <img src={WorkingImage} alt="newFormImage" />
                         </div>
                         <img className={styles.tryOutImage} src={TryImage} alt="" />
+                    </div>
+                </div>
+            </section>
+            <section id="aboutWork">
+                <div className={styles.aboutWorkWrapper1}>
+                    <div className={styles.workImg1}><img width="400px" height="400px" src={WorkImage1} alt="workImage!" /></div>
+                    <div className={styles.aboutWork1}>
+                        <h2>Easy building experience</h2>
+                        <p>All you have to do is drag and drop blocks to create your app. Even if you have custom needs, you can always add custom code.</p>
+                    </div>
+                </div>
+                <div className={styles.aboutWorkWrapper2}>
+                    <div className={styles.aboutWork1}>
+                        <h2>Embed it in a click</h2>
+                        <p>Embedding your typebot in your applications is a walk in the park. Typebot gives you several step-by-step platform- specific instructions. Your typebot will always feel "native".</p>
+                    </div>
+                    <div className={styles.workImg1}><img width="400px" height="400px" src={WorkImage2} alt="workImage!" /></div>
+                </div>
+            </section>
+            <section id='integrationTools'>
+                <div className={styles.toolsContainer}>
+                    <div><img src={Tools1} alt="tools1Image" /></div>
+                    <div><img src={Tools2} alt="tools2Image" /></div>
+                    <div className={styles.toolsAbout}>
+                        <h2>Integrate with any platform</h2>
+                        <p>Typebot offers several native integrations blocks as well as instructions on<br /> how to embed typebot on particular platforms</p>
+                    </div>
+                </div>
+            </section>
+            <section id="results">
+                <div className={styles.resultContainer}>
+                    <div className={styles.resultAbout}>
+                        <h2>Collect results in real-time</h2>
+                        <p>One of the main advantage of a chat application is that you collect the user's responses on each question.<br /><span>You won't lose any valuable data.</span></p>
+                    </div>
+                    <div>
+                        <img width="400px" height="400px" src={WorkImage3} alt="workImage3" />
                     </div>
                 </div>
             </section>

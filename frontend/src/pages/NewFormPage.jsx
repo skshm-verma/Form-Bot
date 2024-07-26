@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './NewFormPage.module.css'
 import NewFormNavbar from '../components/navbars/NewFormNavbar'
 import SelectionChips from '../components/inputTypes/SelectionChips'
-import { createNewTypeBot } from '../helpers/api-communicator';
+import { createNewTypeBot, getAllFormData } from '../helpers/api-communicator';
 import Chat from '../assets/chatIcon1.png';
 import Gif from '../assets/gifIcon.png';
 import Image from '../assets/imageIcon1.png';
@@ -89,13 +89,13 @@ const NewFormPage = () => {
   }
 
   const renderForm = () => {
-    return formFields.map((field, index) =>
+    return formFields?.map((field, index) =>
     (
       <InputChips
         key={`${field.type}-${index}`}
         field={field.label}
-        image={field.icon}
-        placeholder={field.placeholder}
+        image={field?.icon}
+        placeholder={field?.placeholder || "Hint: User Will Enter This Value"}
         isPublic={field.public}
         onDelete={() => deleteField(index)}
         type={field.type}
@@ -107,6 +107,7 @@ const NewFormPage = () => {
 
 
   useEffect(() => {
+
     const checkAuthStatus = async () => {
       const status = await auth?.checkAuthStatus();
       if (status === 401) {
@@ -114,7 +115,23 @@ const NewFormPage = () => {
       }
     };
     checkAuthStatus();
-  }, [auth])
+
+    const fetchFormDetails = async (formId) => {
+      try {
+        const response = await getAllFormData(formId);
+        setFormName(response.title);
+        setFormFields(response.fields);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const formId = location.state?.formId;
+    if (formId) {
+      form.saveFormId(formId);
+      fetchFormDetails(formId);
+    }
+  }, [auth, location.state, navigate]);
 
 
   return (

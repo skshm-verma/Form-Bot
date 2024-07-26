@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getAllFormFieldData, createUserInput, updateFormViews } from '../helpers/api-communicator';
+import { getAllFormData, createUserInput, updateFormViews } from '../helpers/api-communicator';
 import { useForm } from '../context/AllContext';
 import styles from './PublishForm.module.css';
 
@@ -30,7 +30,7 @@ const PublishForm = () => {
     useEffect(() => {
         const fetchFormData = async () => {
             try {
-                const data = await getAllFormFieldData(formId);
+                const data = await getAllFormData(formId);
                 setFormData(data);
                 if (data.fields.length > 0) {
                     const initialField = data.fields[0];

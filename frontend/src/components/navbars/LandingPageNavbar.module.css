@@ -4,18 +4,34 @@
     align-items: center;
     justify-content: space-between;
     padding-top: 12px;
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+   
+}
+
+.navLogo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    background-color: transparent !important;
+    cursor: auto;
+}
+
+.navLogo span{
+    font-family: "Outfit";
+    font-size: 18px;
+    background-color: transparent !important;
+    letter-spacing: 1px;
 }
 
 .navLinks div {
     background-color: #171923;
 }
 
-.navLinks img {
-    margin: 0rem 8rem;
-}
-
 .navLinks div {
-    margin: 0rem 8rem;
+    margin: 0rem 10rem;
 }
 
 
