@@ -26,6 +26,10 @@ const formSchema = new mongoose.Schema({
   views: {
     type: Number,
     default: 0
+  },
+  theme: {
+    type: String,
+    default: 'light'
   }
 })
 

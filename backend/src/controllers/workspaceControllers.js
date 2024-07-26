@@ -8,7 +8,7 @@ const statusCodes = require("../utils/constants");
 // NOTE: I HAVE HANDLED All ERRORS GLOBALLY AT ERROR-HANDLER MIDDLEWARE
 
 const createForm = async (req, res) => {
-    const { userId, title, folderId, fields } = req.body;
+    const { userId, title, folderId, fields, theme } = req.body;
     const user = await User.findById(userId);
     if (!user) {
         throw new NotFoundError('User not found');
@@ -34,7 +34,8 @@ const createForm = async (req, res) => {
     const form = new Form({
         title: title.trim(),
         folderId: folder._id,
-        fields
+        fields,
+        theme
     });
     await form.save();
 
@@ -126,8 +127,8 @@ const getFormDetails = async (req, res) => {
     if (!form) {
         throw new NotFoundError("Form not found");
     }
-    const { fields, views, title } = form;
-    res.status(statusCodes.OK).json({ message: "Success", fields, views, title });
+    const { fields, views, title, userInputs, theme } = form;
+    res.status(statusCodes.OK).json({ message: "Success", fields, views, title, userInputs, theme });
 }
 
 const updateFormFields = async (req, res) => {

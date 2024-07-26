@@ -11,6 +11,7 @@ const ContextProvider = ({ children }) => {
     const [formFields, setFormFields] = useState('');
     const [folderId, setFolderId] = useState('');
     const [formId, setFormId] = useState('');
+    const [formTheme, setFormTheme] = useState('light')
 
 
     const checkAuthStatus = async () => {
@@ -48,6 +49,10 @@ const ContextProvider = ({ children }) => {
         setFormId(formId);
     }
 
+    const saveFormTheme = (theme) => {
+        setFormTheme(theme);
+    }
+
     const authValues = {
         userName,
         userId,
@@ -60,7 +65,9 @@ const ContextProvider = ({ children }) => {
         formFields,
         folderId,
         saveFormId,
-        formId
+        formId,
+        saveFormTheme,
+        formTheme
     }
 
     return <AuthContext.Provider value={authValues}>

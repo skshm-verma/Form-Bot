@@ -46,6 +46,7 @@ const NewFormPage = () => {
   const [formFields, setFormFields] = useState([]);
   const [fieldCounts, setFieldCounts] = useState({});
   const [formName, setFormName] = useState('');
+  const [isSaved, setIsSaved] = useState(false);
 
 
 
@@ -77,11 +78,12 @@ const NewFormPage = () => {
 
   const handleSave = () => {
     form.saveFormValues(formName, formFields, folderId);
+    setIsSaved(true);
   };
 
   const handleShare = async () => {
     try {
-      const response = await createNewTypeBot(auth?.userId, form?.formName, form?.formFields, form?.folderId);
+      const response = await createNewTypeBot(auth?.userId, form?.formName, form?.formFields, form?.folderId, form?.formTheme);
       console.log("Response NewForm:", response);
     } catch (error) {
       console.log(error);
@@ -134,6 +136,13 @@ const NewFormPage = () => {
   }, [auth, location.state, navigate]);
 
 
+  useEffect(() => {
+    if (form?.formFields) {
+      setFormFields(form?.formFields);
+      setFormName(form?.formName)
+    }
+  }, [form?.formFields]);
+
   return (
     <div className={styles.formWrapper}>
       <nav>
@@ -145,6 +154,7 @@ const NewFormPage = () => {
           isForm={true}
           isTheme={false}
           isResponse={false}
+          isSaved={isSaved}
         />
       </nav>
       <div className={styles.formWorkspace}>

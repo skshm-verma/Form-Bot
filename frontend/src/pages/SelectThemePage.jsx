@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react'
+import { useAuth, useForm } from '../context/AllContext';
 import NewFormNavbar from '../components/navbars/NewFormNavbar';
-import { useLocation } from 'react-router-dom';
+import { createNewTypeBot } from '../helpers/api-communicator';
 import styles from './SelectThemePage.module.css';
 import Logo from '../assets/logo3.png'
 
 const SelectThemePage = () => {
+    const auth = useAuth();
+    const form = useForm();
+    const [selectedTheme, setSelectedTheme] = useState('');
+    const [isSaved, setIsSaved] = useState(false);
 
-    const location = useLocation();
-    const [selectedTheme, setSelectedTheme] = useState('light');
     const handleSave = () => {
-
+        setIsSaved(true);
     };
 
     const handleShare = async () => {
         try {
-            const response = await createNewTypeBot(auth?.userId, formName, formFields, folderId);
-            console.log("Response NewForm:", response);
+            const response = await createNewTypeBot(auth?.userId, form?.formName, form?.formFields, form?.folderId, form?.formTheme);
         } catch (error) {
             console.log(error);
         }
@@ -23,14 +25,8 @@ const SelectThemePage = () => {
 
     const handleThemeClick = (theme) => {
         setSelectedTheme(theme);
+        form?.saveFormTheme(theme);
     };
-
-    useEffect(() => {
-        const formId = location.state?.formId;
-        if (formId) {
-            console.log(formId)
-        }
-    }, [])
 
     return (
         <div className={styles.themeWrapper}>
@@ -43,6 +39,7 @@ const SelectThemePage = () => {
                     isForm={false}
                     isTheme={true}
                     isResponse={false}
+                    isSaved={isSaved}
                 />
             </nav>
             <div className={styles.themeContainer}>

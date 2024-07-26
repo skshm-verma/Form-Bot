@@ -63,13 +63,14 @@ const getAllForms = async (folderId) => {
     }
 }
 
-const createNewTypeBot = async (userId, formName, formFields, folderId) => {
+const createNewTypeBot = async (userId, formName, formFields, folderId, theme) => {
     try {
         const formData = {
             userId,
             title: formName,
             folderId,
-            fields: formFields
+            fields: formFields,
+            theme
         };
         const response = await axios.post('/workspace/newForm', formData);
         return response.data;
