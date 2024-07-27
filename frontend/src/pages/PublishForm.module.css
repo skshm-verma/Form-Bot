@@ -1,5 +1,6 @@
 .submitFormWrapper {
-    background-color: orange !important;
+    background-color: white !important;
+    color: black !important;
     width: 100vw;
     height: 100vh;
     overflow-y: auto;
@@ -9,15 +10,18 @@
 }
 
 .formData {
+    background-color: transparent !important;
     display: flex;
-    width: 60%;
-    color: white !important;
+    width: 70%;
+    /* color: white !important; */
     flex-direction: column;
     font-family: "Open Sans";
     font-size: 18px;
+    padding-top: 4rem;
 }
 
 .publicValues {
+    background-color: transparent !important;
     width: 100%;
     display: flex;
     align-items: center;
@@ -25,38 +29,224 @@
 }
 
 .systemValues {
-    width: 15rem;
+    background-color: transparent !important;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: start;
 }
 
+.field1 {
+    background-color: transparent !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Open Sans";
+    font-size: 16px;
+}
+
+.field1 div {
+    width: 14rem;
+    padding: 0.55rem 0px;
+    margin: 0px;
+    border-radius: 5px;
+    border: 1px solid #777777;
+    padding-left: 1rem;
+    color: white;
+    background-color: #777777 !important;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.field1 span {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px;
+    margin: 0;
+    padding: 2px 6px;
+    margin-left: 1rem;
+    background-color: #777777 !important;
+}
+
+.field1 span img {
+    width: 2rem;
+    height: 2rem;
+    background-color: transparent !important;
+}
+
+.field2 {
+    background-color: transparent !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Open Sans";
+    font-size: 16px;
+    gap: 13px;
+}
+
+.field2 img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.field2 span {
+    background-color: rgb(239, 237, 233) !important;
+    color: black;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.5rem 1.2rem;
+    margin: 0px;
+}
+
 .publishFormContainer {
     display: flex;
-    width: 60%;
-    color: white !important;
+    width: 70%;
+    /* color: white !important; */
     flex-direction: column;
     align-items: end;
-    background-color: #171923 !important;
+    background-color: transparent !important;
 }
 
 .inputDetail {
-    background-color: #171923 !important;
+    background-color: transparent !important;
     width: fit-content;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .inputDetail label {
     font-family: "Open Sans";
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .inputDetail input {
-    width: 10rem;
+    width: 14rem;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding-left: 1rem;
+    color: black;
+    background-color: white !important;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .inputDetail button {
-    width: 3rem;
-    height: 1.5rem;
+    background-color: #1A5FFF !important;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px;
+    border: 2px solid #1A5FFF;
+    padding: 2px 6px;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.inputDetail button img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.dateInput {
+    padding: 0rem 1rem !important;
+}
+
+.inputBtn {
+    color: white !important;
+    padding: 0.8rem 1.2rem !important;
+    font-size: 16px;
+}
+
+.ratingInput {
+    background-color: white !important;
+    border-radius: 5px;
+    width: 14rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.ratingInput div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px !important;
+    height: 22px !important;
+    background-color: #1A5FFF !important;
+    color: white !important;
+    position: relative;
+    font-size: 14px;
+    border-radius: 50%;
+    border: none !important;
+    cursor: pointer;
+}
+
+.ratingInput div.selectedRating {
+    background-color: #FF8E21 !important;
+}
+
+
+.field1Btn {
+    color: white !important;
+    padding: 0.8rem 1.2rem !important;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #FF8E21 !important;
+}
+
+.field1Btn div {
+    background-color: transparent !important;
+}
+
+
+.ratingDisplay {
+    background-color: #777777 !important;
+    border-radius: 5px;
+    width: 14rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-right: 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+}
+
+.ratingDisplay div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px !important;
+    height: 22px !important;
+    background-color: #1A5FFF !important;
+    color: white !important;
+    font-size: 14px;
+    border-radius: 50%;
+    border: none !important;
+}
+
+.ratingSend {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px;
+    margin: 0;
+    padding: 2px 6px;
+    background-color: #777777 !important;
+}
+
+.ratingSend img {
+    width: 2rem !important;
+    height: 2rem !important;
+    background-color: transparent !important;
+}
+
+.ratingDisplay div.selectedRating {
+    background-color: #FF8E21 !important;
 }

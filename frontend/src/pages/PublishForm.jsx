@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getAllFormData, createUserInput, updateFormViews } from '../helpers/api-communicator';
 import { useForm } from '../context/AllContext';
 import styles from './PublishForm.module.css';
+import Logo from '../assets/logo3.png';
+import Send from '../assets/send.png';
 
 const PublishForm = () => {
     const { formId } = useParams();
@@ -13,6 +15,7 @@ const PublishForm = () => {
     const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
     const [currentDateTime, setCurrentDateTime] = useState('');
+    const [selectedRating, setSelectedRating] = useState(null);
 
     useEffect(() => {
         const date = new Date();
@@ -32,15 +35,16 @@ const PublishForm = () => {
             try {
                 const data = await getAllFormData(formId);
                 setFormData(data);
+                console.log("Current Data: ", data);
                 if (data.fields.length > 0) {
                     const initialField = data.fields[0];
                     setSubmittedValues(initialField.public ? [] : [initialField]);
+
                     setCurrentFieldIndex(initialField.public ? 0 : 1);
                 }
 
                 const newViews = data.views + 1;
                 await updateFormViews(formId, newViews);
-                form?.setFormViews(newViews);
             } catch (error) {
                 console.error("Failed to fetch form data", error);
             }
@@ -63,26 +67,36 @@ const PublishForm = () => {
         }
     }, [currentFieldIndex, isPaused, formData]);
 
+    const handleDateChange = (e) => {
+        const [year, month, day] = e.target.value.split('-');
+        setUserInput(`${day}/${month}/${year}`);
+    };
+
+    const handleRatingClick = (rating) => {
+        setSelectedRating(rating);
+        setUserInput(rating);
+    };
+
     const handleSubmit = async (e) => {
         console.log(formData?.fields[currentFieldIndex].label);
         e.preventDefault();
-        try {
-            await createUserInput(
-                formId,
-                currentDateTime,
-                formData?.fields[currentFieldIndex].label,
-                userInput
-            );
-        } catch (error) {
-            console.error("Failed to submit user input", error);
-        }
+        // try {
+        //     await createUserInput(
+        //         formId,
+        //         currentDateTime,
+        //         formData?.fields[currentFieldIndex].label,
+        //         userInput
+        //     );
+        // } catch (error) {
+        //     console.error("Failed to submit user input", error);
+        // }
 
         setSubmittedValues(prevValues => [
             ...prevValues,
             { content: userInput, type: formData.fields[currentFieldIndex].type, public: formData.fields[currentFieldIndex].public }
         ]);
         setUserInput('');
-        setIsPaused(false);
+        setIsPaused(true);
         setCurrentFieldIndex(currentFieldIndex + 1);
     };
 
@@ -90,26 +104,107 @@ const PublishForm = () => {
         <div className={styles.submitFormWrapper}>
             <div className={styles.formData}>
                 {submittedValues.map((value, index) => (
-                    <div className={value?.public ? styles.publicValues : styles.systemValues} key={index}>{value?.content}</div>
+                    value?.public ? (value?.type === 'rating' ?
+                        <div className={styles.publicValues}>
+                            <div className={styles.ratingDisplay}>
+                                {[1, 2, 3, 4, 5].map((rating) => (
+                                    <div
+                                        key={rating}
+                                        className={`${selectedRating === rating ? styles.selectedRating : ''}`}
+                                    >
+                                        {rating}
+                                    </div>
+                                ))}
+                            </div>
+                                <span className={styles.ratingSend}><img src={Send} alt="sendIcon" /></span>
+                        </div> :
+                        (
+                            <div className={styles.publicValues} key={index}>
+                                <div className={`${value?.type === "button" ? styles.field1Btn : styles.field1}`}>
+                                    <div>{value?.content}</div>
+                                    {value?.type === 'button' ? <></> : <span><img src={Send} alt="sendIcon" /></span>}
+                                </div>
+                            </div>
+                        )
+                    ) : (
+                        <div className={styles.systemValues} key={index}>
+                            <div className={styles.field2}>
+                                <img src={Logo} alt="logoIcon" />
+                                <span>{value?.content}</span>
+                            </div>
+                        </div>
+                    )
                 ))}
             </div>
             {currentFieldIndex < formData?.fields.length && formData?.fields[currentFieldIndex].public && (
                 <form onSubmit={handleSubmit} className={styles.publishFormContainer}>
                     <div className={styles.inputDetail}>
-                        <label>
-                            {formData?.fields[currentFieldIndex].content || 'Hi'}
-                        </label>
-                        <input
-                            type="text"
-                            value={userInput}
-                            onChange={(e) => setUserInput(e.target.value)}
-                            required
-                        />
-                        <button type="submit">Submit</button>
+                        {formData?.fields[currentFieldIndex].type === 'text' &&
+                            <input
+                                type="text"
+                                value={userInput}
+                                placeholder='Enter your text'
+                                onChange={(e) => setUserInput(e.target.value)}
+                                required
+                            />
+                        }
+                        {formData?.fields[currentFieldIndex].type === 'date' &&
+                            <input
+                                type="date"
+                                onChange={handleDateChange}
+                                required
+                                className={styles.dateInput}
+                            />}
+                        {formData?.fields[currentFieldIndex].type === 'email' &&
+                            <input
+                                type="text"
+                                value={userInput}
+                                placeholder='Enter your email'
+                                onChange={(e) => setUserInput(e.target.value)}
+                                required
+                            />}
+                        {formData?.fields[currentFieldIndex].type === 'number' &&
+                            <input
+                                type="text"
+                                value={userInput}
+                                placeholder='Enter a number'
+                                onChange={(e) => setUserInput(e.target.value)}
+                                required
+                            />}
+                        {formData?.fields[currentFieldIndex].type === 'phone' &&
+                            <input
+                                type="text"
+                                value={userInput}
+                                placeholder='Enter your phone'
+                                onChange={(e) => setUserInput(e.target.value)}
+                                required
+                            />}
+                        {formData?.fields[currentFieldIndex].type === 'button' &&
+                            <button
+                                className={styles.inputBtn}
+                                onClick={() => setUserInput(formData?.fields[currentFieldIndex].content)}
+                            >
+                                {formData?.fields[currentFieldIndex].content}
+                            </button>}
+                        {formData?.fields[currentFieldIndex].type === 'rating' &&
+                            <div className={styles.ratingInput}>
+                                {[1, 2, 3, 4, 5].map((rating) => (
+                                    <div
+                                        key={rating}
+                                        className={`${selectedRating === rating ? styles.selectedRating : ''}`}
+                                        onClick={() => handleRatingClick(rating)}
+                                    >
+                                        {rating}
+                                    </div>
+                                ))}
+                            </div>}
+                        {formData?.fields[currentFieldIndex].type === 'button' ? <></> :
+                            <button type="submit"><img src={Send} alt="sendIcon" /></button>}
                     </div>
                 </form>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 };
 
