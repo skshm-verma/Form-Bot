@@ -86,6 +86,7 @@
     font-family: "Outfit";
     font-size: 1rem;
     text-align: center;
+    color: #A0AEC0 !important;
 }
 
 
@@ -137,12 +138,6 @@
     width: 10rem;
     right: 0;
     filter: blur(60px);
-}
-
-.extraDiv {
-    width: 100%;
-    height: 10rem;
-    background-color: orange !important;
 }
 
 .aboutWorkWrapper1,
@@ -203,7 +198,7 @@
     padding-bottom: 1rem;
 }
 
-.toolsAbout p{
+.toolsAbout p {
     color: #A0AEC0 !important;
     font-family: "Open Sans";
 }
@@ -240,8 +235,216 @@
     padding-bottom: 4rem;
 }
 
-.resultAbout p span{
+.resultAbout p span {
     font-weight: 500;
     background-color: transparent !important;
     color: #bacadf !important;
+}
+
+.featuresContainer {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent !important;
+}
+
+.featuresHeading h2 {
+    font-family: "Outfit";
+    font-size: 35px;
+    letter-spacing: 2px;
+    padding-bottom: 1.3rem;
+    text-align: center;
+}
+
+.featuresHeading p {
+    color: #A0AEC0 !important;
+    font-family: "Open Sans";
+    text-align: center;
+    padding-bottom: 4rem;
+}
+
+.features {
+    background-color: transparent !important;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.eachFeature {
+    width: 24rem;
+    height: 15rem;
+    background-color: #1A202C !important;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+    margin-right: 2rem;
+}
+
+.eachFeature span {
+    position: absolute;
+    background-color: #1A5FFF !important;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 8px;
+    transform: translate(0px, -7.5rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.eachFeature span img {
+    width: 32px;
+    height: 32px;
+}
+
+.eachFeature h3 {
+    font-family: "Outfit";
+    font-size: 25px;
+    letter-spacing: 1px;
+    padding-bottom: 8rem;
+    text-align: center;
+}
+
+.eachFeature p {
+    position: absolute;
+    color: #A0AEC0 !important;
+    font-family: "Open Sans";
+    text-align: center;
+    width: 85%;
+}
+
+.clientsContainer {
+    padding-top: 6rem;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(#171923, #1A202C);
+    z-index: 100;
+    padding-bottom: 6rem;
+}
+
+.clientsContainer h2 {
+    font-family: "Outfit";
+    font-size: 35px;
+    letter-spacing: 1px;
+    padding-bottom: 1.3rem;
+    text-align: center;
+}
+
+
+.allClients {
+    background-color: transparent !important;
+    width: 90%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 100;
+}
+
+.allClients img {
+    width: 18rem;
+    height: 4.5rem;
+    margin-top: 4rem;
+    margin-right: 2rem;
+}
+
+
+.conclusionContainer {
+    background: linear-gradient(#171923, #1A202C);
+    height: 50rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+.conclusionHeading {
+    background-color: transparent !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 9rem;
+}
+
+.conclusionHeading h2 {
+    font-family: "Outfit";
+    font-size: 45px;
+    letter-spacing: 1px;
+    padding-bottom: 1.3rem;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+.conclusionHeading p {
+    color: #A0AEC0 !important;
+    font-family: "Open Sans";
+    text-align: center;
+    padding-top: 2rem;
+}
+
+
+.conclusionHeading button {
+    width: 16rem;
+    font-family: 'Open Sans';
+    border: 2px solid #1A5FFF;
+    border-radius: 8px;
+    background-color: #1A5FFF;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 10px 15px;
+}
+
+.triangle1 {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+}
+
+.semiCircle1 {
+    position: absolute;
+    right: 5px;
+}
+
+
+.footerContainer{
+     height: fit-content;
+     width: 100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+
+.eachFootItem{
+    height: 15rem;
+    width: 15rem;
+    background-color: #A0AEC0 !important;
+    margin-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.eachFootItem span {
+    font-family: "Open Sans";
+    font-size: 16px;
+    background-color: transparent !important;
+    padding-top: 1.5rem;
 }

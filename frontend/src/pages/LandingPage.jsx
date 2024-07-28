@@ -15,6 +15,20 @@ import WorkImage2 from '../assets/workingImage3.png';
 import WorkImage3 from '../assets/workingImage4.png';
 import Tools1 from '../assets/platforms1.png';
 import Tools2 from '../assets/platforms2.png';
+import Contact from '../assets/contactShare.png';
+import Hidden from '../assets/hiddenFields.png';
+import Folder from '../assets/folder.png';
+import Share from '../assets/share.png';
+import LinkShare from '../assets/linkShare.png';
+import Code from '../assets/customCode.png';
+import Creator1 from '../assets/creators1.png';
+import Creator2 from '../assets/creators2.png';
+import Creator3 from '../assets/creators3.png';
+import Creator4 from '../assets/creators4.png';
+import Creator5 from '../assets/creators5.png';
+import Creator6 from '../assets/creators6.png';
+import Creator7 from '../assets/creators7.png';
+import Creator8 from '../assets/creators8.png';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -95,10 +109,85 @@ const LandingPage = () => {
                     </div>
                 </div>
             </section>
-            <div className={styles.extraDiv}>
+            <section id="features">
+                <div className={styles.featuresContainer}>
+                    <div className={styles.featuresHeading}>
+                        <h2>And many more features</h2>
+                        <p>Typebot makes form building easy and comes with powerful features</p>
+                    </div>
+                    <div className={styles.features}>
+                        <div className={styles.eachFeature}>
+                            <span><img src={Hidden} alt="hiddenFieldIcon" /></span>
+                            <h3>Hidden fields</h3>
+                            <p>Include data in your form URL to segment your user and use its data directly in your form.</p>
 
-            </div>
-        </div>
+                        </div>
+                        <div className={styles.eachFeature}>
+                            <span><img src={Contact} alt="contactIcon" /></span>
+                            <h3>Team collaboration</h3>
+                            <p>Invite your teammates to work on your typebots with you</p>
+                        </div>
+                        <div className={styles.eachFeature}>
+                            <span><img src={LinkShare} alt="shareIcon" /></span>
+                            <h3>Link to sub typebots</h3>
+                            <p>Reuse your typebots in different parent bots.</p>
+                        </div>
+                        <div className={styles.eachFeature}>
+                            <span><img src={Share} alt="shareIcon" /></span>
+                            <h3>Custom code</h3>
+                            <p>Customize everything with your own Javascript & CSS code</p>
+                        </div>
+                        <div className={styles.eachFeature}>
+                            <span><img src={Folder} alt="folderIcon" /></span>
+                            <h3>Custom domain</h3>
+                            <p>Connect your typebot to the custom URL of your choice</p>
+                        </div>
+                        <div className={styles.eachFeature}>
+                            <span><img src={Code} alt="customCodeIcon" /></span>
+                            <h3>Folder management</h3>
+                            <p>Organize your typebots in specific folders to keep it clean and work with multiple clients</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="clients">
+                <div className={styles.clientsContainer}>
+                    <h2>Loved by teams and creators from all around the world</h2>
+
+                    <div className={styles.allClients}>
+                        <img src={Creator2} alt="creatorsImg" />
+                        <img src={Creator1} alt="creatorsImg" />
+                        <img src={Creator3} alt="creatorsImg" />
+                        <img src={Creator4} alt="creatorsImg" />
+                        <img src={Creator8} alt="creatorsImg" />
+                        <img src={Creator7} alt="creatorsImg" />
+                        <img src={Creator6} alt="creatorsImg" />
+                        <img src={Creator5} alt="creatorsImg" />
+                    </div>
+                </div>
+            </section>
+            <section id="conclusion">
+                <div className={styles.conclusionContainer}>
+                    <img className={styles.triangle1} src={Triangle} alt="triangleImage" />
+                    <div className={styles.conclusionHeading}>
+                        <h2>Improve conversion and user engagement<br /> with FormBots</h2>
+                        <button onClick={() => navigate('/signUp')}>Create a FormBot</button>
+                        <p>No trial. Generous free plan.</p>
+                    </div>
+                    <img className={styles.semiCircle1} src={SemiCircle} alt="semiCircleImage" />
+                </div>
+            </section>
+            <section id='footer'>
+                <div className={styles.footerContainer}>
+                    <div className={styles.eachFootItem}>
+                      <span>Made with ❤️ by<br/> <a>Saksham</a></span>  
+                    </div>
+                    <div className={styles.eachFootItem}></div>
+                    <div className={styles.eachFootItem}></div>
+                    <div className={styles.eachFootItem}></div>
+                </div>
+            </section>
+        </div >
     )
 }
 
