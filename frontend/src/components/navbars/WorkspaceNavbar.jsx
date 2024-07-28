@@ -12,6 +12,11 @@ const WorkspaceNavbar = ({ type, name }) => {
     setIsOpen(!isOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.setItem("token", '');
+    window.location.reload();
+  }
+
   return (
     <>
       {type === "dropdown" ?
@@ -29,7 +34,7 @@ const WorkspaceNavbar = ({ type, name }) => {
               <hr />
               <button onClick={() => navigate('/workspace/settings')}>Settings</button>
               <hr />
-              <button>Logout</button>
+              <button onClick={handleLogout}>Logout</button>
             </div>
           )}
         </div> : <></>}

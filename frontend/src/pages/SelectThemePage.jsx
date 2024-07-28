@@ -1,28 +1,72 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth, useForm } from '../context/AllContext';
 import NewFormNavbar from '../components/navbars/NewFormNavbar';
-import { createNewTypeBot, getAllFormData } from '../helpers/api-communicator';
+import { createNewTypeBot, getAllFormData, updateFormTheme } from '../helpers/api-communicator';
 import styles from './SelectThemePage.module.css';
-import Logo from '../assets/logo3.png'
-import { useLocation } from 'react-router-dom';
+import Logo from '../assets/logo3.png';
+import Chat from '../assets/chatIcon1.png';
+import Text from '../assets/textIcon.png';
+import Email from '../assets/emailIcon.png';
+
+const defaultData = [
+    {
+        content: "Enter Your Name",
+        icon: Chat,
+        id: "predefined-text",
+        label: "Default Text 1",
+        placeholder: "Click here to edit",
+        public: false,
+        type: "text"
+    },
+    {
+        content: "",
+        icon: Text,
+        id: "public-text",
+        label: "Default Text 1",
+        placeholder: "Hint: User will input a text on his form",
+        public: true,
+        type: "text"
+    },
+    {
+        content: "Enter Your Email",
+        icon: Chat,
+        id: "predefined-text",
+        label: "Default Email 1",
+        placeholder: "Click here to edit",
+        public: false,
+        type: "text"
+    },
+    {
+        content: "",
+        icon: Email,
+        id: "public-text",
+        label: "Default Email 1",
+        placeholder: "Hint: User will input a email on his form",
+        public: true,
+        type: "email"
+    }
+]
 
 const SelectThemePage = () => {
-    // const location = useLocation();
     const auth = useAuth();
     const form = useForm();
-    // const [formId, setFormId] = useState('');
-    const [selectedTheme, setSelectedTheme] = useState(form?.formTheme);
+    const [selectedTheme, setSelectedTheme] = useState('light');
     const [isSaved, setIsSaved] = useState(false);
-//() => localStorage.getItem('selectedTheme') || 
+
+
     const handleSave = () => {
         setIsSaved(true);
-        // localStorage.setItem('selectedTheme', selectedTheme);
     };
+
 
     const handleShare = async () => {
         try {
-            if (isSaved && form?.formFields) {
-                const response = await createNewTypeBot(auth?.userId, form?.formName, form?.formFields, form?.folderId, form?.formTheme);
+            if (isSaved && form?.formId) {
+                const response = await updateFormTheme(form?.formId, selectedTheme);
+                console.log("Update Form Successful", response);
+            } else if (isSaved) {
+                const updatedFormFields = [...defaultData, ...form?.formFields];
+                const response = await createNewTypeBot(auth?.userId, form?.formName, updatedFormFields, form?.folderId, form?.formTheme);
                 alert(`Form submitted`);
             } else {
                 alert('Save The Form First');
@@ -34,14 +78,7 @@ const SelectThemePage = () => {
 
     const handleThemeClick = (theme) => {
         setSelectedTheme(theme);
-        form?.saveFormTheme(theme);
-        // localStorage.setItem('selectedTheme', theme);
     };
-
-    // useEffect(() => {
-    //     const formIdFromState = location.state?.formId;
-    //     setFormId(formIdFromState || form?.formId);
-    // }, [location.state, form?.formId]);
 
     useEffect(() => {
         if (form?.formId) {
@@ -50,7 +87,6 @@ const SelectThemePage = () => {
 
                     const response = await getAllFormData(form?.formId);
                     setSelectedTheme(response?.theme);
-                    // localStorage.setItem('selectedTheme', response?.data?.theme);
                 } catch (error) {
                     console.log(error)
                 }

@@ -15,7 +15,7 @@ const Workspace = () => {
     const [openModal, setOpenModal] = useState(false);
     const [folderName, setFolderName] = useState('');
     const [modalMode, setModalMode] = useState('create');
-    const [itemToDelete, setItemToDelete] = useState(null); 
+    const [itemToDelete, setItemToDelete] = useState(null);
     const [allFoldersNames, setAllFoldersNames] = useState([]);
     const [allFormsNames, setAllFormsNames] = useState([]);
     const [openedFolders, setOpenedFolders] = useState(new Set());
@@ -92,6 +92,11 @@ const Workspace = () => {
             if (itemToDelete.type === 'folder') {
                 await deleteFolder(itemToDelete.id);
                 setAllFoldersNames(prevFolders => prevFolders.filter(folder => folder.id !== itemToDelete.id));
+                setOpenedFolders(prevFolders => {
+                    const newFolders = new Set(prevFolders);
+                    newFolders.delete(itemToDelete.id);
+                    return newFolders;
+                });
             } else if (itemToDelete.type === 'form') {
                 await deleteForm(itemToDelete.id);
                 setAllFormsNames(prevForms => prevForms.filter(form => form !== itemToDelete.name));

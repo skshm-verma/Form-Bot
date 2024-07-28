@@ -72,6 +72,26 @@ const getAllForms = async (folderId) => {
     }
 }
 
+const updateFormData = async (formId, fields, title) => {
+    try {
+        const response = await axios.patch('/workspace/updateFormData', { formId, fields, title });
+        console.log("upadte form response: ", response);
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+}
+
+const updateFormTheme = async (formId, theme) => {
+    try {
+        const response = await axios.patch('/workspace/updateFormTheme', { formId, theme });
+        console.log("upadte form response: ", response);
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+}
+
 const createNewTypeBot = async (userId, formName, formFields, folderId, theme) => {
     try {
         const formData = {
@@ -81,7 +101,6 @@ const createNewTypeBot = async (userId, formName, formFields, folderId, theme) =
             fields: formFields,
             theme
         };
-        console.log("Form data: ", formData)
         const response = await axios.post('/workspace/newForm', formData);
         console.log("response data: ", response.data)
         return response.data;
@@ -153,6 +172,8 @@ export {
     createNewFolder,
     getAllFolders,
     getAllForms,
+    updateFormData,
+    updateFormTheme,
     createNewTypeBot,
     deleteFolder,
     deleteForm,

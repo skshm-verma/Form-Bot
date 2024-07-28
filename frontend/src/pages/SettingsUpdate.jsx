@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { updateUserDetails } from '../helpers/api-communicator';
 import { useAuth } from '../context/AllContext';
 import Logout from '../assets/logoutIcon.png';
@@ -6,10 +6,12 @@ import Lock from '../assets/lockIcon.png';
 import Eye from '../assets/eyeIcon.png';
 import User from '../assets/userIcon.png';
 import styles from './SettingsUpdate.module.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const SettingsUpdate = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
   const [showEmail, setShowEmail] = useState(false);
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -55,6 +57,21 @@ const SettingsUpdate = () => {
       setErrors(validationErrors);
     }
   };
+
+  const handleLogout = () => {
+    localStorage.setItem("token", '');
+    window.location.reload();
+  }
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const status = await auth?.checkAuthStatus();
+      if (status === 401) {
+        navigate('/');
+      }
+    };
+    checkLoginStatus();
+  }, [auth])
 
   return (
     <div className={styles.settingsWrapper}>
@@ -108,7 +125,11 @@ const SettingsUpdate = () => {
           </div>
         </form>
       </div>
-      <button className={styles.logoutBtn}><img src={Logout} alt="logoutIcon" /> Log out</button>
+      <button
+        onClick={handleLogout}
+        className={styles.logoutBtn}>
+        <img src={Logout} alt="logoutIcon" /> Log out
+      </button>
     </div>
   )
 }

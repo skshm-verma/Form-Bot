@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './NewFormPage.module.css'
 import NewFormNavbar from '../components/navbars/NewFormNavbar'
 import SelectionChips from '../components/inputTypes/SelectionChips'
-import { createNewTypeBot, getAllFormData } from '../helpers/api-communicator';
+import { createNewTypeBot, getAllFormData, updateFormData } from '../helpers/api-communicator';
 import Chat from '../assets/chatIcon1.png';
 import Gif from '../assets/gifIcon.png';
 import Image from '../assets/imageIcon1.png';
@@ -34,21 +34,60 @@ const publicFields = [
   { id: 'public-phone', type: 'phone', icon: Phone, label: 'Phone', placeholder: 'Hint: User will input a phone on his form' },
   { id: 'public-date', type: 'date', icon: Date, label: 'Date', placeholder: 'Hint: User will select a date' },
   { id: 'public-rating', type: 'rating', icon: Rating, label: 'Rating', placeholder: 'Hint: User will tap to rate out of 5' },
-  { id: 'public-button', type: 'button', icon: Button, label: 'Button', placeholder: 'Write custom name for start'}
+  { id: 'public-button', type: 'button', icon: Button, label: 'Button', placeholder: 'Write custom name for start' }
 ];
+
+const defaultData = [
+  {
+    content: "Enter Your Name",
+    icon: Chat,
+    id: "predefined-text",
+    label: "Default Text 1",
+    placeholder: "Click here to edit",
+    public: false,
+    type: "text"
+  },
+  {
+    content: "",
+    icon: Text,
+    id: "public-text",
+    label: "Default Text 1",
+    placeholder: "Hint: User will input a text on his form",
+    public: true,
+    type: "text"
+  },
+  {
+    content: "Enter Your Email",
+    icon: Chat,
+    id: "predefined-text",
+    label: "Default Email 1",
+    placeholder: "Click here to edit",
+    public: false,
+    type: "text"
+  },
+  {
+    content: "",
+    icon: Email,
+    id: "public-text",
+    label: "Default Email 1",
+    placeholder: "Hint: User will input a email on his form",
+    public: true,
+    type: "email"
+  }
+]
 
 const NewFormPage = () => {
   const auth = useAuth();
   const form = useForm();
   const location = useLocation();
   const navigate = useNavigate();
-  const [folderId] = useState(location.state?.folderId || form?.folderId);
+  const [folderId] = useState(location.state?.folderId);
+  const [formId] = useState(location.state?.formId);
   const [formFields, setFormFields] = useState([]);
   const [fieldCounts, setFieldCounts] = useState({});
   const [formName, setFormName] = useState('');
   const [isSaved, setIsSaved] = useState(false);
   const [errors, setErrors] = useState({});
-
 
   const addField = (field, isPublic) => {
     const icon = field.icon;
@@ -106,23 +145,33 @@ const NewFormPage = () => {
 
   const handleShare = async () => {
     try {
-      if (form?.formFields) {
-        const response = await createNewTypeBot(auth?.userId, form?.formName, form?.formFields, form?.folderId, form?.formTheme);
-        const formId = response?.form?._id;
-        // console.log("Response NewForm:", response?.form?._id);
-        if (formId) {
-          const url = `http://localhost:5173/submitForm/${formId}`;
-          console.log("URL to be copied:", url);
-          await navigator.clipboard.writeText(url);
-          alert('URL copied to clipboard: ' + url);
+      if (validateFields()) {
+        if (isSaved && formId) {
+          const response = await updateFormData(formId, form?.formFields, form?.formName);
+          setFormFields(response.data.fields);
+          setFormName(response.data.title);
+          console.log("Updated Response: ", response)
+          // if (response.status === 200) {
+          //   alert('Form updated successfully');
+          // }
+        } else if (isSaved) {
+          const updatedFormFields = [...defaultData, ...formFields];     // customizeable
+          const response = await createNewTypeBot(auth?.userId, formName, updatedFormFields, folderId, form?.formTheme);
+          const newFormId = response?.form?._id;
+          if (newFormId) {
+            const url = `http://localhost:5173/submitForm/${newFormId}`;
+            await navigator.clipboard.writeText(url);
+            alert('URL copied to clipboard: ' + url);
+          }
+        } else {
+          alert("First Save the Form")
         }
-      } else {
-        alert('Save The Form First');
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
 
   const renderForm = () => {
     return formFields?.map((field, index) =>
@@ -178,11 +227,13 @@ const NewFormPage = () => {
     }
   }, [form?.formFields]);
 
+
+
   return (
     <div className={styles.formWrapper}>
       <nav>
         <NewFormNavbar
-          formName={formName}
+          formName={ formName }
           setFormName={setFormName}
           onSave={handleSave}
           onShare={handleShare}

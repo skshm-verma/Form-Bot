@@ -22,22 +22,9 @@ const ContextProvider = ({ children }) => {
             setUserId(data.userId);
             return 200;
         } else {
-            setIsLoggedIn(false);
             return data.status;
         }
     }
-
-    // const logout = async () => {
-    //     try {
-
-    //         const data = await logoutUser();
-    //         setIsLoggedIn(false);
-    //         setUser(null);
-    //         window.location.reload();
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // };
 
     const saveFormValues = (formName, formFields, folderId) => {
         setFormName(formName);
@@ -53,9 +40,9 @@ const ContextProvider = ({ children }) => {
         setFormTheme(theme);
     }
 
-    const saveFolderId = (folderId) => {
-        setFolderId(folderId);
-    }
+    // const saveFolderId = (folderId) => {
+    //     setFolderId(folderId);
+    // }
 
     const resetFormValues = () => {
         setFormName('');
@@ -76,7 +63,7 @@ const ContextProvider = ({ children }) => {
         formName,
         formFields,
         folderId,
-        saveFolderId,
+        // saveFolderId,
         saveFormId,
         formId,
         saveFormTheme,

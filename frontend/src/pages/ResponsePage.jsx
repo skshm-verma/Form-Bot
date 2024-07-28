@@ -198,6 +198,8 @@ const ResponsePage = () => {
         if (formId) {
             const getResponseData = async () => {
                 const response = await getAllFormData(formId);
+                console.log(response);
+                console.log("User Inputs: ",response.userInputs);
                 setViews(response.views);
                 setUserInputs(response.userInputs);
             };

@@ -132,13 +132,26 @@ const getFormDetails = async (req, res) => {
 }
 
 const updateFormFields = async (req, res) => {
-    const { formId, fields } = req.query;
+    const { formId, fields, title } = req.body;
     const form = await Form.findById(formId);
     if (!form) {
         throw new NotFoundError("Form not found");
     }
     form.fields = fields;
-    res.status(statusCodes.OK).json({ message: "Success", fields: form.fields });
+    form.title = title;
+    await form.save();
+    res.status(statusCodes.OK).json({ message: "Success", fields: form.fields, title: form.title });
+}
+
+const updateFormTheme = async (req, res) => {
+    const { formId, theme } = req.body;
+    const form = await Form.findById(formId);
+    if (!form) {
+        throw new NotFoundError("Form not found");
+    }
+    form.theme = theme;
+    await form.save();
+    res.status(statusCodes.OK).json({ message: "Success", theme: form.theme });
 }
 
 const updateFormViews = async (req, res) => {
@@ -155,7 +168,6 @@ const updateFormViews = async (req, res) => {
 const createPublicInput = async (req, res) => {
     const { formId, date, labelName, response } = req.body;
 
-    //formId, date and views are mandatory fields
     const form = await Form.findById(formId);
     if (!form) {
         throw new NotFoundError("Form not found");
@@ -181,10 +193,14 @@ const deleteFolder = async (req, res) => {
         throw new BadRequestError("Folder ID is required");
     }
 
-    const folder = await Folder.findById(folderId)
+    const folder = await Folder.findById(folderId).populate('forms');
     if (!folder) {
         throw new NotFoundError("Folder not found");
     }
+
+    const formIds = folder.forms.map(form => form._id);
+    await Form.deleteMany({ _id: { $in: formIds } });
+
     await Folder.findByIdAndDelete(folderId);
     res.status(statusCodes.OK).json({ message: "Folder deleted successfully" });
 
@@ -205,4 +221,4 @@ const deleteForm = async (req, res) => {
     res.status(statusCodes.OK).json({ message: "Form deleted successfully" });
 }
 
-module.exports = { createForm, createFolder, getFormId, getAllFolders, getAllForms, getFormInputDetails, getFormDetails, createPublicInput, updateFormFields, updateFormViews, deleteFolder, deleteForm }
+module.exports = { createForm, createFolder, getFormId, getAllFolders, getAllForms, getFormInputDetails, getFormDetails, createPublicInput, updateFormFields, updateFormTheme, updateFormViews, deleteFolder, deleteForm }
