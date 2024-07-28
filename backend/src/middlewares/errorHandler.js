@@ -14,7 +14,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   if (err.code && err.code === 11000) {
-    console.log(err.keyValue)
+    // console.log(err.keyValue)
     customError.message = `Duplicate value entered`
     customError.statusCode = 400
   }

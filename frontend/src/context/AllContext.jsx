@@ -53,6 +53,18 @@ const ContextProvider = ({ children }) => {
         setFormTheme(theme);
     }
 
+    const saveFolderId = (folderId) => {
+        setFolderId(folderId);
+    }
+
+    const resetFormValues = () => {
+        setFormName('');
+        setFormFields('');
+        setFolderId('');
+        setFormId('');
+        setFormTheme('light');
+    };
+
     const authValues = {
         userName,
         userId,
@@ -64,10 +76,12 @@ const ContextProvider = ({ children }) => {
         formName,
         formFields,
         folderId,
+        saveFolderId,
         saveFormId,
         formId,
         saveFormTheme,
-        formTheme
+        formTheme,
+        resetFormValues
     }
 
     return <AuthContext.Provider value={authValues}>

@@ -18,7 +18,8 @@ const userSignUp = async (req, res) => {
         password: hashedPassword,
     })
     await newUser.save();
-    res.status(statusCodes.CREATED).json({ message: "SUCCESS", name: newUser.name, email: newUser.email });
+    const token = generateToken(newUser._id.toString(), newUser.name);
+    res.status(statusCodes.CREATED).json({ message: "SUCCESS", name: newUser.name, email: newUser.email, token });
 }
 
 const userSignIn = async (req, res) => {
@@ -72,7 +73,7 @@ const updateUser = async (req, res) => {
 
     const oldEmail = await User.findOne({ email })
     if(oldEmail){
-        throw new BadRequestError('User with this email already registered');
+        throw new BadRequestError('Email already registered');
     }
 
     // Verify the old password
@@ -87,7 +88,7 @@ const updateUser = async (req, res) => {
     user.password = await bcrypt.hash(newPassword, 10);
 
     await user.save();
-    res.status(statusCodes.OK).json({ message: 'User updated successfully' });
+    res.status(statusCodes.OK).json({ msg: 'User updated successfully' });
 }
 
 module.exports = { userSignUp, userSignIn, verifyUser, updateUser }

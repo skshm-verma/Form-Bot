@@ -1,29 +1,31 @@
-.inputContainer{
+.inputContainer {
     background-color: black !important;
     margin: 1rem 0rem;
     display: flex;
     flex-direction: column;
     position: relative;
     width: 22rem;
-    height: 7rem;
-    border-radius: 8px ;
+    height: 7.5rem;
+    border-radius: 8px;
 }
 
 .inputContainer span {
     background-color: black !important;
     font-family: "Open Sans";
     font-size: 18px;
-    border-radius: 8px ;
+    border-radius: 8px;
     margin-left: 10px;
+    padding-top: 15px;
 }
 
-.inputs{
+.inputs {
     background-color: black !important;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40px;
 }
+
 .inputs img {
     background-color: transparent !important;
     width: 1.5rem;
@@ -34,23 +36,44 @@
 }
 
 .defaultInput {
-    background-color: #1F1F23  !important;
+    background-color: #1F1F23 !important;
     width: 17.5rem;
     height: 100%;
     position: relative;
-    border: none !important;
+    border: 1px solid transparent !important;
 }
 
 .publicInput {
-    background-color: #1F1F23  !important;
+    background-color: #1F1F23 !important;
     outline: none !important;
     border: none !important;
     width: 17.5rem;
 }
 
-.deleteBtn{
+.inputContainer .deleteImgContainer{
+    position: absolute;
+    background-color: #444444 !important;
+    transform: translate(20rem, -20px);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.deleteBtn {
     background-color: transparent !important;
     position: absolute;
-    transform: translate(21rem, -12px);
+    transform: translate(0px, -8px);
     cursor: pointer;
+}
+
+.errorMessage p {
+    font-family: "Open Sans";
+    font-size: 12px;
+    padding-top: 12px;
+    padding-left: 4rem;
+    color: #522224 !important;
+}
+
+.errorMessage .defaultInput{
+    border-color: #F55050 !important;
 }

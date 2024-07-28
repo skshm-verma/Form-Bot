@@ -49,6 +49,7 @@ const SignUp = () => {
   };
 
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = validate();
@@ -67,6 +68,7 @@ const SignUp = () => {
     try {
       const response = await signUpUser(userName, email, password);
       if (response?.status === 201) {
+
         toast.custom((t) => (
           <div style={toastTheme}>
             <img width="28" height="28" src="https://img.icons8.com/color/48/ok--v1.png" alt="successIcon" />
@@ -75,7 +77,8 @@ const SignUp = () => {
         ),
           { id: "register", duration: 300 }
         );
-        setTimeout(() => navigate('/'), 300);
+        localStorage.setItem("token", response.data.token);
+        setTimeout(() => navigate('/workspace'), 300);//not required, just to show case toast properly for smaller data
       }
     } catch (error) {
       console.log(error);

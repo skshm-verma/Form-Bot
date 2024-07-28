@@ -67,6 +67,20 @@ const PublishForm = () => {
         }
     }, [currentFieldIndex, isPaused, formData]);
 
+
+    const getBackgroundColorClass = (theme) => {
+        switch (theme) {
+            case 'dark':
+                return styles.darkTheme;
+            case 'tail':
+                return styles.tailTheme;
+            case 'light':
+                return styles.lightTheme;
+            default:
+                return styles.lightTheme;
+        }
+    };
+
     const handleDateChange = (e) => {
         const [year, month, day] = e.target.value.split('-');
         setUserInput(`${day}/${month}/${year}`);
@@ -80,32 +94,32 @@ const PublishForm = () => {
     const handleSubmit = async (e) => {
         console.log(formData?.fields[currentFieldIndex].label);
         e.preventDefault();
-        // try {
-        //     await createUserInput(
-        //         formId,
-        //         currentDateTime,
-        //         formData?.fields[currentFieldIndex].label,
-        //         userInput
-        //     );
-        // } catch (error) {
-        //     console.error("Failed to submit user input", error);
-        // }
+        try {
+            await createUserInput(
+                formId,
+                currentDateTime,
+                formData?.fields[currentFieldIndex].label,
+                userInput
+            );
+        } catch (error) {
+            console.error("Failed to submit user input", error);
+        }
 
         setSubmittedValues(prevValues => [
             ...prevValues,
             { content: userInput, type: formData.fields[currentFieldIndex].type, public: formData.fields[currentFieldIndex].public }
         ]);
         setUserInput('');
-        setIsPaused(true);
+        setIsPaused(false);
         setCurrentFieldIndex(currentFieldIndex + 1);
     };
 
     return (
-        <div className={styles.submitFormWrapper}>
+        <div className={`${styles.submitFormWrapper} ${formData ? getBackgroundColorClass(formData.theme) : ''}`}>
             <div className={styles.formData}>
                 {submittedValues.map((value, index) => (
                     value?.public ? (value?.type === 'rating' ?
-                        <div className={styles.publicValues}>
+                        <div className={styles.publicValues} key={index}>
                             <div className={styles.ratingDisplay}>
                                 {[1, 2, 3, 4, 5].map((rating) => (
                                     <div
@@ -116,7 +130,7 @@ const PublishForm = () => {
                                     </div>
                                 ))}
                             </div>
-                                <span className={styles.ratingSend}><img src={Send} alt="sendIcon" /></span>
+                            <span className={styles.ratingSend}><img src={Send} alt="sendIcon" /></span>
                         </div> :
                         (
                             <div className={styles.publicValues} key={index}>
@@ -130,7 +144,25 @@ const PublishForm = () => {
                         <div className={styles.systemValues} key={index}>
                             <div className={styles.field2}>
                                 <img src={Logo} alt="logoIcon" />
-                                <span>{value?.content}</span>
+                                {value?.type === 'text' && <span>{value?.content}</span>}
+                                {value?.type === 'img' &&
+                                    <div className={styles.fieldImgContainer}>
+                                        <img src={value?.content} alt="" />
+                                    </div>
+                                }
+                                {value?.type === 'video' &&
+                                    <div className={styles.fieldVideoContainer}>
+                                        <video key={index} controls>
+                                            <source src={value?.content} type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                }
+                                {value?.type === 'gif' &&
+                                    <div className={styles.fieldImgContainer}>
+                                        <img src={value?.content} alt="" />
+                                    </div>
+                                }
                             </div>
                         </div>
                     )

@@ -18,7 +18,7 @@ const formSchema = new mongoose.Schema({
       icon: { type: String, required: true },
       placeholder: { type: String, required: true },
       type: { type: String, required: true },
-      content: { type: String, default: "Hi" },
+      content: { type: String },
       public: { type: Boolean, default: false }
     }
   ],

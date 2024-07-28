@@ -21,20 +21,20 @@ import Flag from '../assets/flagIcon.png'
 import InputChips from '../components/inputTypes/InputChips';
 
 const predefinedFields = [
-  { type: 'text', icon: Chat, label: 'Text', placeholder: 'Click here to edit' },
-  { type: 'img', icon: Image, label: 'Image', placeholder: 'Click to add link' },
-  { type: 'video', icon: Video, label: 'Video', placeholder: 'Click to add link' },
-  { type: 'gif', icon: Gif, label: 'Gif', placeholder: 'Click to add link' }
+  { id: 'predefined-text', type: 'text', icon: Chat, label: 'Text', placeholder: 'Click here to edit' },
+  { id: 'predefined-img', type: 'img', icon: Image, label: 'Image', placeholder: 'Click to add link' },
+  { id: 'predefined-video', type: 'video', icon: Video, label: 'Video', placeholder: 'Click to add link' },
+  { id: 'predefined-gif', type: 'gif', icon: Gif, label: 'Gif', placeholder: 'Click to add link' }
 ];
 
 const publicFields = [
-  { type: 'text', icon: Text, label: 'Text', placeholder: 'Hint: User will input a text on his form' },
-  { type: 'number', icon: Number, label: 'Number', placeholder: 'Hint: User will input a number on his form' },
-  { type: 'email', icon: Email, label: 'Email', placeholder: 'Hint: User will input a email on his form' },
-  { type: 'phone', icon: Phone, label: 'Phone', placeholder: 'Hint: User will input a phone on his form' },
-  { type: 'date', icon: Date, label: 'Date', placeholder: 'Hint: User will select a date' },
-  { type: 'rating', icon: Rating, label: 'Rating', placeholder: 'Hint: User will tap to rate out of 5' },
-  { type: 'button', icon: Button, label: 'Button', placeholder: 'Write custom name for start, default: Hi' }
+  { id: 'public-text', type: 'text', icon: Text, label: 'Text', placeholder: 'Hint: User will input a text on his form' },
+  { id: 'public-number', type: 'number', icon: Number, label: 'Number', placeholder: 'Hint: User will input a number on his form' },
+  { id: 'public-email', type: 'email', icon: Email, label: 'Email', placeholder: 'Hint: User will input a email on his form' },
+  { id: 'public-phone', type: 'phone', icon: Phone, label: 'Phone', placeholder: 'Hint: User will input a phone on his form' },
+  { id: 'public-date', type: 'date', icon: Date, label: 'Date', placeholder: 'Hint: User will select a date' },
+  { id: 'public-rating', type: 'rating', icon: Rating, label: 'Rating', placeholder: 'Hint: User will tap to rate out of 5' },
+  { id: 'public-button', type: 'button', icon: Button, label: 'Button', placeholder: 'Write custom name for start'}
 ];
 
 const NewFormPage = () => {
@@ -42,12 +42,12 @@ const NewFormPage = () => {
   const form = useForm();
   const location = useLocation();
   const navigate = useNavigate();
-  const [folderId] = useState(location.state?.folderId);
+  const [folderId] = useState(location.state?.folderId || form?.folderId);
   const [formFields, setFormFields] = useState([]);
   const [fieldCounts, setFieldCounts] = useState({});
   const [formName, setFormName] = useState('');
   const [isSaved, setIsSaved] = useState(false);
-
+  const [errors, setErrors] = useState({});
 
 
   const addField = (field, isPublic) => {
@@ -66,7 +66,7 @@ const NewFormPage = () => {
 
   const updateFieldContent = (index, content) => {
     const newFormFields = formFields.map((field, i) =>
-      i === index ? { ...field, content } : field
+      i === index ? { ...field, content: content ?? '' } : field
     );
     setFormFields(newFormFields);
   };
@@ -76,15 +76,49 @@ const NewFormPage = () => {
     setFormFields(newFormFields);
   };
 
+  const validateFields = () => {
+    const newErrors = {};
+    let isValid = true;
+
+    for (let i = 0; i < formFields.length; i++) {
+      const field = formFields[i];
+      if (predefinedFields.some(predefined => predefined.id === field.id) && !field.content) {
+        newErrors[i] = `Required Field`;
+        isValid = false;
+      }
+    }
+
+    if (!formName.trim()) {
+      alert('Form name cannot be empty.');
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const handleSave = () => {
-    form.saveFormValues(formName, formFields, folderId);
-    setIsSaved(true);
+    if (validateFields()) {
+      form.saveFormValues(formName, formFields, folderId);
+      setIsSaved(true);
+    }
   };
 
   const handleShare = async () => {
     try {
-      const response = await createNewTypeBot(auth?.userId, form?.formName, form?.formFields, form?.folderId, form?.formTheme);
-      console.log("Response NewForm:", response);
+      if (form?.formFields) {
+        const response = await createNewTypeBot(auth?.userId, form?.formName, form?.formFields, form?.folderId, form?.formTheme);
+        const formId = response?.form?._id;
+        // console.log("Response NewForm:", response?.form?._id);
+        if (formId) {
+          const url = `http://localhost:5173/submitForm/${formId}`;
+          console.log("URL to be copied:", url);
+          await navigator.clipboard.writeText(url);
+          alert('URL copied to clipboard: ' + url);
+        }
+      } else {
+        alert('Save The Form First');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -103,6 +137,7 @@ const NewFormPage = () => {
         type={field.type}
         content={field.content}
         onContentChange={(content) => updateFieldContent(index, content)}
+        error={errors[index]}
       />
     ));
   };

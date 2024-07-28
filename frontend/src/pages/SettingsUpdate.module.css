@@ -89,3 +89,13 @@
     gap: 12px;
     cursor: pointer;
 }
+
+.errorText {
+   color: red !important;
+   font-size: 12px;
+   padding-left: 1rem;
+}
+
+.errorInput{
+    border-color:  rgb(118, 33, 33) !important;
+}

@@ -1,5 +1,5 @@
 .submitFormWrapper {
-    background-color: white !important;
+    background-color: white;
     color: black !important;
     width: 100vw;
     height: 100vh;
@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 4rem;
 }
 
 .formData {
@@ -26,6 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: end;
+    padding-bottom: 1rem;
 }
 
 .systemValues {
@@ -34,6 +36,33 @@
     display: flex;
     align-items: center;
     justify-content: start;
+    padding-bottom: 1rem;
+}
+
+.fieldImgContainer {
+    background-color: rgb(239, 237, 233) !important;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 30rem;
+    height: 20rem;
+}
+
+.fieldImgContainer img {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.fieldVideoContainer {
+    background-color: rgb(239, 237, 233) !important;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 30rem;
+    height: 20rem;
+}
+
+.fieldVideoContainer video {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .field1 {
@@ -77,7 +106,7 @@
 .field2 {
     background-color: transparent !important;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     font-family: "Open Sans";
     font-size: 16px;
@@ -96,6 +125,7 @@
     border-radius: 8px;
     padding: 0.5rem 1.2rem;
     margin: 0px;
+    margin-top: 0.5rem;
 }
 
 .publishFormContainer {
@@ -249,4 +279,46 @@
 
 .ratingDisplay div.selectedRating {
     background-color: #FF8E21 !important;
+}
+
+
+.darkTheme {
+    background-color: rgb(26, 29, 39) !important;
+    color: white !important;
+}
+
+.tailTheme {
+    background-color: #508C9B !important;
+    color: white !important;
+}
+
+.lightTheme {
+    background-color: white !important;
+    color: black !important;
+}
+
+
+.darkTheme .systemValues .fieldVideoContainer {
+    background-color: rgb(34, 39, 97) !important;
+}
+
+.darkTheme .systemValues .fieldImgContainer {
+    background-color: rgb(34, 39, 97) !important;
+}
+
+.tailTheme .systemValues .fieldImgContainer {
+    background-color: #085c76 !important;
+}
+
+.tailTheme .systemValues .fieldVideoContainer {
+    background-color: #085c76 !important;
+}
+
+.tailTheme .ratingInput {
+    background-color: rgb(239, 237, 233) !important;
+}
+
+
+.tailTheme .inputDetail input {
+    background-color: rgb(239, 237, 233) !important;
 }

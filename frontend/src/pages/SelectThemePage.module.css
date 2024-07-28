@@ -353,13 +353,20 @@
 }
 
 .backgroundColor3 {
-    background-color: #085c76 !important;
+    background-color: #508C9B !important;
 }
 
 .backgroundColor3 .field1 span {
-    color: black !important;
-    background-color: rgb(239, 237, 233) !important;
+    color: white !important;
+    background-color: #085c76 !important;
 }
 
 
-/* tail color: #508C9B */
+.backgroundColor3 .field2 div {
+    background-color: rgb(239, 237, 233) !important;
+    color: black !important
+}
+
+.backgroundColor3 .field2 span {
+    background-color: transparent !important;
+}

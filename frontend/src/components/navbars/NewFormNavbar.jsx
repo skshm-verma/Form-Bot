@@ -32,11 +32,12 @@ const NewFormNavbar = ({ formName, setFormName, onSave, onShare, isForm, isTheme
           <div
             className={isTheme ? styles.currentMenu : ''}
             onClick={() => navigate('/workspace/selectTheme')}>
+            {/* onClick={() => navigate('/workspace/selectTheme', { state: { formId: form?.formId } })}> */}
             Theme
           </div>
           <div
             className={isResponse ? styles.currentMenu : ''}
-            onClick={() => navigate('/workspace/formResponse', {state: { formId: form?.formId }})}
+            onClick={() => navigate('/workspace/formResponse', { state: { formId: form?.formId } })}
           >
             Response
           </div>
@@ -47,7 +48,7 @@ const NewFormNavbar = ({ formName, setFormName, onSave, onShare, isForm, isTheme
           className={`${styles.btn1} ${isSaved ? styles.buttonBlue : ''}`}
           onClick={onShare}>Share</button>
         <button className={styles.btn2} onClick={onSave}>Save</button>
-        <button className={styles.btn3}><img src={Close} alt="crossIcon" /></button>
+        <button className={styles.btn3}><img src={Close} alt="crossIcon" onClick={()=> navigate('/workspace')}/></button>
       </div>
     </div>
   )

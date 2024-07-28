@@ -34,6 +34,15 @@ const verifyUser = async () => {
     }
 }
 
+const updateUserDetails = async (userId, newUserName, newEmail, oldPassword, newPassword) => {
+    try {
+        const response = await axios.patch('/user/updateUserDetails', { userId, userName: newUserName, email: newEmail, oldPassword, newPassword })
+        return response.data;
+    } catch (error) {
+        return error.response;
+    }
+}
+
 
 const createNewFolder = async (userId, folderName) => {
     try {
@@ -72,8 +81,28 @@ const createNewTypeBot = async (userId, formName, formFields, folderId, theme) =
             fields: formFields,
             theme
         };
+        console.log("Form data: ", formData)
         const response = await axios.post('/workspace/newForm', formData);
+        console.log("response data: ", response.data)
         return response.data;
+    } catch (error) {
+        return error.response;
+    }
+}
+
+const deleteFolder = async (folderId) => {
+    try {
+        const response = await axios.delete('/workspace/deleteFolder', { params: { folderId } });
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+}
+
+const deleteForm = async (formId) => {
+    try {
+        const response = await axios.delete('/workspace/deleteForm', { params: { formId } });
+        return response;
     } catch (error) {
         return error.response;
     }
@@ -81,7 +110,7 @@ const createNewTypeBot = async (userId, formName, formFields, folderId, theme) =
 
 const getFormIdByName = async (formName) => {
     try {
-        const response = await axios.get('/workspace/getFormId', { params: { formName } } )
+        const response = await axios.get('/workspace/getFormId', { params: { formName } })
         return response;
     } catch (error) {
         return error.response;
@@ -90,7 +119,7 @@ const getFormIdByName = async (formName) => {
 
 const getAllFormData = async (formId) => {
     try {
-        const response = await axios.get('/workspace/formDetails', { params: { formId } } )
+        const response = await axios.get('/workspace/formDetails', { params: { formId } })
         return response.data;
     } catch (error) {
         return error.response;
@@ -98,32 +127,35 @@ const getAllFormData = async (formId) => {
 }
 
 const updateFormViews = async (formId, views) => {
-    try{
-       const response = await axios.patch('/workspace/updateFromViews', { formId, views })
-       return response;
-    }catch(error){
+    try {
+        const response = await axios.patch('/workspace/updateFromViews', { formId, views })
+        return response;
+    } catch (error) {
         return error.response;
     }
 }
 
-const createUserInput = async ( formId, date, labelName, response) => {
-    try{
-       const data = await axios.post('/workspace/publicInput', { formId, date, labelName, response })
-       return data;
-    }catch(error){
+const createUserInput = async (formId, date, labelName, response) => {
+    try {
+        const data = await axios.post('/workspace/publicInput', { formId, date, labelName, response })
+        return data;
+    } catch (error) {
         return error.response;
     }
-} 
+}
 
 
 export {
     signUpUser,
     signInUser,
     verifyUser,
+    updateUserDetails,
     createNewFolder,
     getAllFolders,
     getAllForms,
     createNewTypeBot,
+    deleteFolder,
+    deleteForm,
     getFormIdByName,
     getAllFormData,
     createUserInput,

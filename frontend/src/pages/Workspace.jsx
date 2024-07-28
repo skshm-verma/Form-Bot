@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import styles from './Workspace.module.css'
 import WorkspaceNavbar from '../components/navbars/WorkspaceNavbar'
 import { useAuth, useForm } from '../context/AllContext'
 import { useNavigate } from 'react-router-dom'
 import FolderChips from '../components/workspaceItems/FolderChips'
 import FormChips from '../components/workspaceItems/FormChips'
-import { createNewFolder, getFormIdByName, getAllFolders, getAllForms } from '../helpers/api-communicator'
+import { createNewFolder, getFormIdByName, getAllFolders, getAllForms, deleteFolder, deleteForm } from '../helpers/api-communicator'
 import CreateModal from '../components/modals/CreateModal'
+import styles from './Workspace.module.css'
 
 const Workspace = () => {
     const auth = useAuth();
@@ -14,6 +14,8 @@ const Workspace = () => {
     const navigate = useNavigate();
     const [openModal, setOpenModal] = useState(false);
     const [folderName, setFolderName] = useState('');
+    const [modalMode, setModalMode] = useState('create');
+    const [itemToDelete, setItemToDelete] = useState(null); 
     const [allFoldersNames, setAllFoldersNames] = useState([]);
     const [allFormsNames, setAllFormsNames] = useState([]);
     const [openedFolders, setOpenedFolders] = useState(new Set());
@@ -21,6 +23,7 @@ const Workspace = () => {
 
     const handleCreateFolder = async () => {
         setFolderName('');
+        setModalMode('create');
         setOpenModal(true);
     }
 
@@ -69,6 +72,36 @@ const Workspace = () => {
         }
     };
 
+    const handleDeleteFolder = async (folderId) => {
+        setModalMode('delete');
+        setItemToDelete({ type: 'folder', id: folderId });
+        setOpenModal(true);
+    };
+
+    const handleDeleteForm = async (formName) => {
+        const response = await getFormIdByName(formName);
+        if (response) {
+            setModalMode('delete');
+            setItemToDelete({ type: 'form', id: response.data.formId, name: formName });
+            setOpenModal(true);
+        }
+    };
+
+    const confirmDelete = async () => {
+        try {
+            if (itemToDelete.type === 'folder') {
+                await deleteFolder(itemToDelete.id);
+                setAllFoldersNames(prevFolders => prevFolders.filter(folder => folder.id !== itemToDelete.id));
+            } else if (itemToDelete.type === 'form') {
+                await deleteForm(itemToDelete.id);
+                setAllFormsNames(prevForms => prevForms.filter(form => form !== itemToDelete.name));
+            }
+            setItemToDelete(null);
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
+
     useEffect(() => {
         const checkLoginStatus = async () => {
             const status = await auth?.checkAuthStatus();
@@ -110,12 +143,21 @@ const Workspace = () => {
             }
         };
         if (auth?.userId) {
+            form?.resetFormValues();
             form?.saveFormId('')
             fetchFolders();
         }
 
     }, [auth, openModal])
 
+    const getRequiredField = () => {
+        if (itemToDelete?.type === 'folder') {
+            return 'Folder';
+        } else if (itemToDelete?.type === 'form') {
+            return 'Form';
+        }
+        return 'New Folder';
+    };
 
     return (
         <div className={styles.workspace}>
@@ -141,6 +183,7 @@ const Workspace = () => {
                                         handleFolderClick(folder.id);
                                         handleGetAllForms(folder.id);
                                     }}
+                                    onDelete={handleDeleteFolder}
                                     className={openedFolders.has(folder.id) ? styles.selectedFolder : ''}
                                 />
                             ))}
@@ -159,12 +202,23 @@ const Workspace = () => {
                                 key={index}
                                 formName={name}
                                 onClick={() => handleFormClick(name)}
+                                onDelete={handleDeleteForm}
                             />
                         ))}
                     </div>
                 </div>
             </div>
-            {openModal && <CreateModal option1={"Done"} option2={"Cancel"} requiredField={"New Folder"} setInputName={setFolderName} inputName={folderName} setOpenModal={setOpenModal} />}
+            {openModal &&
+                <CreateModal
+                    option1={"Done"}
+                    option2={"Cancel"}
+                    requiredField={getRequiredField()}
+                    setInputName={setFolderName}
+                    inputName={folderName}
+                    setOpenModal={setOpenModal}
+                    onConfirm={modalMode === 'create' ? null : confirmDelete}
+                    mode={modalMode}
+                />}
         </div>
     )
 }

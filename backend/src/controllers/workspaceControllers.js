@@ -158,7 +158,7 @@ const createPublicInput = async (req, res) => {
     //formId, date and views are mandatory fields
     const form = await Form.findById(formId);
     if (!form) {
-        return res.status(404).json({ message: 'Form not found' });
+        throw new NotFoundError("Form not found");
     }
 
     const newPublicInput = new PublicInput({
@@ -171,7 +171,38 @@ const createPublicInput = async (req, res) => {
     const savedPublicInput = await newPublicInput.save();
     form.userInputs.push(savedPublicInput);
     await form.save();
-    res.status(201).json({ message: 'Public input saved successfully', publicInput: savedPublicInput });
+    res.status(statusCodes.CREATED).json({ message: 'Public input saved successfully', publicInput: savedPublicInput });
 }
 
-module.exports = { createForm, createFolder, getFormId, getAllFolders, getAllForms, getFormInputDetails, getFormDetails, createPublicInput, updateFormFields, updateFormViews }
+const deleteFolder = async (req, res) => {
+    const { folderId } = req.query
+
+    if (!folderId) {
+        throw new BadRequestError("Folder ID is required");
+    }
+
+    const folder = await Folder.findById(folderId)
+    if (!folder) {
+        throw new NotFoundError("Folder not found");
+    }
+    await Folder.findByIdAndDelete(folderId);
+    res.status(statusCodes.OK).json({ message: "Folder deleted successfully" });
+
+}
+
+const deleteForm = async (req, res) => {
+    const { formId } = req.query
+
+    if (!formId) {
+        throw new BadRequestError("Form ID is required");
+    }
+
+    const form = await Form.findById(formId)
+    if (!form) {
+        throw new NotFoundError("Form not found");
+    }
+    await Form.findByIdAndDelete(formId);
+    res.status(statusCodes.OK).json({ message: "Form deleted successfully" });
+}
+
+module.exports = { createForm, createFolder, getFormId, getAllFolders, getAllForms, getFormInputDetails, getFormDetails, createPublicInput, updateFormFields, updateFormViews, deleteFolder, deleteForm }

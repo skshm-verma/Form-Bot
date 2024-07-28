@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth, useForm } from '../context/AllContext';
 import NewFormNavbar from '../components/navbars/NewFormNavbar';
-import { createNewTypeBot } from '../helpers/api-communicator';
+import { createNewTypeBot, getAllFormData } from '../helpers/api-communicator';
 import styles from './SelectThemePage.module.css';
 import Logo from '../assets/logo3.png'
+import { useLocation } from 'react-router-dom';
 
 const SelectThemePage = () => {
+    // const location = useLocation();
     const auth = useAuth();
     const form = useForm();
-    const [selectedTheme, setSelectedTheme] = useState('');
+    // const [formId, setFormId] = useState('');
+    const [selectedTheme, setSelectedTheme] = useState(form?.formTheme);
     const [isSaved, setIsSaved] = useState(false);
-
+//() => localStorage.getItem('selectedTheme') || 
     const handleSave = () => {
         setIsSaved(true);
+        // localStorage.setItem('selectedTheme', selectedTheme);
     };
 
     const handleShare = async () => {
         try {
-            const response = await createNewTypeBot(auth?.userId, form?.formName, form?.formFields, form?.folderId, form?.formTheme);
+            if (isSaved && form?.formFields) {
+                const response = await createNewTypeBot(auth?.userId, form?.formName, form?.formFields, form?.folderId, form?.formTheme);
+                alert(`Form submitted`);
+            } else {
+                alert('Save The Form First');
+            }
         } catch (error) {
             console.log(error);
         }
@@ -26,7 +35,29 @@ const SelectThemePage = () => {
     const handleThemeClick = (theme) => {
         setSelectedTheme(theme);
         form?.saveFormTheme(theme);
+        // localStorage.setItem('selectedTheme', theme);
     };
+
+    // useEffect(() => {
+    //     const formIdFromState = location.state?.formId;
+    //     setFormId(formIdFromState || form?.formId);
+    // }, [location.state, form?.formId]);
+
+    useEffect(() => {
+        if (form?.formId) {
+            const getOldTheme = async () => {
+                try {
+
+                    const response = await getAllFormData(form?.formId);
+                    setSelectedTheme(response?.theme);
+                    // localStorage.setItem('selectedTheme', response?.data?.theme);
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            getOldTheme()
+        }
+    }, [form])
 
     return (
         <div className={styles.themeWrapper}>
@@ -116,7 +147,6 @@ const SelectThemePage = () => {
                     </div>
                 </div>
                 <div
-                    // className={styles.themeOutputContainer}
                     className={`${styles.themeOutputContainer} 
                 ${selectedTheme === 'light' ? styles.backgroundColor1 :
                             selectedTheme === 'dark' ? styles.backgroundColor2 : styles.backgroundColor3}`}
