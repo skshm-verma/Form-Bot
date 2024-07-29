@@ -71,7 +71,7 @@ const SelectThemePage = () => {
                 const response = await updateFormTheme(form?.formId, selectedTheme);
                 if (response.status === 200) {
                     setSuccessToast(true);
-                    const url = `http://localhost:5173/submitForm/${form?.formId}`;
+                    const url = `https://form-bot-mern.vercel.app/submitForm/${form?.formId}`;
                     await navigator.clipboard.writeText(url);
                     setTimeout(() => setSuccessToast(false), 800)
                   }
@@ -80,7 +80,7 @@ const SelectThemePage = () => {
                 const response = await createNewTypeBot(auth?.userId, form?.formName, updatedFormFields, form?.folderId, selectedTheme);
                 const newFormId = response?.form?._id;
                 if (newFormId) {
-                  const url = `http://localhost:5173/submitForm/${newFormId}`;
+                  const url = `https://form-bot-mern.vercel.app/submitForm/${newFormId}`;
                   await navigator.clipboard.writeText(url);
                   setSuccessToast(true);
                   setTimeout(() => setSuccessToast(false), 800)
