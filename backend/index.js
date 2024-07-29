@@ -12,6 +12,7 @@ const cors = require('cors');
 
 //middlewares
 app.use(cors({origin: "https://form-bot-mern.vercel.app", credentials: true}));
+// app.use(cors());
 app.use(express.json());
 
 
