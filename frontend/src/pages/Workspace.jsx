@@ -6,6 +6,7 @@ import FolderChips from '../components/workspaceItems/FolderChips'
 import FormChips from '../components/workspaceItems/FormChips'
 import { createNewFolder, getFormIdByName, getAllFolders, getAllForms, deleteFolder, deleteForm } from '../helpers/api-communicator'
 import CreateModal from '../components/modals/CreateModal'
+import Mark from '../assets/mark.png';
 import styles from './Workspace.module.css'
 
 const Workspace = () => {
@@ -19,6 +20,9 @@ const Workspace = () => {
     const [allFoldersNames, setAllFoldersNames] = useState([]);
     const [allFormsNames, setAllFormsNames] = useState([]);
     const [openedFolders, setOpenedFolders] = useState(new Set());
+    const [duplicateError, setDuplicateError] = useState(false);
+    const [multiSelectionError, setMultiSelectionError] = useState(false);
+    const [notFoundError, setNotFoundError] = useState(false);
 
 
     const handleCreateFolder = async () => {
@@ -55,7 +59,8 @@ const Workspace = () => {
     const handleCreateTypebot = () => {
         const openedFoldersArray = Array.from(openedFolders);
         if (openedFoldersArray.length > 1) {
-            alert('Multiple folders are selected');
+            setMultiSelectionError(true);
+            setTimeout(() => setMultiSelectionError(false), 800)
         } else if (openedFoldersArray.length === 1) {
             navigate('/workspace/newForm', { state: { folderId: openedFoldersArray[0] } });
         } else {
@@ -68,7 +73,8 @@ const Workspace = () => {
         if (response) {
             navigate('/workspace/newForm', { state: { formId: response.data.formId } });
         } else {
-            alert('Form not found');
+            setNotFoundError(true);
+            setTimeout(() => setNotFoundError(false), 800)
         }
     };
 
@@ -121,7 +127,8 @@ const Workspace = () => {
                 try {
                     const response = await createNewFolder(auth?.userId, folderName);
                     if (response.msg == 'Duplicate value entered') {
-                        alert('Folder with same name already present');
+                        setDuplicateError(true);
+                        setTimeout(() => setDuplicateError(false), 800)
                     }
                     await fetchFolders();
                     setFolderName('');
@@ -165,7 +172,7 @@ const Workspace = () => {
     };
 
     return (
-        <div className={styles.workspace}>
+        <div className={styles.workspace} id="style-1">
             <nav className={styles.navContainer}>
                 <WorkspaceNavbar type={"dropdown"} name={auth?.userName} />
             </nav>
@@ -194,7 +201,7 @@ const Workspace = () => {
                             ))}
                     </div>
                 </div>
-                <div className={styles.formContainer}>
+                <div className={styles.formContainer} id="style-1">
                     <div className={styles.newForm} onClick={handleCreateTypebot}>
                         <img width="24" height="24" src="https://img.icons8.com/android/24/FFFFFF/plus.png" alt="plus" />
                         <span>
@@ -212,6 +219,20 @@ const Workspace = () => {
                         ))}
                     </div>
                 </div>
+                {duplicateError && <div className={styles.toastDivWorkspace}>
+                    <img src={Mark} alt="markIcon" />
+                    <span>Folder Already Present</span>
+                </div>}
+                {multiSelectionError && <div className={styles.toastDivWorkspace}>
+                    <img src={Mark} alt="markIcon" />
+                    <span>Multiple Folders Selected</span>
+                </div>
+                }
+                {notFoundError && <div className={styles.toastDivWorkspace}>
+                    <img src={Mark} alt="markIcon" />
+                    <span>Form Not Found</span>
+                </div>
+                }
             </div>
             {openModal &&
                 <CreateModal

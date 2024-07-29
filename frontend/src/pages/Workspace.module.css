@@ -119,3 +119,41 @@
     flex-wrap: wrap;
     width: 75rem;
 }
+
+.toastDivWorkspace {
+    position: absolute;
+    top: 3rem;
+    right: 10rem;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0.2rem 1rem;
+    border-radius: 8px;
+    border: 2px solid #3D3D3F;
+    animation: slideDown 0.5s ease-out forwards;
+}
+
+.toastDivWorkspace img {
+    width: 32px;
+    height: 32px;
+}
+
+.toastDivWorkspace span{
+    background-color: transparent !important;
+    font-family: "Open Sans";
+    font-size: 16px;
+}
+
+
+@keyframes slideDown {
+    0% {
+        top: -100px;
+        opacity: 0;
+    }
+    100% {
+        top: 3rem;
+        opacity: 1;
+    }
+}

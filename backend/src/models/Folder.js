@@ -8,8 +8,7 @@ const folderSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: [true, 'Provide Folder Name'],
-        unique: true
+        required: [true, 'Provide Folder Name']
     },
     forms: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -17,4 +16,6 @@ const folderSchema = new mongoose.Schema({
     }]
 })
 
+// Create a compound index on userId and name to ensure uniqueness within the user's folders
+folderSchema.index({ userId: 1, name: 1 }, { unique: true });
 module.exports = mongoose.model("Folder", folderSchema);

@@ -99,3 +99,29 @@
 .errorInput{
     border-color:  rgb(118, 33, 33) !important;
 }
+
+.toastDiv {
+    position: absolute;
+    top: 6.5rem;
+    right: 10rem;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0.2rem 1rem;
+    border-radius: 8px;
+    border: 2px solid #3D3D3F;
+    animation: slideDown 0.5s ease-out forwards;
+}
+
+.toastDiv img {
+    width: 32px;
+    height: 32px;
+}
+
+.toastDiv span {
+    background-color: transparent !important;
+    font-family: "Open Sans";
+    font-size: 16px;
+}

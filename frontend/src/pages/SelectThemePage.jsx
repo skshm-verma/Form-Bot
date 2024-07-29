@@ -7,6 +7,9 @@ import Logo from '../assets/logo3.png';
 import Chat from '../assets/chatIcon1.png';
 import Text from '../assets/textIcon.png';
 import Email from '../assets/emailIcon.png';
+import Tick from '../assets/tick.png';
+import Mark from '../assets/mark.png';
+// import Success from '../assets/success.png';
 
 const defaultData = [
     {
@@ -52,6 +55,8 @@ const SelectThemePage = () => {
     const form = useForm();
     const [selectedTheme, setSelectedTheme] = useState('light');
     const [isSaved, setIsSaved] = useState(false);
+    const [successToast, setSuccessToast] = useState(false);
+    const [saveFormError, setSaveFormError] = useState(false);
 
 
     const handleSave = () => {
@@ -63,13 +68,25 @@ const SelectThemePage = () => {
         try {
             if (isSaved && form?.formId) {
                 const response = await updateFormTheme(form?.formId, selectedTheme);
-                console.log("Update Form Successful", response);
+                if (response.status === 200) {
+                    setSuccessToast(true);
+                    const url = `http://localhost:5173/submitForm/${form?.formId}`;
+                    await navigator.clipboard.writeText(url);
+                    setTimeout(() => setSuccessToast(false), 800)
+                  }
             } else if (isSaved) {
                 const updatedFormFields = [...defaultData, ...form?.formFields];
                 const response = await createNewTypeBot(auth?.userId, form?.formName, updatedFormFields, form?.folderId, form?.formTheme);
-                alert(`Form submitted`);
+                const newFormId = response?.form?._id;
+                if (newFormId) {
+                  const url = `http://localhost:5173/submitForm/${newFormId}`;
+                  await navigator.clipboard.writeText(url);
+                  setSuccessToast(true);
+                  setTimeout(() => setSuccessToast(false), 800)
+                }
             } else {
-                alert('Save The Form First');
+                setSaveFormError(true);
+                setTimeout(() => setSaveFormError(false), 800)
             }
         } catch (error) {
             console.log(error);
@@ -196,6 +213,21 @@ const SelectThemePage = () => {
                         <span></span>
                     </div>
                 </div>
+                {successToast && <div className={styles.toastDiv}>
+                    <img src={Tick} alt="tickIcon" />
+                    <span>Link Copied</span>
+                </div>}
+                {saveFormError && <div className={styles.toastDiv}>
+                    <img src={Mark} alt="markIcon" />
+                    <span>Save Form</span>
+                </div>}
+                {/* 
+                Can be used for other functionality
+                {updateToast && <div className={styles.toastDiv}>
+                    <img src={Success} alt="successIcon" />
+                    <span>Updated Successfully</span>
+                </div>} */
+                }
             </div>
         </div >
     )

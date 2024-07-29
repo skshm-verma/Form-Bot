@@ -6,6 +6,8 @@ import Triangle from '../assets/triangleImage2.png';
 import Ellipse1 from '../assets/ellipseImage1.png';
 import Ellipse2 from '../assets/ellipseImage2.png';
 import Arrow from '../assets/backArrow.png';
+import Success from '../assets/success.png'
+import Error from '../assets/cross.png'
 import styles from './SignIn.module.css';
 
 const SignIn = () => {
@@ -45,14 +47,17 @@ const SignIn = () => {
     const errors = validate();
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
-      toast.custom((t) => (
-        <div style={toastTheme}>
-          <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon" />
-          <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
-        </div >
-      ),
-        { id: "login", duration: 300 }
-      );
+      const notify = () => {
+        toast.custom((t) => (
+          <div style={toastTheme} >
+            <img width="28" height="28" src={Error} alt="crossIcon" />
+            <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
+          </div >
+        ),
+          { id: "login", duration: 50 }
+        );
+      }
+      notify();
       return;
     }
 
@@ -61,51 +66,69 @@ const SignIn = () => {
       if (response?.msg == 'Invalid Email') {
         errors.email = "Invalid Email";
         setErrors(errors)
-        toast.custom((t) => (
-          <div style={toastTheme}>
-            <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon" />
-            <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
-          </div >
-        ),
-          { id: "login", duration: 300 }
-        );
+        const notify = () => {
+          toast.custom((t) => (
+            <div style={toastTheme} >
+              <img width="28" height="28" src={Error} alt="crossIcon" />
+              <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
+            </div >
+          ),
+            { id: "login", duration: 50 }
+          );
+        }
+        notify();
       }
       if (response?.msg == 'Invalid Password') {
         errors.password = "Invalid Password";
         setErrors(errors)
-        toast.custom((t) => (
-          <div style={toastTheme}>
-            <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon" />
-            <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
-          </div >
-        ),
-          { id: "login", duration: 300 }
-        );
+        const notify = () => {
+          toast.custom((t) => (
+            <div style={toastTheme} >
+              <img width="28" height="28" src={Error} alt="crossIcon" />
+              <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
+            </div >
+          ),
+            { id: "login", duration: 50 }
+          );
+        }
+        notify();
       }
       if (response?.status == 200) {
-        toast.custom((t) => (
-          <div style={toastTheme}>
-            <img width="28" height="28" src="https://img.icons8.com/color/48/ok--v1.png" alt="successIcon" />
-            <p style={{ color: 'green', backgroundColor: "#171923" }}>Signed In Successfully</p>
-          </div >
-        ),
-          { id: "login", duration: 300 }
-        );
+        const notify = () => {
+          toast.custom((t) => (
+            <div style={toastTheme}>
+              <img width="28" height="28" src={Success} alt="successIcon" />
+              <p style={{ color: 'green', backgroundColor: "#171923" }}>Signed In Successfully</p>
+            </div >
+          ),
+            { id: "login", duration: 50 }
+          );
+        }
+        notify();
         localStorage.setItem("token", response.data.token);
-        setTimeout(() => navigate('/workspace'), 300);//not required, just to show case toast properly for smaller data
+        toast.dismiss();
+        setTimeout(() => navigate('/workspace'), 500);//not required, just to show case toast properly for smaller data
       }
     } catch (error) {
       console.log(error);
-      toast.custom((t) => (
-        <div style={toastTheme}>
-          <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon" />
-          <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
-        </div >
-      ),
-        { id: "login", duration: 300 }
-      );
+      const notify = () => {
+        toast.custom((t) => (
+          <div style={toastTheme} >
+            <img width="28" height="28" src={Error} alt="crossIcon" />
+            <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
+          </div >
+        ),
+          { id: "login", duration: 50 }
+        );
+      }
+      notify();
     }
   };
+
+  const handleSignUp = () => {
+    toast.dismiss();
+    navigate('/signUp');
+  }
 
   return (
     <div className={styles.wrapperContainer}>
@@ -144,7 +167,7 @@ const SignIn = () => {
           </div>
           <button type="submit">Log In</button>
           <p>
-            Don't have an account? <span onClick={() => navigate('/signUp')}>Register now</span>
+            Don't have an account? <span onClick={handleSignUp}>Register now</span>
           </p>
         </form>
       </div>

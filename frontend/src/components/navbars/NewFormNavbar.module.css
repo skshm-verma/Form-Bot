@@ -11,14 +11,29 @@
     background-color: black !important;
     width: 20rem;
     padding: 4px;
+    position: relative;
 }
 
 .formName input {
     background-color: #37373E !important;
     border-radius: 4px;
     margin-bottom: 1rem;
+    border: 2px solid #848890;
 }
 
+.inputError{
+    border-color: rgb(118, 33, 33) !important;
+}
+
+.errorStatus{
+    position: absolute;
+    background-color: transparent !important;
+    bottom: 0px;
+    font-family: "Open Sans";
+    font-size: 12px;
+    color: #522224 !important;
+    padding-left: 0.5rem;
+}
 
 .menuWrapper {
     background-color: black !important;

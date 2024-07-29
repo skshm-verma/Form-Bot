@@ -5,6 +5,7 @@ import Logout from '../assets/logoutIcon.png';
 import Lock from '../assets/lockIcon.png';
 import Eye from '../assets/eyeIcon.png';
 import User from '../assets/userIcon.png';
+import Success from '../assets/success.png';
 import styles from './SettingsUpdate.module.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,6 +21,7 @@ const SettingsUpdate = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [updateToast, setUpdateToast] = useState({});
 
   const validate = () => {
     const errors = {};
@@ -52,7 +54,8 @@ const SettingsUpdate = () => {
         setErrors(prevErrors => ({ ...prevErrors, oldPassword: 'Old password is incorrect', email: '' }));
       }
       if (response?.msg === 'User updated successfully')
-        alert('Form Submitted Successfully');
+        setUpdateToast(true);
+      setTimeout(() => setUpdateToast(false), 800)
     } else {
       setErrors(validationErrors);
     }
@@ -130,6 +133,10 @@ const SettingsUpdate = () => {
         className={styles.logoutBtn}>
         <img src={Logout} alt="logoutIcon" /> Log out
       </button>
+      {updateToast && <div className={styles.toastDiv}>
+        <img src={Success} alt="successIcon" />
+        <span>Updated Successfully</span>
+      </div>}
     </div>
   )
 }

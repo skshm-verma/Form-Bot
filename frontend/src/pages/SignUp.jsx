@@ -5,7 +5,9 @@ import { Toaster, toast } from 'react-hot-toast';
 import Triangle from '../assets/triangleImage2.png';
 import Ellipse1 from '../assets/ellipseImage1.png';
 import Ellipse2 from '../assets/ellipseImage2.png';
-import Arrow from '../assets/backArrow.png'
+import Arrow from '../assets/backArrow.png';
+import Success from '../assets/success.png';
+import Error from '../assets/cross.png';
 import styles from './SignUp.module.css';
 
 const SignUp = () => {
@@ -55,41 +57,49 @@ const SignUp = () => {
     const errors = validate();
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
-      toast.custom((t) => (
-        <div style={toastTheme}>
-          <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon" />
-          <p style={{ color: 'red' }}>SignUp Failed</p>
-        </div >
-      ),
-        { id: "register", duration: 300 }
-      );
+      const notify = () => {
+        toast.custom((t) => (
+          <div style={toastTheme} >
+            <img width="28" height="28" src={Error} alt="crossIcon" />
+            <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
+          </div >
+        ),
+          { id: "register", duration: 50 }
+        );
+      }
+      notify();
       return;
     }
     try {
       const response = await signUpUser(userName, email, password);
       if (response?.status === 201) {
-
-        toast.custom((t) => (
-          <div style={toastTheme}>
-            <img width="28" height="28" src="https://img.icons8.com/color/48/ok--v1.png" alt="successIcon" />
-            <p style={{ color: 'green' }}>Signed In Successfully</p>
-          </div >
-        ),
-          { id: "register", duration: 300 }
-        );
+        const notify = () => {
+          toast.custom((t) => (
+            <div style={toastTheme}>
+              <img width="28" height="28" src={Success} alt="successIcon" />
+              <p style={{ color: 'green', backgroundColor: "#171923" }}>Signed In Successfully</p>
+            </div >
+          ),
+            { id: "register", duration: 50 }
+          );
+        }
+        notify();
         localStorage.setItem("token", response.data.token);
-        setTimeout(() => navigate('/workspace'), 300);//not required, just to show case toast properly for smaller data
+        setTimeout(() => navigate('/workspace'), 500);//not required, just to show case toast properly for smaller data
       }
     } catch (error) {
       console.log(error);
-      toast.custom((t) => (
-        <div style={toastTheme}>
-          <img width="28" height="28" src="https://img.icons8.com/color/48/cancel--v1.png" alt="crossIcon" />
-          <p style={{ color: 'red' }}>SignUp Failed</p>
-        </div >
-      ),
-        { id: "register", duration: 300 }
-      );
+      const notify = () => {
+        toast.custom((t) => (
+          <div style={toastTheme} >
+            <img width="28" height="28" src={Error} alt="crossIcon" />
+            <p style={{ color: 'red', backgroundColor: "#171923", }}>Signing In Failed</p>
+          </div >
+        ),
+          { id: "register", duration: 50 }
+        );
+      }
+      notify();
     }
   }
 

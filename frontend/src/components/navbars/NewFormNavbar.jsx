@@ -5,7 +5,7 @@ import Close from '../../assets/close.png'
 import { useForm } from '../../context/AllContext';
 
 
-const NewFormNavbar = ({ formName, setFormName, onSave, onShare, isForm, isTheme, isResponse, isSaved }) => {
+const NewFormNavbar = ({ formName, setFormName, onSave, onShare, isForm, isTheme, isResponse, isSaved, errorMessage }) => {
 
   const form = useForm();
   const navigate = useNavigate()
@@ -18,9 +18,11 @@ const NewFormNavbar = ({ formName, setFormName, onSave, onShare, isForm, isTheme
             type="text"
             placeholder='Enter Form Name'
             value={formName}
+            className={errorMessage? styles.inputError : ''}
             onChange={(e) => setFormName(e.target.value)}
           />
         }
+        {errorMessage && <div className={styles.errorStatus}>{errorMessage}</div>}
       </div>
       <div className={styles.menuWrapper}>
         <div className={styles.menuContainer}>
@@ -32,7 +34,6 @@ const NewFormNavbar = ({ formName, setFormName, onSave, onShare, isForm, isTheme
           <div
             className={isTheme ? styles.currentMenu : ''}
             onClick={() => navigate('/workspace/selectTheme')}>
-            {/* onClick={() => navigate('/workspace/selectTheme', { state: { formId: form?.formId } })}> */}
             Theme
           </div>
           <div

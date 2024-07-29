@@ -51,7 +51,7 @@ const createForm = async (req, res) => {
 
 const createFolder = async (req, res) => {
     const { userId, folderName } = req.body;
-
+    
     const user = await User.findById(userId);
 
     if (!user) {

@@ -1,10 +1,9 @@
 .formWrapper {
     background-color: #1F1F23 !important;
     height: 100%;
-    /* to be calculated accordind to the navbar*/
     width: 100%;
+    position: relative;
     overflow: auto;
-    
 }
 
 
@@ -26,7 +25,7 @@
     flex-direction: column;
     align-items: center;
     padding: 2rem 0rem;
-    
+
 }
 
 
@@ -73,7 +72,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-   
+
 }
 
 .startChip {
@@ -88,6 +87,7 @@
     border-radius: 8px;
 
 }
+
 .startChip img {
     width: 1.5rem;
     height: 1.5rem;
@@ -100,4 +100,70 @@
     font-size: 18px;
     background-color: black !important;
     margin-left: 5px;
+}
+
+
+.toastDiv {
+    position: absolute;
+    top: 6.5rem;
+    right: 10rem;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0.2rem 1rem;
+    border-radius: 8px;
+    border: 2px solid #3D3D3F;
+    animation: slideDown 0.5s ease-out forwards;
+}
+
+.toastDiv img {
+    width: 32px;
+    height: 32px;
+}
+
+.toastDiv span {
+    background-color: transparent !important;
+    font-family: "Open Sans";
+    font-size: 16px;
+}
+
+
+.toastDivDuplicate {
+    position: absolute;
+    top: 6.5rem;
+    right: 7rem;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0.2rem 1rem;
+    border-radius: 8px;
+    border: 2px solid #3D3D3F;
+    animation: slideDown 0.5s ease-out forwards;
+}
+
+.toastDivDuplicate span {
+    background-color: transparent !important;
+    font-family: "Open Sans";
+    font-size: 16px;
+}
+
+.toastDivDuplicate img {
+    width: 32px;
+    height: 32px;
+}
+
+@keyframes slideDown {
+    0% {
+        top: -100px;
+        opacity: 0;
+    }
+
+    100% {
+        top: 6.5rem;
+        opacity: 1;
+    }
 }

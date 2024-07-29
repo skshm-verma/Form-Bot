@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth, useForm } from '../context/AllContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styles from './NewFormPage.module.css'
+import InputChips from '../components/inputTypes/InputChips';
 import NewFormNavbar from '../components/navbars/NewFormNavbar'
 import SelectionChips from '../components/inputTypes/SelectionChips'
 import { createNewTypeBot, getAllFormData, updateFormData } from '../helpers/api-communicator';
@@ -10,7 +10,6 @@ import Gif from '../assets/gifIcon.png';
 import Image from '../assets/imageIcon1.png';
 import Video from '../assets/videoIcon1.png';
 import Text from '../assets/textIcon.png';
-import Text1 from '../assets/textIcon1.png';
 import Number from '../assets/numberIcon.png';
 import Phone from '../assets/phoneIcon.png';
 import Rating from '../assets/ratingIcon.png';
@@ -18,7 +17,9 @@ import Button from '../assets/buttonIcon.png';
 import Date from '../assets/dateIcon.png';
 import Email from '../assets/emailIcon.png';
 import Flag from '../assets/flagIcon.png'
-import InputChips from '../components/inputTypes/InputChips';
+import Tick from '../assets/tick.png';
+import Mark from '../assets/mark.png';
+import styles from './NewFormPage.module.css'
 
 const predefinedFields = [
   { id: 'predefined-text', type: 'text', icon: Chat, label: 'Text', placeholder: 'Click here to edit' },
@@ -76,6 +77,9 @@ const defaultData = [
   }
 ]
 
+
+
+
 const NewFormPage = () => {
   const auth = useAuth();
   const form = useForm();
@@ -88,6 +92,11 @@ const NewFormPage = () => {
   const [formName, setFormName] = useState('');
   const [isSaved, setIsSaved] = useState(false);
   const [errors, setErrors] = useState({});
+  const [formNameError, setFormNameError] = useState('');
+  const [successToast, setSuccessToast] = useState(false);
+  const [saveFormError, setSaveFormError] = useState(false);
+  const [duplicateError, setDuplicateError] = useState(false);
+
 
   const addField = (field, isPublic) => {
     const icon = field.icon;
@@ -118,7 +127,6 @@ const NewFormPage = () => {
   const validateFields = () => {
     const newErrors = {};
     let isValid = true;
-
     for (let i = 0; i < formFields.length; i++) {
       const field = formFields[i];
       if (predefinedFields.some(predefined => predefined.id === field.id) && !field.content) {
@@ -128,8 +136,10 @@ const NewFormPage = () => {
     }
 
     if (!formName.trim()) {
-      alert('Form name cannot be empty.');
+      setFormNameError('Required Field');
       isValid = false;
+    } else {
+      setFormNameError('');
     }
 
     setErrors(newErrors);
@@ -140,6 +150,7 @@ const NewFormPage = () => {
     if (validateFields()) {
       form.saveFormValues(formName, formFields, folderId);
       setIsSaved(true);
+      setFormNameError('');
     }
   };
 
@@ -150,21 +161,30 @@ const NewFormPage = () => {
           const response = await updateFormData(formId, form?.formFields, form?.formName);
           setFormFields(response.data.fields);
           setFormName(response.data.title);
-          console.log("Updated Response: ", response)
-          // if (response.status === 200) {
-          //   alert('Form updated successfully');
-          // }
+          setFormNameError('');
+          if (response.status === 200) {
+            const url = `http://localhost:5173/submitForm/${formId}`;
+            await navigator.clipboard.writeText(url);
+            setSuccessToast(true);
+            setTimeout(() => setSuccessToast(false), 800)
+          }
         } else if (isSaved) {
-          const updatedFormFields = [...defaultData, ...formFields];     // customizeable
+          const updatedFormFields = [...defaultData, ...formFields];    // customizeable
           const response = await createNewTypeBot(auth?.userId, formName, updatedFormFields, folderId, form?.formTheme);
+          if (response?.data?.msg === 'Duplicate value entered') {
+            setDuplicateError(true);
+            setTimeout(() => setDuplicateError(false), 800)
+          }
           const newFormId = response?.form?._id;
           if (newFormId) {
             const url = `http://localhost:5173/submitForm/${newFormId}`;
             await navigator.clipboard.writeText(url);
-            alert('URL copied to clipboard: ' + url);
+            setSuccessToast(true);
+            setTimeout(() => setSuccessToast(false), 800)
           }
         } else {
-          alert("First Save the Form")
+          setSaveFormError(true);
+          setTimeout(() => setSaveFormError(false), 800)
         }
       }
     } catch (error) {
@@ -228,12 +248,11 @@ const NewFormPage = () => {
   }, [form?.formFields]);
 
 
-
   return (
-    <div className={styles.formWrapper}>
+    <div className={styles.formWrapper} id="style-1">
       <nav>
         <NewFormNavbar
-          formName={ formName }
+          formName={formName}
           setFormName={setFormName}
           onSave={handleSave}
           onShare={handleShare}
@@ -241,9 +260,10 @@ const NewFormPage = () => {
           isTheme={false}
           isResponse={false}
           isSaved={isSaved}
+          errorMessage={formNameError}
         />
       </nav>
-      <div className={styles.formWorkspace}>
+      <div className={styles.formWorkspace} id="style-1">
         <div className={styles.selectionWrapper}>
           <div className={styles.bubblesContainer}>
             <h2>Bubbles</h2>
@@ -280,6 +300,24 @@ const NewFormPage = () => {
           {renderForm()}
         </div>
       </div>
+      {successToast && <div className={styles.toastDiv}>
+        <img src={Tick} alt="tickIcon" />
+        <span>Link Copied</span>
+      </div>}
+      {saveFormError && <div className={styles.toastDiv}>
+        <img src={Mark} alt="markIcon" />
+        <span>Save Form</span>
+      </div>}
+      {duplicateError && <div className={styles.toastDivDuplicate}>
+        <img src={Mark} alt="markIcon" />
+        <span>FormName Already Taken</span>
+      </div>}
+      {/*
+      can be used for other purposes 
+      {updateToast && <div className={styles.toastDiv}>
+        <img src={Success} alt="successIcon" />
+        <span>Updated Successfully</span>
+      </div>} */}
     </div>
   );
 };

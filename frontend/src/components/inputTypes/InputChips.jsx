@@ -33,5 +33,3 @@ const InputChips = ({ field, image, placeholder, isPublic, onDelete, type, conte
 };
 
 export default InputChips;
-
-//{error && <p className={styles.errorMessage}>{error}</p>}

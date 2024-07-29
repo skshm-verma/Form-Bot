@@ -52,7 +52,6 @@
     /* Ensure the entire container is scrollable */
 }
 
-
 .tableContainer {
     background-color: transparent !important;
     height: 27rem;
@@ -126,27 +125,3 @@ thead th {
     font-size: 40px;
     letter-spacing: 1px;
 }
-
-
-
-
-/* thead th, tbody td {
-    min-width: 100px;
-    max-width: 150px;
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    white-space: normal;
-    word-wrap: break-word;
-    word-break: break-all;
-} */
-
-/* min-width: 100px;
-    max-width: 100px;
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    white-space: nowrap;
-
-    overflow: hidden;
-    text-overflow: ellipsis; */
