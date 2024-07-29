@@ -11,6 +11,7 @@ import Tick from '../assets/tick.png';
 import Mark from '../assets/mark.png';
 // import Success from '../assets/success.png';
 
+
 const defaultData = [
     {
         content: "Enter Your Name",
@@ -76,7 +77,7 @@ const SelectThemePage = () => {
                   }
             } else if (isSaved) {
                 const updatedFormFields = [...defaultData, ...form?.formFields];
-                const response = await createNewTypeBot(auth?.userId, form?.formName, updatedFormFields, form?.folderId, form?.formTheme);
+                const response = await createNewTypeBot(auth?.userId, form?.formName, updatedFormFields, form?.folderId, selectedTheme);
                 const newFormId = response?.form?._id;
                 if (newFormId) {
                   const url = `http://localhost:5173/submitForm/${newFormId}`;

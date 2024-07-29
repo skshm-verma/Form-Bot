@@ -78,8 +78,6 @@ const defaultData = [
 ]
 
 
-
-
 const NewFormPage = () => {
   const auth = useAuth();
   const form = useForm();

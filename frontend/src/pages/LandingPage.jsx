@@ -1,6 +1,5 @@
-import React from 'react'
-import LandingPageNavbar from '../components/navbars/LandingPageNavbar'
-import styles from './LandingPage.module.css'
+import React from 'react';
+import LandingPageNavbar from '../components/navbars/LandingPageNavbar';
 import Triangle from '../assets/triangleImage1.png';
 import SemiCircle from '../assets/semiCircle.png';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +28,8 @@ import Creator5 from '../assets/creators5.png';
 import Creator6 from '../assets/creators6.png';
 import Creator7 from '../assets/creators7.png';
 import Creator8 from '../assets/creators8.png';
+import Link from '../assets/openLink.png';
+import styles from './LandingPage.module.css';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -180,11 +181,27 @@ const LandingPage = () => {
             <section id='footer'>
                 <div className={styles.footerContainer}>
                     <div className={styles.eachFootItem}>
-                      <span>Made with ❤️ by<br/> <a>Saksham</a></span>  
+                        <p>Made with ❤️ by<br /> <a>@Saksham</a></p>
                     </div>
-                    <div className={styles.eachFootItem}></div>
-                    <div className={styles.eachFootItem}></div>
-                    <div className={styles.eachFootItem}></div>
+                    <div className={styles.eachFootItem}>
+                        <span>Status<img src={Link} alt="linkIcon" /></span>
+                        <span>Documentation<img src={Link} alt="linkIcon" /></span>
+                        <span>Roadmap<img src={Link} alt="linkIcon" /></span>
+                        <span>Pricing<img src={Link} alt="linkIcon" /></span>
+                    </div>
+                    <div className={styles.eachFootItem}>
+                        <span>Discord<img src={Link} alt="linkIcon" /></span>
+                        <span>GitHub repository<img src={Link} alt="linkIcon" /></span>
+                        <span>Twitter<img src={Link} alt="linkIcon" /></span>
+                        <span>LinkedIn<img src={Link} alt="linkIcon" /></span>
+                        <span>OSS Friends</span>
+                    </div>
+                    <div className={styles.eachFootItem}>
+                        <span>About</span>
+                        <span>Contact</span>
+                        <span>Terms of Service</span>
+                        <span>Privacy Policy</span>
+                    </div>
                 </div>
             </section>
         </div >

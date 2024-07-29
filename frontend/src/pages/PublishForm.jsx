@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getAllFormData, createUserInput, updateFormViews } from '../helpers/api-communicator';
 import { useForm } from '../context/AllContext';
-import styles from './PublishForm.module.css';
 import Logo from '../assets/logo3.png';
 import Send from '../assets/send.png';
+import Mark from '../assets/mark.png';
+import styles from './PublishForm.module.css';
 
 const PublishForm = () => {
     const { formId } = useParams();
@@ -16,6 +17,9 @@ const PublishForm = () => {
     const [isPaused, setIsPaused] = useState(false);
     const [currentDateTime, setCurrentDateTime] = useState('');
     const [selectedRating, setSelectedRating] = useState(null);
+    const [emailError, setEmailError] = useState(false);
+    const [numberError, setNumberError] = useState(false);
+    const [phoneError, setPhoneError] = useState(false);
 
     useEffect(() => {
         const date = new Date();
@@ -35,7 +39,6 @@ const PublishForm = () => {
             try {
                 const data = await getAllFormData(formId);
                 setFormData(data);
-                console.log("Current Data: ", data);
                 if (data.fields.length > 0) {
                     const initialField = data.fields[0];
                     setSubmittedValues(initialField.public ? [] : [initialField]);
@@ -58,9 +61,8 @@ const PublishForm = () => {
             if (!currentField.public) {
                 setTimeout(() => {
                     setCurrentFieldIndex(currentFieldIndex + 1);
-                }, 2000);
+                }, 1500);
                 setSubmittedValues(prevValues => [...prevValues, { content: currentField.content, type: currentField.type, public: currentField.public }]);
-                console.log("Submitted values: ", submittedValues);
             } else {
                 setIsPaused(true);
             }
@@ -92,8 +94,24 @@ const PublishForm = () => {
     };
 
     const handleSubmit = async (e) => {
-        console.log(formData?.fields[currentFieldIndex].label);
         e.preventDefault();
+
+        if (formData?.fields[currentFieldIndex].type === 'email' && !/\S+@\S+\.\S+/.test(userInput)) {
+            setEmailError(true);
+            setTimeout(() => setEmailError(false), 800);
+            return;
+        }
+        if (formData?.fields[currentFieldIndex].type === 'number' && isNaN(userInput)) {
+            setNumberError(true);
+            setTimeout(() => setNumberError(false), 800);
+            return;
+        }
+        if (formData?.fields[currentFieldIndex].type === 'phone' && !/^\d{10}$/.test(userInput)) {
+            setPhoneError(true);
+            setTimeout(() => setPhoneError(false), 800);
+            return;
+        }
+
         try {
             await createUserInput(
                 formId,
@@ -116,6 +134,18 @@ const PublishForm = () => {
 
     return (
         <div className={`${styles.submitFormWrapper} ${formData ? getBackgroundColorClass(formData.theme) : ''}`}>
+            {emailError && <div className={styles.toastError}>
+                <img src={Mark} alt="markIcon" />
+                <span>Enter a valid email</span>
+            </div>}
+            {numberError && <div className={styles.toastError}>
+                <img src={Mark} alt="markIcon" />
+                <span>Not a number</span>
+            </div>}
+            {phoneError && <div className={styles.toastError}>
+                <img src={Mark} alt="markIcon" />
+                <span>Enter a 10 digit number</span>
+            </div>}
             <div className={styles.formData}>
                 {submittedValues.map((value, index) => (
                     value?.public ? (value?.type === 'rating' ?
@@ -143,8 +173,12 @@ const PublishForm = () => {
                     ) : (
                         <div className={styles.systemValues} key={index}>
                             <div className={styles.field2}>
-                                <img src={Logo} alt="logoIcon" />
-                                {value?.type === 'text' && <span>{value?.content}</span>}
+                                {value?.type === 'text' &&
+                                    <>
+                                        <img src={Logo} alt="logoIcon" />
+                                        <span>{value?.content}</span>
+                                    </>
+                                }
                                 {value?.type === 'img' &&
                                     <div className={styles.fieldImgContainer}>
                                         <img src={value?.content} alt="" />
@@ -189,7 +223,7 @@ const PublishForm = () => {
                             />}
                         {formData?.fields[currentFieldIndex].type === 'email' &&
                             <input
-                                type="text"
+                                type="email"
                                 value={userInput}
                                 placeholder='Enter your email'
                                 onChange={(e) => setUserInput(e.target.value)}
