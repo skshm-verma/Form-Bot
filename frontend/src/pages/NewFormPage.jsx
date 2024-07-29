@@ -161,7 +161,7 @@ const NewFormPage = () => {
           setFormName(response.data.title);
           setFormNameError('');
           if (response.status === 200) {
-            const url = `http://localhost:5173/submitForm/${formId}`;
+            const url = `https://form-bot-mern.vercel.app/submitForm/${formId}`;
             await navigator.clipboard.writeText(url);
             setSuccessToast(true);
             setTimeout(() => setSuccessToast(false), 800)
@@ -175,7 +175,7 @@ const NewFormPage = () => {
           }
           const newFormId = response?.form?._id;
           if (newFormId) {
-            const url = `http://localhost:5173/submitForm/${newFormId}`;
+            const url = `https://form-bot-mern.vercel.app/submitForm/${newFormId}`;
             await navigator.clipboard.writeText(url);
             setSuccessToast(true);
             setTimeout(() => setSuccessToast(false), 800)
