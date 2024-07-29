@@ -21,7 +21,7 @@ const SettingsUpdate = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [errors, setErrors] = useState({});
-  const [updateToast, setUpdateToast] = useState({});
+  const [updateToast, setUpdateToast] = useState(false);
 
   const validate = () => {
     const errors = {};

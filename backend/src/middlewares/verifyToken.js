@@ -6,7 +6,6 @@ const verifyToken = (req, res ,next) => {
         const token = req.header('Authorization').split(' ')[1];
         if(!token) return res.status(statusCodes.UNAUTHORIZED).json({message:'Token Not Found'});
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        // console.log("Token Decoded: ",decoded);
         req.userId = decoded.id;
         req.userName = decoded.userName;
         next();

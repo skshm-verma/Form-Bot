@@ -24,7 +24,6 @@ const Workspace = () => {
     const [multiSelectionError, setMultiSelectionError] = useState(false);
     const [notFoundError, setNotFoundError] = useState(false);
 
-
     const handleCreateFolder = async () => {
         setFolderName('');
         setModalMode('create');

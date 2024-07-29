@@ -55,6 +55,7 @@
     margin: auto;
     padding: 0.6rem 0.8rem;
     cursor: pointer;
+    
 }
 
 .btn img {
@@ -73,6 +74,7 @@
     width: 75rem;
     height: auto;
     background-color: black !important;
+    
 }
 
 .selectedFolder {
@@ -87,7 +89,6 @@
     padding: 1rem 4rem;
     background-color: black !important;
 }
-
 
 .newForm {
     display: flex;

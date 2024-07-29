@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getAllFormData, createUserInput, updateFormViews } from '../helpers/api-communicator';
-import { useForm } from '../context/AllContext';
 import Logo from '../assets/logo3.png';
 import Send from '../assets/send.png';
 import Mark from '../assets/mark.png';
 import styles from './PublishForm.module.css';
 
 const PublishForm = () => {
+
     const { formId } = useParams();
-    const form = useForm();
     const [formData, setFormData] = useState(null);
     const [userInput, setUserInput] = useState('');
     const [submittedValues, setSubmittedValues] = useState([]);
