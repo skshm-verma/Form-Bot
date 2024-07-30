@@ -167,7 +167,7 @@ const Workspace = () => {
         } else if (itemToDelete?.type === 'form') {
             return 'Form';
         }
-        return 'New Folder';
+        return 'folder';
     };
 
     return (

@@ -56,7 +56,7 @@ const PublishForm = () => {
 
     useEffect(() => {
         if (!isPaused && currentFieldIndex < formData?.fields.length) {
-            const currentField = formData.fields[currentFieldIndex];
+            const currentField = formData?.fields[currentFieldIndex];
             if (!currentField.public) {
                 setTimeout(() => {
                     setCurrentFieldIndex(currentFieldIndex + 1);

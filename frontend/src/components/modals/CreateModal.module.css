@@ -25,9 +25,15 @@
 .buttonContainer {
     background-color: #171923 !important;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     margin-top: 1.5rem;
     
+}
+
+.buttonContainer hr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #47474A;
 }
 
 .button1 {

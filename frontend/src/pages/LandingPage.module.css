@@ -5,6 +5,12 @@
     position: relative;
 }
 
+/* .wrapperContainer img {
+    cursor: auto;
+} 
+    depends on the requirement
+*/  
+
 
 .previewSection {
     background-color: #171923;

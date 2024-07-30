@@ -161,6 +161,7 @@ const NewFormPage = () => {
             setDuplicateError(true);
             setTimeout(() => setDuplicateError(false), 800);
           }
+          
           const newFormId = response?.form?._id;
           if (newFormId) {
             form.saveFormId(newFormId); // Save the new form ID to context
@@ -175,9 +176,9 @@ const NewFormPage = () => {
   };
 
   const handleShare = async () => {
-    if (isSaved && formId) {
+    if (isSaved) {
       // Copy form URL to clipboard and show success toast
-      const url = `https://form-bot-mern.vercel.app/submitForm/${formId}`;
+      const url = `https://form-bot-mern.vercel.app/submitForm/${form?.formId}`;
       await navigator.clipboard.writeText(url);
       setSuccessToast(true);
       setTimeout(() => setSuccessToast(false), 800);

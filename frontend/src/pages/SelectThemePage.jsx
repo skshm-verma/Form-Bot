@@ -87,8 +87,8 @@ const SelectThemePage = () => {
         }
     };
 
-    const handleShare = async () => {
-        if (isSaved && form?.formId) {
+const handleShare = async () => {
+        if (isSaved) {
             try {
                 const url = `https://form-bot-mern.vercel.app/submitForm/${form?.formId}`;
                 await navigator.clipboard.writeText(url);

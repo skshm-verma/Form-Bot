@@ -8,7 +8,8 @@
     height: calc(100vh - 5rem);
     width: 100%;
     display: flex;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .allThemes {
