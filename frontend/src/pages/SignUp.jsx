@@ -45,7 +45,7 @@ const SignUp = () => {
     // Password validation
     if (!password) errors.password = "Password is required";
     if (!confirmPassword) errors.confirmPassword = "Password is required";
-    if (password !== confirmPassword) errors.confirmPassword = "Enter same password";
+    if (password !== confirmPassword) errors.confirmPassword = "Enter same password in both fields";
 
     return errors;
   };
