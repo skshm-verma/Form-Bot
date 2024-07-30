@@ -41,30 +41,35 @@
 
 }
 
-.btn {
+.folderContainer .btn {
     background-color: #171923;
     border: 1px solid black;
     border-radius: 8px;
     color: white;
-    font-size: 16px;
-    width: 11rem;
-    height: fit-content;
+    width: fit-content;
+    height: 70%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin: auto;
-    padding: 0.6rem 0.8rem;
+    padding: 0rem 1.2rem;
     cursor: pointer;
+    gap:10px;
     
 }
 
-.btn img {
+.folderContainer .btn  img {
     background-color: transparent !important;
-    padding-bottom: 0.2rem;
 }
 
-.btn span {
+.folderContainer .btn span {
     background-color: transparent !important;
+    width: 7rem;
+    font-family: "Open Sans";
+    font-size: 16px;
+    height: fit-content;
+    padding: 0rem;
+    text-align: center;
 }
 
 .folders {
@@ -74,7 +79,7 @@
     width: 75rem;
     height: auto;
     background-color: black !important;
-    
+    padding-left: 8px;
 }
 
 .selectedFolder {
@@ -102,7 +107,6 @@
     border-radius: 5px;
     cursor: pointer;
 }
-
 
 .newForm img {
     background-color: #1A5FFF;

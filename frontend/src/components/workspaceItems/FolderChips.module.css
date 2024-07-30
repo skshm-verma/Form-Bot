@@ -2,6 +2,7 @@
     background-color: #171923;
     display: flex;
     width: fit-content;
+    height: 70%;
     justify-content: center;
     align-items: center;
     border-radius: 8px;
@@ -13,6 +14,7 @@
 .folder span{
     background-color: transparent !important;
     width: fit-content;
+    font-family: "Open Sans";
     padding-right: 8px;
     font-size: 16px;
 }

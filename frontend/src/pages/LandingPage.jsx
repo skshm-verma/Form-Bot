@@ -181,7 +181,7 @@ const LandingPage = () => {
             <section id='footer'>
                 <div className={styles.footerContainer}>
                     <div className={styles.eachFootItem}>
-                        <p>Made with ❤️ by<br /> <a>@Saksham</a></p>
+                        <p>Made with ❤️ by<br /> <a href='https://github.com/skshm-verma/Form-Bot'>@Saksham</a></p>
                     </div>
                     <div className={styles.eachFootItem}>
                         <span>Status<img src={Link} alt="linkIcon" /></span>

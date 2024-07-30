@@ -454,6 +454,8 @@
 .eachFootItem p a {
     text-decoration: underline;
     text-decoration-color: #A0AEC0;
+    color: #A0AEC0;
+    cursor: pointer;
 }
 
 .eachFootItem span {

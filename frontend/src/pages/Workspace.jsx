@@ -178,10 +178,10 @@ const Workspace = () => {
             <hr className={styles.partition} />
             <div className={styles.itemsWrapper}>
                 <div className={styles.folderContainer}>
-                    <button className={styles.btn} onClick={handleCreateFolder}>
-                        <img width="24" height="24" src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/add-folder.png" alt="add-folder" />
+                    <div className={styles.btn} onClick={handleCreateFolder}>
+                        <div><img width="22" height="22" src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/add-folder.png" alt="add-folder" /></div>
                         <span>Create a folder</span>
-                    </button>
+                    </div>
                     <div className={styles.folders}>
                         {allFoldersNames
                             ?.filter(folder => folder.name !== "main")
