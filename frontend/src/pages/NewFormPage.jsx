@@ -144,51 +144,94 @@ const NewFormPage = () => {
     return isValid;
   };
 
-  const handleSave = () => {
+
+  const handleSave = async () => {
     if (validateFields()) {
-      form.saveFormValues(formName, formFields, folderId);
-      setIsSaved(true);
-      setFormNameError('');
+      try {
+        if (formId) {
+          // Update existing form
+          const response = await updateFormData(formId, formFields, formName);
+          setFormFields(response.data.fields);
+          setFormName(response.data.title);
+        } else {
+          // Create new form
+          const updatedFormFields = [...defaultData, ...formFields];    // customizable
+          const response = await createNewTypeBot(auth?.userId, formName, updatedFormFields, folderId, form?.formTheme);
+          if (response?.data?.msg === 'Duplicate value entered') {
+            setDuplicateError(true);
+            setTimeout(() => setDuplicateError(false), 800);
+          }
+          const newFormId = response?.form?._id;
+          if (newFormId) {
+            form.saveFormId(newFormId); // Save the new form ID to context
+          }
+        }
+        setIsSaved(true);
+        setFormNameError('');
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   const handleShare = async () => {
-    try {
-      if (validateFields()) {
-        if (isSaved && formId) {
-          const response = await updateFormData(formId, form?.formFields, form?.formName);
-          setFormFields(response.data.fields);
-          setFormName(response.data.title);
-          setFormNameError('');
-          if (response.status === 200) {
-            const url = `https://form-bot-mern.vercel.app/submitForm/${formId}`;
-            await navigator.clipboard.writeText(url);
-            setSuccessToast(true);
-            setTimeout(() => setSuccessToast(false), 800)
-          }
-        } else if (isSaved) {
-          const updatedFormFields = [...defaultData, ...formFields];    // customizeable
-          const response = await createNewTypeBot(auth?.userId, formName, updatedFormFields, folderId, form?.formTheme);
-          if (response?.data?.msg === 'Duplicate value entered') {
-            setDuplicateError(true);
-            setTimeout(() => setDuplicateError(false), 800)
-          }
-          const newFormId = response?.form?._id;
-          if (newFormId) {
-            const url = `https://form-bot-mern.vercel.app/submitForm/${newFormId}`;
-            await navigator.clipboard.writeText(url);
-            setSuccessToast(true);
-            setTimeout(() => setSuccessToast(false), 800)
-          }
-        } else {
-          setSaveFormError(true);
-          setTimeout(() => setSaveFormError(false), 800)
-        }
-      }
-    } catch (error) {
-      console.log(error);
+    if (isSaved && formId) {
+      // Copy form URL to clipboard and show success toast
+      const url = `https://form-bot-mern.vercel.app/submitForm/${formId}`;
+      await navigator.clipboard.writeText(url);
+      setSuccessToast(true);
+      setTimeout(() => setSuccessToast(false), 800);
+    } else {
+      setSaveFormError(true);
+      setTimeout(() => setSaveFormError(false), 800);
     }
   };
+
+  // const handleSave = () => {
+  //   if (validateFields()) {
+  //     form.saveFormValues(formName, formFields, folderId);
+  //     setIsSaved(true);
+  //     setFormNameError('');
+  //   }
+  // };
+
+  // const handleShare = async () => {
+  //   try {
+  //     if (validateFields()) {
+  //       if (isSaved && formId) {
+  //         const response = await updateFormData(formId, form?.formFields, form?.formName);
+  //         setFormFields(response.data.fields);
+  //         setFormName(response.data.title);
+  //         setFormNameError('');
+  //         if (response.status === 200) {
+  //           const url = `https://form-bot-mern.vercel.app/submitForm/${formId}`;
+  //           await navigator.clipboard.writeText(url);
+  //           setSuccessToast(true);
+  //           setTimeout(() => setSuccessToast(false), 800)
+  //         }
+  //       } else if (isSaved) {
+  //         const updatedFormFields = [...defaultData, ...formFields];    // customizeable
+  //         const response = await createNewTypeBot(auth?.userId, formName, updatedFormFields, folderId, form?.formTheme);
+  //         if (response?.data?.msg === 'Duplicate value entered') {
+  //           setDuplicateError(true);
+  //           setTimeout(() => setDuplicateError(false), 800)
+  //         }
+  //         const newFormId = response?.form?._id;
+  //         if (newFormId) {
+  //           const url = `https://form-bot-mern.vercel.app/submitForm/${newFormId}`;
+  //           await navigator.clipboard.writeText(url);
+  //           setSuccessToast(true);
+  //           setTimeout(() => setSuccessToast(false), 800)
+  //         }
+  //       } else {
+  //         setSaveFormError(true);
+  //         setTimeout(() => setSaveFormError(false), 800)
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
 
   const renderForm = () => {

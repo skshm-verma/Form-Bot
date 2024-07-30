@@ -58,41 +58,85 @@ const SelectThemePage = () => {
     const [isSaved, setIsSaved] = useState(false);
     const [successToast, setSuccessToast] = useState(false);
     const [saveFormError, setSaveFormError] = useState(false);
+    const [formNameError, setFormNameError] = useState(false);
 
-
-    const handleSave = () => {
-        setIsSaved(true);
-    };
-
-
-    const handleShare = async () => {
+    const handleSave = async () => {
         try {
-            if (isSaved && form?.formId) {
+            if (form?.formId) {
+                // Update form theme if formId exists
                 const response = await updateFormTheme(form?.formId, selectedTheme);
                 if (response.status === 200) {
-                    setSuccessToast(true);
-                    const url = `https://form-bot-mern.vercel.app/submitForm/${form?.formId}`;
-                    await navigator.clipboard.writeText(url);
-                    setTimeout(() => setSuccessToast(false), 800)
-                  }
-            } else if (isSaved) {
-                const updatedFormFields = [...defaultData, ...form?.formFields];
-                const response = await createNewTypeBot(auth?.userId, form?.formName, updatedFormFields, form?.folderId, selectedTheme);
-                const newFormId = response?.form?._id;
-                if (newFormId) {
-                  const url = `https://form-bot-mern.vercel.app/submitForm/${newFormId}`;
-                  await navigator.clipboard.writeText(url);
-                  setSuccessToast(true);
-                  setTimeout(() => setSuccessToast(false), 800)
+                    setIsSaved(true);
                 }
             } else {
-                setSaveFormError(true);
-                setTimeout(() => setSaveFormError(false), 800)
+                // Create new form with default data if formId does not exist
+                const updatedFormFields = [...defaultData, ...form?.formFields];
+                const response = await createNewTypeBot(auth?.userId, form?.formName, updatedFormFields, form?.folderId, selectedTheme);
+                if (response.data.msg.name === 'ValidationError' && response.status === 500) {
+                    setFormNameError(true);
+                    setTimeout(() => setFormNameError(false), 800)
+                }
+                const newFormId = response?.form?._id;
+                if (newFormId) {
+                    form.saveFormId(newFormId);
+                    setIsSaved(true);
+                }
             }
         } catch (error) {
             console.log(error);
         }
     };
+
+    const handleShare = async () => {
+        if (isSaved && form?.formId) {
+            try {
+                const url = `https://form-bot-mern.vercel.app/submitForm/${form?.formId}`;
+                await navigator.clipboard.writeText(url);
+                setSuccessToast(true);
+                setTimeout(() => setSuccessToast(false), 800);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            setSaveFormError(true);
+            setTimeout(() => setSaveFormError(false), 800);
+        }
+    };
+
+
+    // const handleSave = () => {
+    //     setIsSaved(true);
+    // };
+
+
+    // const handleShare = async () => {
+    //     try {
+    //         if (isSaved && form?.formId) {
+    //             const response = await updateFormTheme(form?.formId, selectedTheme);
+    //             if (response.status === 200) {
+    //                 setSuccessToast(true);
+    //                 const url = `https://form-bot-mern.vercel.app/submitForm/${form?.formId}`;
+    //                 await navigator.clipboard.writeText(url);
+    //                 setTimeout(() => setSuccessToast(false), 800)
+    //               }
+    //         } else if (isSaved) {
+    //             const updatedFormFields = [...defaultData, ...form?.formFields];
+    //             const response = await createNewTypeBot(auth?.userId, form?.formName, updatedFormFields, form?.folderId, selectedTheme);
+    //             const newFormId = response?.form?._id;
+    //             if (newFormId) {
+    //               const url = `https://form-bot-mern.vercel.app/submitForm/${newFormId}`;
+    //               await navigator.clipboard.writeText(url);
+    //               setSuccessToast(true);
+    //               setTimeout(() => setSuccessToast(false), 800)
+    //             }
+    //         } else {
+    //             setSaveFormError(true);
+    //             setTimeout(() => setSaveFormError(false), 800)
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
     const handleThemeClick = (theme) => {
         setSelectedTheme(theme);
@@ -222,6 +266,11 @@ const SelectThemePage = () => {
                     <img src={Mark} alt="markIcon" />
                     <span>Save Form</span>
                 </div>}
+                {formNameError && <div className={styles.toastDiv}>
+                    <img src={Mark} alt="markIcon" />
+                    <span>Form Name Required</span>
+                </div>
+                }
                 {/* 
                 Can be used for other functionality
                 {updateToast && <div className={styles.toastDiv}>
