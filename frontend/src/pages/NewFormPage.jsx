@@ -160,15 +160,17 @@ const NewFormPage = () => {
           if (response?.data?.msg === 'Duplicate value entered') {
             setDuplicateError(true);
             setTimeout(() => setDuplicateError(false), 800);
+          } else {
+            setIsSaved(true);
+            setFormNameError('');
           }
-          
+
           const newFormId = response?.form?._id;
           if (newFormId) {
-            form.saveFormId(newFormId); 
+            form.saveFormId(newFormId);
           }
         }
-        setIsSaved(true);
-        setFormNameError('');
+
       } catch (error) {
         console.log(error);
       }
