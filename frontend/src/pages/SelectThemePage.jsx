@@ -9,7 +9,6 @@ import Text from '../assets/textIcon.png';
 import Email from '../assets/emailIcon.png';
 import Tick from '../assets/tick.png';
 import Mark from '../assets/mark.png';
-// import Success from '../assets/success.png';
 
 
 const defaultData = [
@@ -102,41 +101,6 @@ const handleShare = async () => {
             setTimeout(() => setSaveFormError(false), 800);
         }
     };
-
-
-    // const handleSave = () => {
-    //     setIsSaved(true);
-    // };
-
-
-    // const handleShare = async () => {
-    //     try {
-    //         if (isSaved && form?.formId) {
-    //             const response = await updateFormTheme(form?.formId, selectedTheme);
-    //             if (response.status === 200) {
-    //                 setSuccessToast(true);
-    //                 const url = `https://form-bot-mern.vercel.app/submitForm/${form?.formId}`;
-    //                 await navigator.clipboard.writeText(url);
-    //                 setTimeout(() => setSuccessToast(false), 800)
-    //               }
-    //         } else if (isSaved) {
-    //             const updatedFormFields = [...defaultData, ...form?.formFields];
-    //             const response = await createNewTypeBot(auth?.userId, form?.formName, updatedFormFields, form?.folderId, selectedTheme);
-    //             const newFormId = response?.form?._id;
-    //             if (newFormId) {
-    //               const url = `https://form-bot-mern.vercel.app/submitForm/${newFormId}`;
-    //               await navigator.clipboard.writeText(url);
-    //               setSuccessToast(true);
-    //               setTimeout(() => setSuccessToast(false), 800)
-    //             }
-    //         } else {
-    //             setSaveFormError(true);
-    //             setTimeout(() => setSaveFormError(false), 800)
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
 
     const handleThemeClick = (theme) => {
         setSelectedTheme(theme);

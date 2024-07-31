@@ -264,7 +264,9 @@ const PublishForm = () => {
                                 ))}
                             </div>}
                         {formData?.fields[currentFieldIndex].type === 'button' ? <></> :
-                            <button type="submit"><img src={Send} alt="sendIcon" /></button>}
+                            <button type="submit" disabled={formData?.fields[currentFieldIndex].type === 'rating' && selectedRating === null}>
+                                <img src={Send} alt="sendIcon" />
+                            </button>}
                     </div>
                 </form>
             )
