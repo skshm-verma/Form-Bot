@@ -171,7 +171,7 @@ const handleShare = async () => {
                     isSaved={isSaved}
                 />
             </nav>
-            <div className={styles.themeContainer}>
+            <div className={styles.themeContainer} id="style-1">
                 <div className={styles.allThemes}>
                     <h1>Customize the theme</h1>
                     <div className={styles.themeImgs}>

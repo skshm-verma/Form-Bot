@@ -46,6 +46,7 @@ const SettingsUpdate = () => {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
       const response = await updateUserDetails(auth?.userId, userName, email, oldPassword, newPassword);
+      console.log('User Response: ', response);
 
       if (response.data?.msg === 'Email already registered') {
         setErrors(prevErrors => ({ ...prevErrors, email: 'Email already registered' }));
@@ -53,9 +54,10 @@ const SettingsUpdate = () => {
       if (response.data?.msg === 'Old password is incorrect') {
         setErrors(prevErrors => ({ ...prevErrors, oldPassword: 'Old password is incorrect', email: '' }));
       }
-      if (response?.msg === 'User updated successfully')
+      if (response?.msg === 'User updated successfully'){
         setUpdateToast(true);
-      setTimeout(() => setUpdateToast(false), 800)
+        setTimeout(() => setUpdateToast(false), 800)
+      }
     } else {
       setErrors(validationErrors);
     }
