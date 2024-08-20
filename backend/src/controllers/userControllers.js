@@ -88,7 +88,8 @@ const updateUser = async (req, res) => {
     user.password = await bcrypt.hash(newPassword, 10);
 
     await user.save();
-    res.status(statusCodes.OK).json({ msg: 'User updated successfully' });
+    const token = generateToken(user._id.toString(), user.name);
+    res.status(statusCodes.OK).json({ msg: 'User updated successfully', token });
 }
 
 module.exports = { userSignUp, userSignIn, verifyUser, updateUser }

@@ -31,7 +31,7 @@ const WorkspaceNavbar = ({ type, name }) => {
       {type === "dropdown" ?
         <div className={styles.dropdown}>
           <button className={styles.dropbtn} onClick={toggleDropdown}>
-            <span>{formattedName}</span>
+            <span>{`${formattedName} workspace`}</span>
             {isOpen ?
               <img width="20" height="20" src="https://img.icons8.com/ios-filled/50/FFFFFF/expand-arrow--v1.png" alt="expand-arrow--v1" />
               :

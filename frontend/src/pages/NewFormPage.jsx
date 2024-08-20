@@ -71,7 +71,7 @@ const defaultData = [
     icon: Email,
     id: "public-text",
     label: "Default Email 1",
-    placeholder: "Hint: User will input a email on his form",
+    placeholder: "Hint: User will input an email on his form",
     public: true,
     type: "email"
   }

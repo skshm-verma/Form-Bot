@@ -36,8 +36,10 @@ const LandingPage = () => {
 
     return (
         <div className={styles.wrapperContainer}>
-            <div className={styles.blurEffect1}></div>
-            <div className={styles.blurEffect2}></div>
+            {/* <div className={styles.blurEffect1}></div>
+            <div className={styles.blurEffect2}></div> 
+            Extra feature
+            */}
             <nav>
                 <LandingPageNavbar />
             </nav>
@@ -67,7 +69,7 @@ const LandingPage = () => {
                         </div>
                         <div className={styles.newTypeForms}>
                             <img src={Correct} alt="correctIcon" />
-                            <img src={WorkingImage} alt="newFormImage" />
+                            <img className={styles.newFormImage} src={WorkingImage} alt="newFormImage" />
                         </div>
                         <img className={styles.tryOutImage} src={TryImage} alt="" />
                     </div>
