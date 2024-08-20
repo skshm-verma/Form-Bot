@@ -1,8 +1,10 @@
 .wrapperContainer {
     background-color: #171923;
     color: white;
-    width: 100%;
+    width: 100vw;
     min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
     position: relative;
 }
 
